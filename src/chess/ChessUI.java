@@ -27,10 +27,10 @@ public class ChessUI extends JFrame implements MouseListener{
         for(int i=0; i<Main.pieces.size(); i++) {
             JLabel pieceHolder = new JLabel();
             pieceHolder.setSize(100, 100);
-            pieceHolder.setLocation(xCoordinateToPixels(Main.pieces.get(i).x), yCoordinateToPixels(Main.pieces.get(i).y, 700));
+            pieceHolder.setLocation(xCoordinateToPixels(Main.pieces.get(i).x), yCoordinateToPixels(Main.pieces.get(i).y, 7));
             pieceHolder.setIcon(Main.pieces.get(i).pieceImage);
             if(Main.pieces.get(i).pieceType.equals("rook")) {
-                System.out.println("Row: " + xCoordinateToPixels(Main.pieces.get(i).x) + " Column: " + yCoordinateToPixels(Main.pieces.get(i).y, 700));
+                System.out.println("Row: " + xCoordinateToPixels(Main.pieces.get(i).x) + " Column: " + yCoordinateToPixels(Main.pieces.get(i).y, 7));
             }
             this.add(pieceHolder);
         }
@@ -48,21 +48,30 @@ public class ChessUI extends JFrame implements MouseListener{
     }
     
     public static int xPixelToCoordinate(int pixel) {
-        float roughCoordinate = pixel/100;
-        return (int) Math.floor(roughCoordinate);
+        /**
+         * @param pixel (the value (between 0 and 800) of the x pixel )
+         * @returns the column value that matches the pixel
+         * @example: if pixel = 750, the column value returned would be 7 (the max possible)
+         */
+        return (int) Math.floor(pixel/100.0);
     }
     
     public static int yCoordinateToPixels(int coordinate, int constant) {
-        //constant could be 0 or 700
-        return Math.abs(constant - coordinate*100);
+        /**
+         * @param coordinate (the value (between 0 and 7) for each row
+         * @param constant (either 7 (when playing white) or 0 (when playing black))
+         * @returns the top left pixel of the indicated row
+         */
+        return Math.abs(constant - coordinate)*100;
     }
     
     public static int yPixelToCoordinate(int pixel, int constant) {
         /**
-         * @param pixel (pixel location on the board)
+         * @param pixel (pixel location on the board: it needs to be less than 840)
+         * @param constant which is either 7 (when playing white) or 0 (when playing black)
+         * @returns the row coordinate that matches the y pixel that was put in
          */
-        float roughCoordinate = (pixel-30)/100; 
-        return (int) Math.abs(constant - Math.floor(roughCoordinate));
+        return (int) Math.abs(constant - Math.floor((pixel-40)/100.0));
     }
     
     @Override
@@ -80,13 +89,17 @@ public class ChessUI extends JFrame implements MouseListener{
     public void mouseReleased(MouseEvent e) {
         this.finalPosition = this.getMousePosition();
         
-        Square source = new Square ((yPixelToCoordinate((int)initialPosition.getY(),0)), (xPixelToCoordinate((int)initialPosition.getX())));
-        System.out.println(source.col);
+        //cast the double to an integer so that it can be passed into the pixel to coordinate functions
+        //Could get rid of this variable and do it directly in the Square constructor call
+        int x = (int) initialPosition.getX();
+        int y = (int) initialPosition.getY();
+
+        //The source square is the location (in coordinates: (0-7, 0-7)) of the piece that was initially clicked
+        Square source = new Square ((xPixelToCoordinate(x)),(yPixelToCoordinate(y,7)));
+        System.out.println("Column: " + source.col);
+        System.out.println("Row: " + source.row);
         Square destination;
 
-        System.out.println(initialPosition.getX());
-        System.out.println(initialPosition.getY());
-        //do the logic in here for now. Eventually it should probably get moved
         
     }
 
