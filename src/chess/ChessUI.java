@@ -25,6 +25,8 @@ public class ChessUI extends JFrame implements MouseListener{
         this.setSize(1100,900);
         
         this.drawBoard();
+        this.setVisible(true);
+        this.addMouseListener(this);
         /*
         for(int i=0; i<Main.pieces.size(); i++) {
             JLabel pieceHolder = new JLabel();
@@ -42,8 +44,8 @@ public class ChessUI extends JFrame implements MouseListener{
             this.add(new ContentPanel(Main.pieces.get(i).pieceImage, Main.pieces.get(i).x, Main.pieces.get(i).y));
         }*/
         
-        this.setVisible(true);
-        this.addMouseListener(this);
+        
+        
     }   
     public static int xCoordinateToPixels(int coordinate) {
         return coordinate*100;
@@ -82,8 +84,14 @@ public class ChessUI extends JFrame implements MouseListener{
          * NOTE: This is for development only. Actual graphical display will not
          * use this, and will added once the rest of the program is in working order
          */
- 
+        
         for(int i=0; i<Main.pieces.size(); i++) {
+            if(Main.pieces.get(i).pieceType.equals("pawn")) {
+                System.out.println("X: " + Main.pieces.get(i).x + "/tY: " + Main.pieces.get(i).y);   
+            }
+            
+            
+            
             this.add(Main.pieces.get(i).draw());
         }
     }

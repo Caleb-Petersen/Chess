@@ -89,15 +89,24 @@ public class Move {
          * @returns nothing
          * Function purpose: To execute a move
          */
-        this.piece.x = x;
-        this.piece.y = y;
-        this.piece.hasMoved = true;
-        
         //If a piece was captured, remove it.
         for(int i=0; i<Main.pieces.size(); i++) {
             if(Main.pieces.get(i).x == this.x && Main.pieces.get(i).y == y) {
                 Main.pieces.remove(i);
             }
         }
+        for(int i=0; i< Main.pieces.size(); i++) {
+            if(Main.pieces.get(i) == this.piece) {
+                System.out.println("CHANGING MAIN PIECE");
+                System.out.println("X is: " + this.x);
+                System.out.println("Y is: " + this.y);
+                Main.pieces.get(i).hasMoved = true;
+                Main.pieces.get(i).x = this.x;
+                Main.pieces.get(i).y = this.y;
+                System.out.println(Main.pieces.get(i).y);
+            }
+        }
+        
+        
     }
 }
