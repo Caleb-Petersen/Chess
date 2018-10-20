@@ -1,0 +1,577 @@
+<class>
+<square>
+	<row>1</row>
+	<col>1</col>
+	<pieceType>rook</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>1</row>
+	<col>2</col>
+	<pieceType>knight</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>1</row>
+	<col>3</col>
+	<pieceType>bishop</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>1</row>
+	<col>4</col>
+	<pieceType>queen</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>1</row>
+	<col>5</col>
+	<pieceType>king</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>1</row>
+	<col>6</col>
+	<pieceType>bishop</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>1</row>
+	<col>7</col>
+	<pieceType>knight</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>1</row>
+	<col>8</col>
+	<pieceType>rook</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>2</row>
+	<col>1</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>2</row>
+	<col>2</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>2</row>
+	<col>3</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>2</row>
+	<col>4</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>2</row>
+	<col>5</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>2</row>
+	<col>6</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>2</row>
+	<col>7</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>2</row>
+	<col>8</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>white</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>3</row>
+	<col>1</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>3</row>
+	<col>2</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>3</row>
+	<col>3</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>3</row>
+	<col>4</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>3</row>
+	<col>5</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>3</row>
+	<col>6</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>3</row>
+	<col>7</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>3</row>
+	<col>8</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>4</row>
+	<col>1</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>4</row>
+	<col>2</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>4</row>
+	<col>3</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>4</row>
+	<col>4</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>4</row>
+	<col>5</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>4</row>
+	<col>6</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>4</row>
+	<col>7</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>4</row>
+	<col>8</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>5</row>
+	<col>1</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>5</row>
+	<col>2</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>5</row>
+	<col>3</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>5</row>
+	<col>4</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>5</row>
+	<col>5</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>5</row>
+	<col>6</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>5</row>
+	<col>7</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>5</row>
+	<col>8</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>6</row>
+	<col>1</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>6</row>
+	<col>2</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>6</row>
+	<col>3</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>6</row>
+	<col>4</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>6</row>
+	<col>5</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>6</row>
+	<col>6</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>6</row>
+	<col>7</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>6</row>
+	<col>8</col>
+	<pieceType>null</pieceType>
+	<pieceColour>null</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>7</row>
+	<col>1</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>7</row>
+	<col>2</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>7</row>
+	<col>3</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>7</row>
+	<col>4</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>7</row>
+	<col>5</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>7</row>
+	<col>6</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>7</row>
+	<col>7</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>7</row>
+	<col>8</col>
+	<pieceType>pawn</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>8</row>
+	<col>1</col>
+	<pieceType>rook</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>8</row>
+	<col>2</col>
+	<pieceType>knight</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>8</row>
+	<col>3</col>
+	<pieceType>bishop</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>8</row>
+	<col>4</col>
+	<pieceType>queen</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>8</row>
+	<col>5</col>
+	<pieceType>king</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>8</row>
+	<col>6</col>
+	<pieceType>bishop</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>8</row>
+	<col>7</col>
+	<pieceType>knight</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>white</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+
+<square>
+	<row>8</row>
+	<col>8</col>
+	<pieceType>rook</pieceType>
+	<pieceColour>black</pieceColour>
+	<squareColour>black</squareColour>
+	<hasMoved>false</hasMoved>
+</square>
+</class>
