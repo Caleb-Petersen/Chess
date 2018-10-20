@@ -24,6 +24,8 @@ public class ChessUI extends JFrame implements MouseListener{
         
         this.setSize(1100,900);
         
+        this.drawBoard();
+        /*
         for(int i=0; i<Main.pieces.size(); i++) {
             JLabel pieceHolder = new JLabel();
             pieceHolder.setSize(100, 100);
@@ -33,7 +35,7 @@ public class ChessUI extends JFrame implements MouseListener{
                 System.out.println("Row: " + xCoordinateToPixels(Main.pieces.get(i).x) + " Column: " + yCoordinateToPixels(Main.pieces.get(i).y, 7));
             }
             this.add(pieceHolder);
-        }
+        }*/
         //ContentPanel contentPanel = new ContentPanel(image,5,5);
         /*
         for(int i=0; i<Main.pieces.size(); i++) {
@@ -80,14 +82,9 @@ public class ChessUI extends JFrame implements MouseListener{
          * NOTE: This is for development only. Actual graphical display will not
          * use this, and will added once the rest of the program is in working order
          */
-        this.getContentPane().removeAll();
  
-       for(int i=0; i<Main.pieces.size(); i++) {
-            JLabel pieceHolder = new JLabel();
-            pieceHolder.setSize(100, 100);
-            pieceHolder.setLocation(xCoordinateToPixels(Main.pieces.get(i).x), yCoordinateToPixels(Main.pieces.get(i).y, 7));
-            pieceHolder.setIcon(Main.pieces.get(i).pieceImage);
-            this.add(pieceHolder);
+        for(int i=0; i<Main.pieces.size(); i++) {
+            this.add(Main.pieces.get(i).draw());
         }
     }
     @Override
@@ -124,6 +121,7 @@ public class ChessUI extends JFrame implements MouseListener{
             if(move.isValidMove()) {
                 System.out.println("MOVE IS VALID");
                 move.executeMove();
+                
                 this.drawBoard();
             }else {
                 Main.infoBox("Invalid Move!", "Error");

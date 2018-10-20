@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -136,6 +137,7 @@ public class Main {
 //                        }
                         
                         piece.pieceImage = piece.getImage();//getImages(piece.pieceColour + "_" + piece.pieceType);
+                        piece.pieceLabel = new JLabel();
                         pieces.add(piece);
                         //System.out.println(piece.pieceColour + " " + piece.pieceType + " on (" + piece.x + " " + piece.y + ")" );
                     }

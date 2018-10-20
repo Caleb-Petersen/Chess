@@ -2,6 +2,7 @@
 package Chess;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,6 +22,7 @@ public class Piece {
     public boolean hasMoved; //used only for pawns
     public ArrayList<Square> possibleDestinations; //An array of the squares the piece can go to
     public ImageIcon pieceImage;
+    public JLabel pieceLabel;
     
     public boolean moveLegal(int x, int y) {
         /**
@@ -156,5 +158,18 @@ public class Piece {
             return true;
         }
         return false;
+    }
+    
+    public JLabel draw() {
+        this.pieceLabel.setSize(100,100);
+        this.pieceLabel.setLocation(ChessUI.xCoordinateToPixels(this.x), ChessUI.yCoordinateToPixels(y, 7));
+        this.pieceLabel.setIcon(this.pieceImage);
+        
+        return this.pieceLabel;
+    }
+    public JLabel delete() {
+        this.pieceLabel.setIcon(null);
+        
+        return this.pieceLabel;
     }
 }
