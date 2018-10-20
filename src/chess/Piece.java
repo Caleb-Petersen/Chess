@@ -167,9 +167,7 @@ public class Piece {
         
         return this.pieceLabel;
     }
-    public JLabel delete() {
+    public void delete() {
         this.pieceLabel.setIcon(null);
-        
-        return this.pieceLabel;
     }
 }
