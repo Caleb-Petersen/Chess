@@ -92,7 +92,9 @@ public class Move {
         //If a piece was captured, remove it
         for(int i=0; i<Main.pieces.size(); i++) {
             if(Main.pieces.get(i).x == this.x && Main.pieces.get(i).y == y) {
+                Main.deletedPieces.add(Main.pieces.get(i));
                 Main.pieces.remove(i);
+                System.out.println(Main.deletedPieces.size() == 1);
             }
         }
         for(int i=0; i< Main.pieces.size(); i++) {

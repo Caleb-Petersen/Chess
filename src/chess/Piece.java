@@ -160,14 +160,16 @@ public class Piece {
         return false;
     }
     
-    public JLabel draw() {
+    public JLabel prepareToDraw() {
         this.pieceLabel.setSize(100,100);
         this.pieceLabel.setLocation(ChessUI.xCoordinateToPixels(this.x), ChessUI.yCoordinateToPixels(y, 7));
         this.pieceLabel.setIcon(this.pieceImage);
         
         return this.pieceLabel;
     }
-    public void delete() {
+    public JLabel drawBlank() {
         this.pieceLabel.setIcon(null);
+        
+        return this.pieceLabel;
     }
 }

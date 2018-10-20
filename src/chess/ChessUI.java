@@ -85,8 +85,11 @@ public class ChessUI extends JFrame implements MouseListener{
          * use this, and will added once the rest of the program is in working order
          */
         
+        for(int i=0; i<Main.deletedPieces.size(); i++) {
+            this.add(Main.deletedPieces.get(i).drawBlank());
+        }
         for(int i=0; i<Main.pieces.size(); i++) {
-            this.add(Main.pieces.get(i).draw());
+            this.add(Main.pieces.get(i).prepareToDraw());
         }
     }
     @Override

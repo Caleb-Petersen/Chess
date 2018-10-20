@@ -39,6 +39,7 @@ import org.xml.sax.SAXParseException;
 
 public class Main {
     public static ArrayList<Piece> pieces = new ArrayList<Piece>();
+    public static ArrayList<Piece> deletedPieces = new ArrayList<Piece>();
     
     public static void main(String[] args){
         EventQueue.invokeLater(new Runnable() {
