@@ -102,11 +102,8 @@ public class Piece {
             
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                Move move = new Move();
-                move.piece = this;
-                move.x = x;
-                move.y = y;
-                
+                Move move = new Move(this, x, y);
+
                 switch(this.pieceType) {
                     case "king":
                         if(Validation.isKing(move)) { //&& !proccessCheck(this, x, y

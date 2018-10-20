@@ -13,6 +13,11 @@ public class Move {
     public int x;
     public int y;
     
+    public Move(Piece initPiece, int initX, int initY) {
+        this.piece = initPiece;
+        this.x = initX;
+        this.y = initY;
+    }
     public boolean moveIsEnpassant() {
         /**
          * @param none

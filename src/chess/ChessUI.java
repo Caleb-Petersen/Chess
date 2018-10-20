@@ -74,6 +74,22 @@ public class ChessUI extends JFrame implements MouseListener{
         return (int) Math.abs(constant - Math.floor((pixel-40)/100.0));
     }
     
+    public void drawBoard() {
+        /**
+         * Redraws the images on the board
+         * NOTE: This is for development only. Actual graphical display will not
+         * use this, and will added once the rest of the program is in working order
+         */
+        this.getContentPane().removeAll();
+ 
+       for(int i=0; i<Main.pieces.size(); i++) {
+            JLabel pieceHolder = new JLabel();
+            pieceHolder.setSize(100, 100);
+            pieceHolder.setLocation(xCoordinateToPixels(Main.pieces.get(i).x), yCoordinateToPixels(Main.pieces.get(i).y, 7));
+            pieceHolder.setIcon(Main.pieces.get(i).pieceImage);
+            this.add(pieceHolder);
+        }
+    }
     @Override
     public void mouseClicked(MouseEvent e) {
         //Not yet used (could eventually be implemented for some purpose)
@@ -89,18 +105,32 @@ public class ChessUI extends JFrame implements MouseListener{
     public void mouseReleased(MouseEvent e) {
         this.finalPosition = this.getMousePosition();
         
-        //cast the double to an integer so that it can be passed into the pixel to coordinate functions
-        //Could get rid of this variable and do it directly in the Square constructor call
-        int x = (int) initialPosition.getX();
-        int y = (int) initialPosition.getY();
-
         //The source square is the location (in coordinates: (0-7, 0-7)) of the piece that was initially clicked
-        Square source = new Square ((xPixelToCoordinate(x)),(yPixelToCoordinate(y,7)));
-        System.out.println("Column: " + source.col);
-        System.out.println("Row: " + source.row);
-        Square destination;
-
+        Square source = new Square ((xPixelToCoordinate((int) initialPosition.getX())),(yPixelToCoordinate((int) initialPosition.getY(),7)));
+        //the destination square is the end location (in coordinates: (0-7, 0-7)) of the piece that was moved
+        Square destination = new Square ((xPixelToCoordinate((int) finalPosition.getX())),(yPixelToCoordinate((int) finalPosition.getY(),7)));;
         
+        Piece piece = null;
+        //Get the piece that was initially clicked. If no such piece exists, then inform the user of that fact
+        for(int i=0; i<Main.pieces.size(); i++) {
+            if(Main.pieces.get(i).x == source.col && Main.pieces.get(i).y == source.row) {
+                System.out.println("PIECE MATCH FOUND");
+                piece = Main.pieces.get(i);
+            }
+        }
+        if(piece != null) {
+            Move move = new Move (piece, destination.col, destination.row);
+            
+            if(move.isValidMove()) {
+                System.out.println("MOVE IS VALID");
+                move.executeMove();
+                this.drawBoard();
+            }else {
+                Main.infoBox("Invalid Move!", "Error");
+            }
+        }else {
+            Main.infoBox("You didn't select a piece!", "Error");
+        }
     }
 
     @Override
