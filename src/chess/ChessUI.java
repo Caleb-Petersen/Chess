@@ -3,8 +3,10 @@ package Chess;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,7 +25,6 @@ public class ChessUI extends JFrame implements MouseListener{
         //Define variables
         
         this.setSize(1100,900);
-        
         this.drawBoard();
         this.setVisible(true);
         this.addMouseListener(this);

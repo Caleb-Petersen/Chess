@@ -232,24 +232,32 @@ public class Validation {
         } else if ((move.x == move.piece.x) && ((move.y - move.piece.y) == (direction*2)) && move.piece.hasMoved == false) {
             validLocation = true;
             //This is for the capture of pawns
-        } else if (move.y == move.piece.y + direction && (move.x == move.piece.x + 1 || move.x == move.piece.x - 1)) {
+        } else if (move.y == (move.piece.y + direction) && (move.x == (move.piece.x + 1) || move.x == (move.piece.x - 1))) {
+            
             for(int i=0; i<Main.pieces.size(); i++) {
-                Square square = new Square(move.x, move.y);
+                if(Main.pieces.get(i).x == move.x && Main.pieces.get(i).y == move.y) {
+                    Square square = new Square(move.x, move.y);
                 
-                if(Main.pieces.get(i).pieceOnSquare(square)) {
-                    if(Main.pieces.get(i).pieceColour.equals(move.piece.pieceColour)){
-                        return false;
+                    if(Main.pieces.get(i).pieceOnSquare(square)) {
+                        if(Main.pieces.get(i).pieceColour.equals(move.piece.pieceColour)){
+                            return false;
+                        }
+                        validLocation = true;
+                    }else {
+                        /*This is for if en passant is played
+                        Firstly, the destination square needs to be empty (already verified). Secondly, the 
+                        piece beside the pawn needs to be a pawn, and of the opposite colour */
+                        return false; //for now leave enpassant until later
                     }
-                }else {
-                    /*This is for if en passant is played
-                    Firstly, the destination square needs to be empty (already verified). Secondly, the 
-                    piece beside the pawn needs to be a pawn, and of the opposite colour */
-                    return false; //for now leave enpassant until later
                 }
+                
             }
         }
 
         if(validLocation) {
+            //check to see if there is a piece on the destination square
+            //if there is, verify that it is not of the same colour as the piece
+            //that is being moved
             for(int i=0; i<Main.pieces.size(); i++) {
                 Square square = new Square(move.x, move.y);
                 
