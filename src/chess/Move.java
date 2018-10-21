@@ -24,6 +24,13 @@ public class Move {
          * @returns a boolean indicating whether or not a move is enpassant
          */
         
+        //Algorithm to implement
+        //Check to see if the piece moved was a pawn
+        //check to see if the move is valid
+        //Check to see if a diagonal move was made
+        //Check to see if there is no piece on the destination square
+        //If all of those checks are true, return true, if not, return false
+        
         int direction = 1;
         if(this.piece.pieceColour.equals("black")) {
             direction = -1;
@@ -52,6 +59,13 @@ public class Move {
          * NOTE: as of October 20, 2018, this function is incomplete, and 
          * views every king move as an attempt to castle.
          */
+        
+        //Algorithm to implement
+        //Check to see if the piece moved is a king
+        //Check to see if the move is valid
+        //Check to see if the king was moved two squares
+        //If all are true, return true, if not, return false
+        
         if(this.piece.pieceType.equals("king")) {
             return true;
         }
@@ -64,22 +78,22 @@ public class Move {
          */
         switch(this.piece.pieceType) {
             case "king":
-                return Validation.isKing(this);
+                return Validation.isKing(Main.pieces, this);
                 
             case "queen":
-                return Validation.isDiagonal(this) && Validation.isStraight(this);
+                return Validation.isDiagonal(Main.pieces, this) && Validation.isStraight(Main.pieces, this);
                 
             case "rook":
-                return Validation.isStraight(this);
+                return Validation.isStraight(Main.pieces, this);
                 
             case "bishop":
-                return Validation.isDiagonal(this);
+                return Validation.isDiagonal(Main.pieces, this);
      
             case "knight":
-                return Validation.isKnight(this);
+                return Validation.isKnight(Main.pieces, this);
                 
             default:
-                return Validation.isPawn(this);
+                return Validation.isPawn(Main.pieces, this);
         }
     }
     
@@ -89,7 +103,8 @@ public class Move {
          * @returns nothing
          * Function purpose: To execute a move
          */
-        //If a piece was captured, remove it
+        //If a piece was captured, remove it from the main array, 
+        //add it to the deleted pieces array for graphical purpososes
         for(int i=0; i<Main.pieces.size(); i++) {
             if(Main.pieces.get(i).x == this.x && Main.pieces.get(i).y == y) {
                 Main.deletedPieces.add(Main.pieces.get(i));
@@ -102,10 +117,7 @@ public class Move {
                 Main.pieces.get(i).hasMoved = true;
                 Main.pieces.get(i).x = this.x;
                 Main.pieces.get(i).y = this.y;
-                System.out.println(Main.pieces.get(i).y);
             }
         }
-        
-        
     }
 }

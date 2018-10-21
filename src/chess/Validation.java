@@ -4,12 +4,15 @@
  * and open the template in the editor.
  */
 package Chess;
+
+import java.util.ArrayList;
+
 /**
  *
  * @author Caleb
  */
 public class Validation {
-     public static boolean isDiagonal(Move move) {
+     public static boolean isDiagonal(ArrayList<Piece> boardPosition, Move move) {
         //This function checks to see if the move is diagonal, and if the path is clear
         int loopTracker = 0;
 
@@ -38,19 +41,19 @@ public class Validation {
                     loopTracker = loopTracker + 1;
                     yStart = yStart + slope;
                     
-                    for(int j=0; j<Main.pieces.size(); j++) {
+                    for(int j=0; j<boardPosition.size(); j++) {
                         Square square = new Square(i, yStart);
-                        if(Main.pieces.get(j).pieceOnSquare(square)) {
+                        if(boardPosition.get(j).pieceOnSquare(square)) {
                             return false;
                         }
                     }
                 }
                 //The piece colours must be different, or the square must be empty
-                for(int i=0; i<Main.pieces.size(); i++) {
+                for(int i=0; i<boardPosition.size(); i++) {
                     Square square = new Square(move.x,move.y);
                
-                    if(Main.pieces.get(i).pieceOnSquare(square)) {
-                        if(Main.pieces.get(i).pieceColour.equals(move.piece.pieceColour)){
+                    if(boardPosition.get(i).pieceOnSquare(square)) {
+                        if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
                             return false;
                         }
                     }
@@ -60,7 +63,7 @@ public class Validation {
         return true;
     }
 
-    public static boolean isStraight(Move move) {
+    public static boolean isStraight(ArrayList<Piece> boardPosition, Move move) {
         //This function checks to see if the move is straight, and if the path is clear
         
         //the rook travels across a y if y1 is eqal to y2
@@ -70,10 +73,10 @@ public class Validation {
             int minX = java.lang.Math.min(move.piece.y, move.x);
             //if all the squares between minY and maxY are empty ifTracker will equal loopTracker
             for (int i = (minX + 1); i < maxX; i++) {
-                for(int j=0; j<Main.pieces.size(); j++) {
+                for(int j=0; j<boardPosition.size(); j++) {
                     Square square = new Square(i, move.piece.y);
                     
-                    if(Main.pieces.get(j).pieceOnSquare(square)) {
+                    if(boardPosition.get(j).pieceOnSquare(square)) {
                         return false;
                     }
                 }
@@ -84,20 +87,20 @@ public class Validation {
             int minY = java.lang.Math.min(move.piece.y, move.y);
             //if all the squares between minY and maxY are empty ifTracker will equal loopTracker
             for (int i = (minY + 1); i < maxY; i++) {
-                for(int j=0; j<Main.pieces.size(); j++) {
+                for(int j=0; j<boardPosition.size(); j++) {
                     Square square = new Square(i, move.piece.y);
                     
-                    if(Main.pieces.get(j).pieceOnSquare(square)) {
+                    if(boardPosition.get(j).pieceOnSquare(square)) {
                         return false;
                     }
                 }
             }
         }
-        for(int i=0; i<Main.pieces.size(); i++) {
+        for(int i=0; i<boardPosition.size(); i++) {
             Square square = new Square(move.x, move.y);
             
-            if(Main.pieces.get(i).pieceOnSquare(square)) {
-                if(Main.pieces.get(i).pieceColour.equals(move.piece.pieceColour)){
+            if(boardPosition.get(i).pieceOnSquare(square)) {
+                if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
                     return false;
                 }
             }
@@ -105,7 +108,7 @@ public class Validation {
         return true;
     }
 
-    public static boolean isKnight(Move move) {
+    public static boolean isKnight(ArrayList<Piece> boardPosition, Move move) {
         // this function will check to see if a knight can move to a given square
         boolean validLocation = false;
 
@@ -126,11 +129,11 @@ public class Validation {
             to be a valid move
             */
             
-            for(int i=0; i<Main.pieces.size(); i++) {
+            for(int i=0; i<boardPosition.size(); i++) {
                 Square square = new Square(move.x, move.y);
                 
-                if(Main.pieces.get(i).pieceOnSquare(square)) {
-                    if(Main.pieces.get(i).pieceColour.equals(move.piece.pieceColour)){
+                if(boardPosition.get(i).pieceOnSquare(square)) {
+                    if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
                         return false;
                     }
                 }
@@ -140,7 +143,7 @@ public class Validation {
         return false;
     }
     
-    public static boolean isKing(Move move) {
+    public static boolean isKing(ArrayList<Piece> boardPosition, Move move) {
         //This function checks to see if the king can move to any square
         boolean validLocation = false;
         String kingColour;
@@ -151,11 +154,11 @@ public class Validation {
         if (((Math.abs(move.y - move.piece.y) == 0 && (Math.abs(move.x - move.piece.x)) == 1)
                 || (Math.abs(move.y - move.piece.y) == 1 && (Math.abs(move.x - move.piece.x)) == 0)
                 || (Math.abs(move.y - move.piece.y) == 1 && (Math.abs(move.x - move.piece.x)) == 1))) {
-            for(int i=0; i<Main.pieces.size(); i++) {
+            for(int i=0; i<boardPosition.size(); i++) {
                 Square square = new Square(move.x, move.y);
                 
-                if(Main.pieces.get(i).pieceOnSquare(square)) {
-                    if(Main.pieces.get(i).pieceColour.equals(move.piece.pieceColour)){
+                if(boardPosition.get(i).pieceOnSquare(square)) {
+                    if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
                         return false;
                     }
                 }
@@ -213,7 +216,7 @@ public class Validation {
         return validLocation; //castling currently commented out
     }
     
-    public static boolean isPawn(Move move) {
+    public static boolean isPawn(ArrayList<Piece> boardPosition, Move move) {
         boolean validLocation = false;
         int direction;
         //the black pawn
@@ -234,12 +237,12 @@ public class Validation {
             //This is for the capture of pawns
         } else if (move.y == (move.piece.y + direction) && (move.x == (move.piece.x + 1) || move.x == (move.piece.x - 1))) {
             
-            for(int i=0; i<Main.pieces.size(); i++) {
-                if(Main.pieces.get(i).x == move.x && Main.pieces.get(i).y == move.y) {
+            for(int i=0; i<boardPosition.size(); i++) {
+                if(boardPosition.get(i).x == move.x && boardPosition.get(i).y == move.y) {
                     Square square = new Square(move.x, move.y);
                 
-                    if(Main.pieces.get(i).pieceOnSquare(square)) {
-                        if(Main.pieces.get(i).pieceColour.equals(move.piece.pieceColour)){
+                    if(boardPosition.get(i).pieceOnSquare(square)) {
+                        if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
                             return false;
                         }
                         validLocation = true;
@@ -258,11 +261,11 @@ public class Validation {
             //check to see if there is a piece on the destination square
             //if there is, verify that it is not of the same colour as the piece
             //that is being moved
-            for(int i=0; i<Main.pieces.size(); i++) {
+            for(int i=0; i<boardPosition.size(); i++) {
                 Square square = new Square(move.x, move.y);
                 
-                if(Main.pieces.get(i).pieceOnSquare(square)) {
-                    if(Main.pieces.get(i).pieceColour.equals(move.piece.pieceColour)){
+                if(boardPosition.get(i).pieceOnSquare(square)) {
+                    if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
                         return false;
                     }
                 }

@@ -108,20 +108,20 @@ public class Piece {
 
                 switch(this.pieceType) {
                     case "king":
-                        if(Validation.isKing(move)) { //&& !proccessCheck(this, x, y
+                        if(Validation.isKing(Main.pieces, move)) { //&& !proccessCheck(this, x, y
                             Square square = new Square(x,y);              
                             possibleDestinations.add(square);
                         }
                         break;
                     case "queen":
-                        if((Validation.isDiagonal(move) || Validation.isStraight(move)) ) { //&&!proccessCheck(this, x, y)
+                        if((Validation.isDiagonal(Main.pieces, move) || Validation.isStraight(Main.pieces, move)) ) { //&&!proccessCheck(this, x, y)
                             Square square = new Square(x,y); 
                             possibleDestinations.add(square);
                         }
                         break;
                     
                     case "rook":
-                        if(Validation.isStraight(move) ) { //&& !proccessCheck(this.x, x, this.y, y, null)
+                        if(Validation.isStraight(Main.pieces, move) ) { //&& !proccessCheck(this.x, x, this.y, y, null)
                             Square square = new Square(x,y); 
                             possibleDestinations.add(square);
                         }
@@ -129,21 +129,21 @@ public class Piece {
                     
                         
                     case "bishop":
-                        if(Validation.isDiagonal(move)) { //&&!proccessCheck(this.x, x, this.y, y, null)
+                        if(Validation.isDiagonal(Main.pieces, move)) { //&&!proccessCheck(this.x, x, this.y, y, null)
                             Square square = new Square(x,y); 
                             possibleDestinations.add(square);
                         }
                         break;
                     
                     case "knight":
-                        if(Validation.isKnight(move) ) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
+                        if(Validation.isKnight(Main.pieces, move) ) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
                             Square square = new Square(x,y); 
                             possibleDestinations.add(square);  
                         }
                         break;
                     
                     default:
-                        if(Validation.isPawn(move)) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
+                        if(Validation.isPawn(Main.pieces, move)) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
                             Square square = new Square(x,y); 
                             possibleDestinations.add(square);  
                         }
