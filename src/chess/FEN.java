@@ -27,6 +27,7 @@ public class FEN {
         for(int i=0; i<8; i++) {
             char [] squares = boardRows[i].toCharArray();
             //NOTE:: this is somewhat messy, and hard to understand -> to be refactored in the future
+            //NOTE:: need to add a constructor to the Piece class
             for(int j=0; (j<boardRows[i].length() && (Character.getType(squares[j])) != 12); j++) {
                 if(!Character.isDigit(squares[j])) {
                     boardPosition.add(charToPiece(String.valueOf(squares[j])));
