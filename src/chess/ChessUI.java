@@ -25,6 +25,7 @@ public class ChessUI extends JFrame implements MouseListener{
         //Define variables
         
         this.setSize(1100,900);
+        this.setResizable(false);
         this.drawBoard();
         this.setVisible(true);
         this.addMouseListener(this);
@@ -44,9 +45,6 @@ public class ChessUI extends JFrame implements MouseListener{
         for(int i=0; i<Main.pieces.size(); i++) {
             this.add(new ContentPanel(Main.pieces.get(i).pieceImage, Main.pieces.get(i).x, Main.pieces.get(i).y));
         }*/
-        
-        
-        
     }   
     public static int xCoordinateToPixels(int coordinate) {
         return coordinate*100;
@@ -90,6 +88,7 @@ public class ChessUI extends JFrame implements MouseListener{
             this.add(Main.deletedPieces.get(i).drawBlank());
         }
         for(int i=0; i<Main.pieces.size(); i++) {
+           /// System.out.println(Main.pieces.get(i).prepareToDraw().);
             this.add(Main.pieces.get(i).prepareToDraw());
         }
     }
@@ -103,7 +102,6 @@ public class ChessUI extends JFrame implements MouseListener{
         this.initialPosition = this.getMousePosition();
     }
 
-    
     @Override
     public void mouseReleased(MouseEvent e) {
         this.finalPosition = this.getMousePosition();

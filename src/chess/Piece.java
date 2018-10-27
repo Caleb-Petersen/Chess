@@ -163,6 +163,11 @@ public class Piece {
     public JLabel prepareToDraw() {
         this.pieceLabel.setSize(100,100);
         this.pieceLabel.setLocation(ChessUI.xCoordinateToPixels(this.x), ChessUI.yCoordinateToPixels(y, 7));
+        System.out.println("_______________________________________________");
+        System.out.println("Piece: " + this.pieceType);
+        System.out.println("X Pixel: " + ChessUI.xCoordinateToPixels(this.x));
+        System.out.println("Y Pixel: " + ChessUI.yCoordinateToPixels(this.y,7));
+        System.out.println("_______________________________________________");
         this.pieceLabel.setIcon(this.pieceImage);
         
         return this.pieceLabel;
