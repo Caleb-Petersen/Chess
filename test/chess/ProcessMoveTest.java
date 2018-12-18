@@ -5,8 +5,6 @@
  */
 package Chess;
 
-import Chess.Move;
-import Chess.ProcessMove;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

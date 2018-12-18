@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Chess;
+package chess;
 
 /**
  *  
@@ -25,8 +25,14 @@ public class Main {
                 FEN initialPosition = new FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
                 pieces = initialPosition.fenToBoardPosition();
                 
-                ChessUI frame = new ChessUI();
+                //set up the JFrame
+                JFrame frame = new JFrame();
+                frame.setSize(1100,900);
+                frame.setResizable(false);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+                ChessUI panel = new ChessUI();
+                frame.add(panel);
                 frame.setVisible(true);
             }
         });

@@ -1,5 +1,6 @@
-package Chess;
+package chess;
 
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -18,16 +19,11 @@ import javax.swing.JPanel;
  *
  * @author Caleb
  */
-public class ChessUI extends JFrame implements MouseListener{
+public class ChessUI extends JPanel implements MouseListener{
     Point initialPosition, finalPosition;
     
     public ChessUI() {
         //Define variables
-        
-        this.setSize(1100,900);
-        this.setResizable(false);
-        this.drawBoard();
-        this.setVisible(true);
         this.addMouseListener(this);
         /*
         for(int i=0; i<Main.pieces.size(); i++) {
@@ -93,6 +89,15 @@ public class ChessUI extends JFrame implements MouseListener{
         }
     }
     @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponents(g);
+        
+        for(int i=0; i<Main.pieces.size(); i++) {
+            g.drawImage(img, Main.pieces.get(i).x, Main.pieces.get(i).y, this);
+        }
+    }
+    
+    @Override
     public void mouseClicked(MouseEvent e) {
         //Not yet used (could eventually be implemented for some purpose)
     }
@@ -114,13 +119,13 @@ public class ChessUI extends JFrame implements MouseListener{
         Piece piece = null;
         //Get the piece that was initially clicked. If no such piece exists, then inform the user of that fact
         for(int i=0; i<Main.pieces.size(); i++) {
-            if(Main.pieces.get(i).x == source.col && Main.pieces.get(i).y == source.row) {
+            if(Main.pieces.get(i).x == source.x && Main.pieces.get(i).y == source.y) {
                 System.out.println("PIECE MATCH FOUND");
                 piece = Main.pieces.get(i);
             }
         }
         if(piece != null) {
-            Move move = new Move (piece, destination.col, destination.row);
+            Move move = new Move (piece, destination);
             
             if(move.isValidMove()) {
                 System.out.println("MOVE IS VALID");

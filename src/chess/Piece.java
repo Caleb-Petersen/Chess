@@ -1,5 +1,5 @@
 
-package Chess;
+package chess;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -31,7 +31,7 @@ public class Piece {
          * Note: The possible destinations array is assumed to be updated
          */
         for(int i=0; i<this.possibleDestinations.size(); i++) {
-            if(this.possibleDestinations.get(i).col == x && this.possibleDestinations.get(i).row == y) {
+            if(this.possibleDestinations.get(i).x == x && this.possibleDestinations.get(i).y == y) {
                 return true;
             }
         }
@@ -104,25 +104,23 @@ public class Piece {
             
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                Move move = new Move(this, x, y);
+                Square square = new Square(x,y);
+                Move move = new Move(this, square);
 
                 switch(this.pieceType) {
                     case "king":
-                        if(Validation.isKing(Main.pieces, move)) { //&& !proccessCheck(this, x, y
-                            Square square = new Square(x,y);              
+                        if(Validation.isKing(Main.pieces, move)) { //&& !proccessCheck(this, x, y            
                             possibleDestinations.add(square);
                         }
                         break;
                     case "queen":
                         if((Validation.isDiagonal(Main.pieces, move) || Validation.isStraight(Main.pieces, move)) ) { //&&!proccessCheck(this, x, y)
-                            Square square = new Square(x,y); 
                             possibleDestinations.add(square);
                         }
                         break;
                     
                     case "rook":
                         if(Validation.isStraight(Main.pieces, move) ) { //&& !proccessCheck(this.x, x, this.y, y, null)
-                            Square square = new Square(x,y); 
                             possibleDestinations.add(square);
                         }
                         break;
@@ -130,21 +128,18 @@ public class Piece {
                         
                     case "bishop":
                         if(Validation.isDiagonal(Main.pieces, move)) { //&&!proccessCheck(this.x, x, this.y, y, null)
-                            Square square = new Square(x,y); 
                             possibleDestinations.add(square);
                         }
                         break;
                     
                     case "knight":
                         if(Validation.isKnight(Main.pieces, move) ) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
-                            Square square = new Square(x,y); 
                             possibleDestinations.add(square);  
                         }
                         break;
                     
                     default:
                         if(Validation.isPawn(Main.pieces, move)) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
-                            Square square = new Square(x,y); 
                             possibleDestinations.add(square);  
                         }
                         break;
@@ -154,7 +149,7 @@ public class Piece {
     }
     
     public boolean pieceOnSquare(Square square) {
-        if(this.y == square.row && this.x == square.col) {
+        if(this.y == square.y && this.x == square.x) {
             return true;
         }
         return false;

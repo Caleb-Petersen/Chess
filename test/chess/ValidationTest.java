@@ -5,14 +5,7 @@
  */
 package Chess;
 
-import Chess.Move;
-import Chess.Piece;
-import Chess.Validation;
 import java.util.ArrayList;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -23,31 +16,20 @@ import static org.junit.Assert.*;
 public class ValidationTest {
     
     public ValidationTest() {
+        
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
     /**
      * Test of isDiagonal method, of class Validation.
      */
     @Test
     public void testIsDiagonal() {
-        System.out.println("isDiagonal");
-        ArrayList<Piece> boardPosition = null;
+        System.out.println("Checking the isDiagonal Function");
+        //Create a pieces array using a preset FEN
+        FEN boardFEN = new FEN("FEN!!");
+        ArrayList<Piece> boardPosition = boardFEN.fenToBoardPosition();
+        //send it a few moves, and assert that the correct boolean is returned
+        
         Move move = null;
         boolean expResult = false;
         boolean result = Validation.isDiagonal(boardPosition, move);

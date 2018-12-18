@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Chess;
+package chess;
 
 import java.util.ArrayList;
 import javax.swing.JLabel;

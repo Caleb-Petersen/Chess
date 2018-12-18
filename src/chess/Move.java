@@ -3,20 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Chess;
+package chess;
 /**
  * 
  * @author Caleb
  */
 public class Move {
     public Piece piece;
-    public int x;
-    public int y;
+    public Square destination;
     
-    public Move(Piece initPiece, int initX, int initY) {
+    public Move(Piece initPiece, Square initSquare) {
         this.piece = initPiece;
-        this.x = initX;
-        this.y = initY;
+        this.destination = initSquare;
     }
     public boolean moveIsEnpassant() {
         /**
@@ -28,7 +26,7 @@ public class Move {
         //Check to see if the piece moved was a pawn
         //check to see if the move is valid
         //Check to see if a diagonal move was made
-        //Check to see if there is no piece on the destination square
+        //Check to see if there is no piece on the destination destination
         //If all of those checks are true, return true, if not, return false
         
         int direction = 1;
@@ -38,12 +36,12 @@ public class Move {
         
         if(this.piece.pieceType.equals("pawn")) {
             //check to see if the destination row is correct for the colour of piece (3rd rank for black pieces, 6th for white)
-            if((this.piece.pieceColour.equals("white") && this.y == 2) || (this.piece.pieceColour.equals("black") && this.y == 5)) {
-                //check to see that the pawn was one column removed from the destination square (e.g the e file to the f file)
-                if(Math.abs(this.piece.x - this.x) == 1) {
-                    //check to see if the piece on the square above the destination square contains a pawn
+            if((this.piece.pieceColour.equals("white") && this.destination.y == 2) || (this.piece.pieceColour.equals("black") && this.destination.y == 5)) {
+                //check to see that the pawn was one column removed from the destination destination (e.g the e file to the f file)
+                if(Math.abs(this.piece.x - this.destination.x) == 1) {
+                    //check to see if the piece on the destination above the destination destination contains a pawn
                     for(int i=0; i< Main.pieces.size(); i++) {
-                        if(Main.pieces.get(i).x == x && Main.pieces.get(i).y == y + direction) {
+                        if(Main.pieces.get(i).x == this.destination.x && Main.pieces.get(i).y == this.destination.y + direction) {
                             
                         }
                     }
@@ -106,7 +104,7 @@ public class Move {
         //If a piece was captured, remove it from the main array, 
         //add it to the deleted pieces array for graphical purpososes
         for(int i=0; i<Main.pieces.size(); i++) {
-            if(Main.pieces.get(i).x == this.x && Main.pieces.get(i).y == y) {
+            if(Main.pieces.get(i).x == this.destination.x && Main.pieces.get(i).y == this.destination.y) {
                 Main.deletedPieces.add(Main.pieces.get(i));
                 Main.pieces.remove(i);
                 System.out.println(Main.deletedPieces.size() == 1);
@@ -115,8 +113,8 @@ public class Move {
         for(int i=0; i< Main.pieces.size(); i++) {
             if(Main.pieces.get(i) == this.piece) {
                 Main.pieces.get(i).hasMoved = true;
-                Main.pieces.get(i).x = this.x;
-                Main.pieces.get(i).y = this.y;
+                Main.pieces.get(i).x = this.destination.x;
+                Main.pieces.get(i).y = this.destination.y;
             }
         }
     }

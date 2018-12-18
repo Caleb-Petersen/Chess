@@ -5,8 +5,6 @@
  */
 package Chess;
 
-import Chess.Piece;
-import Chess.Square;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import org.junit.After;
