@@ -1,9 +1,11 @@
 
-package chess;
-import java.util.ArrayList;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+package Chess;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -21,9 +23,11 @@ public class Piece {
     public int x; //the x-coordinate of the piece: a-h in chess notation
     public boolean hasMoved; //used only for pawns
     public ArrayList<Square> possibleDestinations; //An array of the squares the piece can go to
-    public ImageIcon pieceImage;
-    public JLabel pieceLabel;
+    public BufferedImage pieceImage;
     
+    public Piece() {
+        
+    }
     public boolean moveLegal(int x, int y) {
         /**
          * @param a possible destination for a piece.
@@ -38,13 +42,33 @@ public class Piece {
         return false;
     }
     
-    public ImageIcon getImage() {
+    public BufferedImage getImage() {
         /**
          * @param none
          * @returns ImageIcon
          * Note: This is using a testing graphical method. It will not be used in the
          * final product if that is at all possible.
          */
+        BufferedImage whiteKing = null, whiteQueen = null, whiteRook = null, whiteBishop = null, whiteKnight = null, whitePawn = null;
+        BufferedImage blackKing = null, blackQueen = null, blackRook = null, blackBishop = null, blackKnight = null, blackPawn = null;
+        try {
+            whiteKing = ImageIO.read(getClass().getResource("Images/whiteKing.jpg"));
+            whiteQueen = ImageIO.read(getClass().getResource("Images/whiteQueen.jpg"));
+            whiteRook = ImageIO.read(getClass().getResource("Images/whiteRook.jpg"));
+            whiteBishop = ImageIO.read(getClass().getResource("Images/whiteBishop.jpg"));
+            whiteKnight = ImageIO.read(getClass().getResource("Images/whiteKnight.jpg"));
+            whitePawn = ImageIO.read(getClass().getResource("Images/whitePawn.jpg"));
+            blackKing = ImageIO.read(getClass().getResource("Images/blackKing.jpg"));
+            blackQueen = ImageIO.read(getClass().getResource("Images/blackQueen.jpg"));
+            blackRook = ImageIO.read(getClass().getResource("Images/blackRook.jpg"));
+            blackBishop = ImageIO.read(getClass().getResource("Images/blackBishop.jpg"));
+            blackKnight = ImageIO.read(getClass().getResource("Images/blackKnight.jpg"));
+            blackPawn = ImageIO.read(getClass().getResource("Images/blackPawn.jpg"));
+        } catch (IOException e) {
+            Main.infoBox("Could not read in the image files: " + e.toString(), "IOException");
+        }
+        
+        /* Old implementation with Image Icons
         ImageIcon whiteKing = new ImageIcon(getClass().getResource("Images/whiteKing.jpg"));
         ImageIcon whiteQueen = new ImageIcon(getClass().getResource("Images/whiteQueen.jpg"));
         ImageIcon whiteRook = new ImageIcon(getClass().getResource("Images/whiteRook.jpg"));
@@ -57,7 +81,7 @@ public class Piece {
         ImageIcon blackBishop = new ImageIcon(getClass().getResource("Images/blackBishop.jpg"));
         ImageIcon blackKnight = new ImageIcon(getClass().getResource("Images/blackKnight.jpg"));
         ImageIcon blackPawn = new ImageIcon(getClass().getResource("Images/blackPawn.jpg"));
-        
+        */
         if(this.pieceColour.equals("white")) {
             switch (this.pieceType) {
                 case "king":
@@ -149,12 +173,14 @@ public class Piece {
     }
     
     public boolean pieceOnSquare(Square square) {
+        Square quack = new Square(2,3);
         if(this.y == square.y && this.x == square.x) {
             return true;
         }
         return false;
     }
-    
+    /*
+    NOTE: these functions were used in an older graphics implementation
     public JLabel prepareToDraw() {
         this.pieceLabel.setSize(100,100);
         this.pieceLabel.setLocation(ChessUI.xCoordinateToPixels(this.x), ChessUI.yCoordinateToPixels(y, 7));
@@ -172,4 +198,5 @@ public class Piece {
         
         return this.pieceLabel;
     }
+    */
 }

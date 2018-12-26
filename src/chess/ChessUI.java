@@ -1,12 +1,9 @@
-package chess;
+package Chess;
 
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /*
@@ -25,6 +22,7 @@ public class ChessUI extends JPanel implements MouseListener{
     public ChessUI() {
         //Define variables
         this.addMouseListener(this);
+        repaint();
         /*
         for(int i=0; i<Main.pieces.size(); i++) {
             JLabel pieceHolder = new JLabel();
@@ -42,7 +40,7 @@ public class ChessUI extends JPanel implements MouseListener{
             this.add(new ContentPanel(Main.pieces.get(i).pieceImage, Main.pieces.get(i).x, Main.pieces.get(i).y));
         }*/
     }   
-    public static int xCoordinateToPixels(int coordinate) {
+    public static int xCoordinateToPixel(int coordinate) {
         return coordinate*100;
     }
     
@@ -55,7 +53,7 @@ public class ChessUI extends JPanel implements MouseListener{
         return (int) Math.floor(pixel/100.0);
     }
     
-    public static int yCoordinateToPixels(int coordinate, int constant) {
+    public static int yCoordinateToPixel(int coordinate, int constant) {
         /**
          * @param coordinate (the value (between 0 and 7) for each row
          * @param constant (either 7 (when playing white) or 0 (when playing black))
@@ -73,28 +71,30 @@ public class ChessUI extends JPanel implements MouseListener{
         return (int) Math.abs(constant - Math.floor((pixel-40)/100.0));
     }
     
-    public void drawBoard() {
-        /**
-         * Redraws the images on the board
-         * NOTE: This is for development only. Actual graphical display will not
-         * use this, and will added once the rest of the program is in working order
-         */
-        
-        for(int i=0; i<Main.deletedPieces.size(); i++) {
-            this.add(Main.deletedPieces.get(i).drawBlank());
-        }
-        for(int i=0; i<Main.pieces.size(); i++) {
-           /// System.out.println(Main.pieces.get(i).prepareToDraw().);
-            this.add(Main.pieces.get(i).prepareToDraw());
-        }
-    }
+    //NOTE: This was used in an older version of the graphics and will be deleted once the other method is fully implemented
+//    public void drawBoard() {
+//        /**
+//         * Redraws the images on the board
+//         * NOTE: This is for development only. Actual graphical display will not
+//         * use this, and will added once the rest of the program is in working order
+//         */
+//        
+//        for(int i=0; i<Main.deletedPieces.size(); i++) {
+//            this.add(Main.deletedPieces.get(i).drawBlank());
+//        }
+//        for(int i=0; i<Main.pieces.size(); i++) {
+//           /// System.out.println(Main.pieces.get(i).prepareToDraw().);
+//            this.add(Main.pieces.get(i).prepareToDraw());
+//        }
+//    }
+
     @Override
     public void paintComponent(Graphics g) {
-        super.paintComponents(g);
         
         for(int i=0; i<Main.pieces.size(); i++) {
-            g.drawImage(img, Main.pieces.get(i).x, Main.pieces.get(i).y, this);
+            g.drawImage(Main.pieces.get(i).pieceImage, xCoordinateToPixel(Main.pieces.get(i).x), yCoordinateToPixel(Main.pieces.get(i).y, 7), this);
         }
+        super.paintComponent(g);
     }
     
     @Override
@@ -114,7 +114,7 @@ public class ChessUI extends JPanel implements MouseListener{
         //The source square is the location (in coordinates: (0-7, 0-7)) of the piece that was initially clicked
         Square source = new Square ((xPixelToCoordinate((int) initialPosition.getX())),(yPixelToCoordinate((int) initialPosition.getY(),7)));
         //the destination square is the end location (in coordinates: (0-7, 0-7)) of the piece that was moved
-        Square destination = new Square ((xPixelToCoordinate((int) finalPosition.getX())),(yPixelToCoordinate((int) finalPosition.getY(),7)));;
+        Square destination = new Square ((xPixelToCoordinate((int) finalPosition.getX())),(yPixelToCoordinate((int) finalPosition.getY(),7)));
         
         Piece piece = null;
         //Get the piece that was initially clicked. If no such piece exists, then inform the user of that fact
@@ -125,13 +125,13 @@ public class ChessUI extends JPanel implements MouseListener{
             }
         }
         if(piece != null) {
-            Move move = new Move (piece, destination);
+            Move move = new Move(piece, destination);
             
             if(move.isValidMove()) {
                 System.out.println("MOVE IS VALID");
                 move.executeMove();
                 
-                this.drawBoard();
+                repaint();
             }else {
                 Main.infoBox("Invalid Move!", "Error");
             }
@@ -149,13 +149,24 @@ public class ChessUI extends JPanel implements MouseListener{
     public void mouseExited(MouseEvent e) {
         //not used yet (could eventually be implemented for some purpose)
     }
-    
 }
 
 /**
  * Old attempt to have moving graphics: Will revisit later when developing the 
  * full graphical display.
  */
+//@Override
+//protected void paintComponent(Graphics g)
+//{
+//        super.paintComponent(g);
+//
+//        for(int i=0; i<Main.pieces.size(); i++) {
+//           g.drawImage(img, Main.pieces.get(i).x, Main.pieces.get(i).y, this);
+//
+//        }
+//}
+//h
+//
 //class ContentPanel extends JPanel{ 
 //    BufferedImage image;
 //    int xPixel,yPixel;

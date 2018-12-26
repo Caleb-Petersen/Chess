@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chess;
+package Chess;
 
 /**
  *  
@@ -19,25 +19,35 @@ public class Main {
     public static ArrayList<Piece> deletedPieces = new ArrayList<Piece>();
     
     public static void main(String[] args){
+        Square piece = new Square(3,4);
+        
         EventQueue.invokeLater(new Runnable() {
             public void run(){
-                //The initial position in an FEN string
-                FEN initialPosition = new FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
-                pieces = initialPosition.fenToBoardPosition();
-                
-                //set up the JFrame
-                JFrame frame = new JFrame();
-                frame.setSize(1100,900);
-                frame.setResizable(false);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                
-                ChessUI panel = new ChessUI();
-                frame.add(panel);
-                frame.setVisible(true);
+                displayChessBoard();
             }
         });
     }
+    private static void displayChessBoard(){
+        //The initial position in an FEN string
+        FEN initialPosition = new FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+        pieces = initialPosition.fenToBoardPosition();
+
+        ChessUI chessUI = new ChessUI();
+        //ButtonPanel buttonPanel = new ButtonPanel(chessUI);
+        
+        //set up the JFrame
+        JFrame frame = new JFrame("Chess Game");
+        frame.setSize(1100,900);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       
+        frame.getContentPane().add(chessUI);
+        //frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        
+        frame.setLocationRelativeTo( null );
+        frame.setVisible(true);
     
+    }
     public static void infoBox(String infoMessage, String titleBar) {
         /**
          * @param infoMessage message to be displayed to the user
@@ -46,6 +56,3 @@ public class Main {
         JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
     }
 }
-
-
-

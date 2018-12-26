@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chess;
+package Chess;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class Square {
         x = initX;
     }
     
-    boolean pieceOnSquare(ArrayList<Piece> boardPosition) {
+    public boolean pieceOnSquare(ArrayList<Piece> boardPosition) {
         /**
          * @param boardPostion an array of pieces showing the current state of the position
          * @returns boolean indicating whether or not the piece is on a square
