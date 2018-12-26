@@ -32,4 +32,29 @@ public class Square {
         }
         return false;
     }
+    public boolean squareControlled(ArrayList<Piece> boardPosition, String playerColour) {
+        /**
+         * @param boardPosition contains the current state of the board
+         * @param playerColour is the string containing the colour of the player's pieces
+         * @returns boolean indicating whether or not the opposing team controls a given square
+         */
+        
+        Piece piece = null;
+        for(int i=0; i<boardPosition.size(); i++) {
+            piece = boardPosition.get(i);
+            //the piece must be of opposite colour
+            if(piece.pieceColour.equals(playerColour) == false) {
+                //check all of the destinations that the pieces have to see if they match the square 
+                for(int j=0; j<piece.possibleDestinations.size(); j++) {
+                    if(piece.possibleDestinations.get(j).x == this.x && piece.possibleDestinations.get(j).y == this.y) {
+                        return true;
+                    }
+                }
+            }
+
+        }
+            
+        
+        return false;
+    }
 }

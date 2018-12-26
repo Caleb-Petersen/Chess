@@ -155,8 +155,29 @@ public class Piece {
         }
     }
     
+    public boolean isInCheck(ArrayList<Piece> boardPosition) {
+        if(this.pieceType.equals("king")) {
+            Piece piece = null;
+            for(int i=0; i<boardPosition.size(); i++) {
+                piece = boardPosition.get(i);
+                
+                //the piece must be of opposite colour
+                if(piece.pieceColour.equals(this.pieceColour) == false) {
+                    //check all of the destinations that the pieces have to see if they match the square the king is on
+                    for(int j=0; j<piece.possibleDestinations.size(); j++) {
+                        if(piece.possibleDestinations.get(j).x == this.x && piece.possibleDestinations.get(j).y == this.y) {
+                            return true;
+                        }
+                    }
+                }
+                
+            }
+            
+        }
+        return false;
+    }
+    
     public boolean pieceOnSquare(Square square) {
-        Square quack = new Square(2,3);
         if(this.y == square.y && this.x == square.x) {
             return true;
         }

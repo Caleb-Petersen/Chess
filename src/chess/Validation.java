@@ -38,10 +38,12 @@ public class Validation {
                 int yLocation = move.piece.y;
                 
                 //The slope variable indicates whether or not the y value increases or decreases as the x value increases
+                //It is either -1, or +1, and is used to adjust the y value as the squares are checked
                 int slope = (move.destination.y - move.piece.y) / (move.destination.x - move.piece.x);
 
                 //Loop through all of the squares on the diagonal and check if a piece is on those squares
                 for (int i = minX + 1; i < maxX; i++) {
+                   
                     yLocation = yLocation + slope;
                     
                     for(int j=0; j<boardPosition.size(); j++) {
@@ -52,24 +54,22 @@ public class Validation {
                     }
                 }
                 //The piece colours must be different, or the destination must be empty
-                for(int i=0; i<boardPosition.size(); i++) {
-                    Square square = new Square(move.destination.x,move.destination.y);
-               
-                    if(boardPosition.get(i).pieceOnSquare(square)) {
-                        if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
-                            return false;
-                        }
-                    }
-                } 
-                return true;
+                return isValidDestination(boardPosition, move);
             }
         }
         return false;
     }
 
     public static boolean isStraight(ArrayList<Piece> boardPosition, Move move) {
-        //This function checks to see if the move is straight, and if the path is clear
-        
+        /**
+         * @param boardPosition contains the current state of the board
+         * @param move is the move in the current board position that is be assessed for validity
+         * @returns boolean indicating whether or not the move is valid
+         * The Algorithm
+         *      1. Does the piece travel horizontally or vertically?
+         *      2. Are there any pieces in the way of the path of that piece?
+         *      3. Is the destination square occupied by a piece of the same colour?
+         */     
         
         if (move.destination.y == move.piece.y) {
             //a horizontal move was atempted
@@ -104,121 +104,121 @@ public class Validation {
             return false;
         }
         //Checking to see that the piece on the destination destination doesn't have a piece of the same colour on it
-        for(int i=0; i<boardPosition.size(); i++) {
-            Square square = new Square(move.destination.x, move.destination.y);
-            
-            if(boardPosition.get(i).pieceOnSquare(square)) {
-                if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
-                    return false;
-                }
-            }
-        }   
-        return true;
+        return isValidDestination(boardPosition, move);
     }
 
     public static boolean isKnight(ArrayList<Piece> boardPosition, Move move) {
-        // this function will check to see if a knight can move to a given destination
+        /**
+         * @param boardPosition contains the current state of the board
+         * @param move is the move in the current board position that is be assessed for validity
+         * @returns boolean indicating whether or not the move is valid
+         */  
         boolean validLocation = false;
 
-        /*Check to see if the knight moved up/down one y, and over two columns. The
-        absolute values allow it to occur in any direction (as a knight should be
-        able to move).
-        */
+        //Check to see if the knight moved up/down one y, and over two columns. The
+        //absolute values allow it to occur in any direction 
         if ((Math.abs(move.destination.y - move.piece.y) == 1) && (Math.abs(move.destination.x - move.piece.x) == 2)) {
             validLocation = true;
-        /*Check to see if the knight moved up/down two rows, and over one column. 
-        The absolute values allow it to occur in any direction. 
-        */
+            
+        //Check to see if the knight moved up/down two rows, and over one column. 
+        //The absolute values allow it to occur in any direction. 
         } else if ((Math.abs(move.destination.y - move.piece.y) == 2) && (Math.abs(move.destination.x - move.piece.x) == 1)) {
             validLocation = true;
         }
         if(validLocation) {
             //Check to make sure that the destination destination doesn't have a piece of the same colour on it
-            for(int i=0; i<boardPosition.size(); i++) {
-                Square square = new Square(move.destination.x, move.destination.y);
-                
-                if(boardPosition.get(i).pieceOnSquare(square)) {
-                    if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
-                        return false;
-                    }
-                }
-            }
-            return true;
+            return isValidDestination(boardPosition, move);
         }
         return false;
     }
     
     public static boolean isKing(ArrayList<Piece> boardPosition, Move move) {
-        //This function checks to see if the king can move to any destination
-        boolean validLocation = false;
-        String kingColour;
+        /**
+         * @param boardPosition contains the current state of the board
+         * @param move is the move in the current board position that is be assessed for validity
+         * @returns boolean indicating whether or not the move is valid
+         * The Algorithm
+         *      1. Does the piece travel to a location one away, and is that location free?
+         *      2. Was castling attempted? If so, castling is split up into kingside and queenside cases
+         *      3. Is the destination square occupied by a piece of the same colour?
+         */   
         
-        /*The king can move one destination in any direction if the destination is empty or
-        occupied by an opponent's piece
-        */
         if (((Math.abs(move.destination.y - move.piece.y) == 0 && (Math.abs(move.destination.x - move.piece.x)) == 1)
                 || (Math.abs(move.destination.y - move.piece.y) == 1 && (Math.abs(move.destination.x - move.piece.x)) == 0)
                 || (Math.abs(move.destination.y - move.piece.y) == 1 && (Math.abs(move.destination.x - move.piece.x)) == 1))) {
-            for(int i=0; i<boardPosition.size(); i++) {
-                Square square = new Square(move.destination.x, move.destination.y);
-                
-                if(boardPosition.get(i).pieceOnSquare(square)) {
-                    if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
-                        return false;
-                    }
-                }
-            }
-            validLocation = true;
-        //this allows for castling to occur
-        } else if (Math.abs(move.destination.x - move.piece.x) == 2 && move.destination.y - move.piece.x == 0) {
-            //the attempt was to castle queenside
+            
+            return isValidDestination(boardPosition, move);
+        } else if (Math.abs(move.destination.x - move.piece.x) == 2 && move.destination.y - move.piece.y == 0) {
+            
             if ((move.destination.x - move.piece.x) == -2) {
-                //In order for castling to be legal neither the king or rook can have moved
-                /*
-                if (A[y1][x1 - 4].pieceType.equals("rook")
-                        && A[y1][x1 - 4].hasMoved == false
-                        && A[y1][x1].hasMoved == false
-                        //check the squares between the king and rook. They must be empty
-                        && A[y1][x1 - 1].pieceType.equals("null")
-                        && A[y1][x1 - 2].pieceType.equals("null")
-                        && A[y1][x1 - 3].pieceType.equals("null")) {
-                    kingColour = A[y1][x1].pieceColour;
-                    /*Check to see if the king is attacked, or if the destination beside
-                    the king is controlled by an opponent's piece. If either is true, 
-                    the king cannot castle.
-                    */
-                /*
-                    if (!isCheck(x1, y1, kingColour, A) &&
-                        !isCheck(x1-1, y1, kingColour, A)) {
-                        //move the rook, the king will be moved in the usual way
-                        resetArray(A, x1 - 4, x1 - 1, y1, y2);
-                        A[y1][x1 - 1].hasMoved = true;
-                        isKing = true;
+                //NOTE:: Queenside castling was attempted
+                
+                //Find the rook that matches the king
+                Piece rook = null;
+                for(int i=0; i<boardPosition.size(); i++) {
+                    //For queenside castling, the x position of the rook will be zero, and the y will match that of the king
+                    if(boardPosition.get(i).x == 0 && boardPosition.get(i).y == move.piece.y) {
+                        rook = boardPosition.get(i);
+                    }
+                } 
+                
+                if(move.piece.hasMoved == false && rook.hasMoved == false) {
+                    //check the path between the rook and the king for checks and pieces
+                    //get all of the squares between the king and the rook and check that
+                    //      1. The square isn't controlled by an opponent's piece
+                    //      2. The square isn't occupied
+                    
+                    if(move.piece.isInCheck(boardPosition) == false) {
+                        //NOTE:: could convert this to an array to avoid having the three variables
+                        Square oneLeft = new Square(move.piece.x - 1, move.piece.y);
+                        Square twoLeft = new Square(move.piece.x - 2, move.piece.y);
+                        Square threeLeft = new Square(move.piece.x - 3, move.piece.y);
+
+                        if(oneLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
+                                oneLeft.pieceOnSquare(boardPosition) == false &&
+                                twoLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
+                                twoLeft.pieceOnSquare(boardPosition) == false &&
+                                threeLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
+                                threeLeft.pieceOnSquare(boardPosition) == false) {
+
+                            return true;
+                        }
                     }
                 }
-            /* the attempt was to castle kingside. All the same elements need to be 
-            checked, only there is one less destination involved when castling kingside
-            */
             } else if ((move.destination.x - move.piece.x) == 2) {
-                /*
-                if (A[y1][x1 + 3].pieceType.equals("rook")
-                        && A[y1][x1 + 3].hasMoved == false
-                        && A[y1][x1].hasMoved == false
-                        && A[y1][x1 + 1].pieceType.equals("null")
-                        && A[y1][x1 + 2].pieceType.equals("null")) {
-                    kingColour = A[y1][x1].pieceColour;
-                    
-                    if (!isCheck(x1, y1, kingColour, A) &&
-                        !isCheck(x1+1, y1, kingColour, A)) {
-
-                        resetArray(A, x1 + 3, x1 + 1, y1, y1);
-                        A[y1][x2 + 1].hasMoved = true;
-                        isKing = true;
+                //NOTE:: castling kingside was attempted
+                
+                //Find the rook that matches the king
+                Piece rook = null;
+                for(int i=0; i<boardPosition.size(); i++) {
+                    //For queenside castling, the x position of the rook will be 7, and the y will match that of the king
+                    if(boardPosition.get(i).x == 7 && boardPosition.get(i).y == move.piece.y) {
+                        rook = boardPosition.get(i);
                     }
-                }*/
+                } 
+                
+                if(move.piece.hasMoved == false && rook.hasMoved == false) {
+                    //check the path between the rook and the king for checks and pieces
+                    //get all of the squares between the king and the rook and check that
+                    //      1. The square isn't controlled by an opponent's piece
+                    //      2. The square isn't occupied
+                    
+                    if(move.piece.isInCheck(boardPosition) == false) {
+                        Square oneLeft = new Square(move.piece.x + 1, move.piece.y);
+                        Square twoLeft = new Square(move.piece.x + 2, move.piece.y);
+
+                        if(oneLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
+                                oneLeft.pieceOnSquare(boardPosition) == false &&
+                                twoLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
+                                twoLeft.pieceOnSquare(boardPosition) == false) {
+
+                            return true;
+                        }
+                    }
+                }
             }
         }
-        return validLocation; //castling currently commented out
+        return false;
     }
     
     public static boolean isPawn(ArrayList<Piece> boardPosition, Move move) {
@@ -279,5 +279,24 @@ public class Validation {
         }
         return false;
     
+    }
+    
+    public static boolean isValidDestination(ArrayList<Piece> boardPosition, Move move) {
+        /**
+         * @param boardPosition contains the current state of the board
+         * @param move is the move in the current board position that is be assessed for validity
+         * @returns boolean indicating whether or not the destination square contains a piece of the same colour as the one being moved
+         */  
+      
+        for(int i=0; i<boardPosition.size(); i++) {
+            Square square = new Square(move.destination.x, move.destination.y);
+            
+            if(boardPosition.get(i).pieceOnSquare(square)) {
+                if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
+                    return false;
+                }
+            }
+        } 
+        return true;
     }
 }
