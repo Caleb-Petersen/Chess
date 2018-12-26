@@ -13,36 +13,39 @@ import java.util.ArrayList;
  */
 public class Validation {
      public static boolean isDiagonal(ArrayList<Piece> boardPosition, Move move) {
-        //This function checks to see if the move is diagonal, and if the path is clear
-        int loopTracker = 0;
+        /**
+         * @param boardPosition contains the current state of the board
+         * @param move is the move in the current board position that is be assessed for validity
+         * @returns boolean indicating whether or not the move is valid
+         * The Algorithm
+         *      1. Does the piece travel diagonally?
+         *      2. Are there any pieces in the way of the path of that piece?
+         *      3. Is the destination square occupied by a piece of the same colour?
+         */
+        
 
-        //perform slope calculation to see if the moves are diagonal. 
+        //If a move is diagonal, it will follow a linear path with a slope of 1
         if ((Math.abs(move.destination.y - move.piece.y)) == (Math.abs(move.destination.x - move.piece.x))) {
-            //return the max and min values x and x2
-            int maxX = java.lang.Math.max(move.piece.x, move.destination.x);
-            int minX = java.lang.Math.min(move.piece.x, move.destination.x);
-            
-            /*this is the default definition for yStart and yEnd. Later, if a different
-            senario is true, the other option for the values of yStart and yEnd will 
-            bee set to be true. These are the y values if minX==x1.
-            */
-            int yStart = move.piece.y;
-            int yEnd = move.destination.y;
-            //The piece travels in a diagonal; This checks to see if the path is clear
+           
+            //The piece cannot move to the square that it itself occupies
             if ((move.destination.x - move.piece.x) != 0) {
-                int slope = (move.destination.y - move.piece.y) / (move.destination.x - move.piece.x);
-                if (minX == move.destination.x) {
-                    yStart = move.destination.y;
-                    yEnd = move.piece.y;
-                }
+                
+                //It is known that the piece travels diagonally, however there also need to be no other pieces in its way
+                //This loops through all of the squares in between the piece, and it's destination square
 
-                //Loop through all of the squares on the diagonal and check 
+                int maxX = java.lang.Math.max(move.piece.x, move.destination.x);
+                int minX = java.lang.Math.min(move.piece.x, move.destination.x);
+                int yLocation = move.piece.y;
+                
+                //The slope variable indicates whether or not the y value increases or decreases as the x value increases
+                int slope = (move.destination.y - move.piece.y) / (move.destination.x - move.piece.x);
+
+                //Loop through all of the squares on the diagonal and check if a piece is on those squares
                 for (int i = minX + 1; i < maxX; i++) {
-                    loopTracker = loopTracker + 1;
-                    yStart = yStart + slope;
+                    yLocation = yLocation + slope;
                     
                     for(int j=0; j<boardPosition.size(); j++) {
-                        Square square = new Square(i, yStart);
+                        Square square = new Square(i, yLocation);
                         if(boardPosition.get(j).pieceOnSquare(square)) {
                             return false;
                         }
@@ -57,10 +60,11 @@ public class Validation {
                             return false;
                         }
                     }
-                }    
+                } 
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public static boolean isStraight(ArrayList<Piece> boardPosition, Move move) {
