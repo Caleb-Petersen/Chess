@@ -33,7 +33,6 @@ public class Main {
         pieces = initialPosition.fenToBoardPosition();
 
         ChessUI chessUI = new ChessUI();
-        //ButtonPanel buttonPanel = new ButtonPanel(chessUI);
         
         //set up the JFrame
         JFrame frame = new JFrame("Chess Game");
@@ -42,7 +41,6 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        
         frame.getContentPane().add(chessUI);
-        //frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
         
         frame.setLocationRelativeTo( null );
         frame.setVisible(true);

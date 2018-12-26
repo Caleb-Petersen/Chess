@@ -23,22 +23,6 @@ public class ChessUI extends JPanel implements MouseListener{
         //Define variables
         this.addMouseListener(this);
         repaint();
-        /*
-        for(int i=0; i<Main.pieces.size(); i++) {
-            JLabel pieceHolder = new JLabel();
-            pieceHolder.setSize(100, 100);
-            pieceHolder.setLocation(xCoordinateToPixels(Main.pieces.get(i).x), yCoordinateToPixels(Main.pieces.get(i).y, 7));
-            pieceHolder.setIcon(Main.pieces.get(i).pieceImage);
-            if(Main.pieces.get(i).pieceType.equals("rook")) {
-                System.out.println("Row: " + xCoordinateToPixels(Main.pieces.get(i).x) + " Column: " + yCoordinateToPixels(Main.pieces.get(i).y, 7));
-            }
-            this.add(pieceHolder);
-        }*/
-        //ContentPanel contentPanel = new ContentPanel(image,5,5);
-        /*
-        for(int i=0; i<Main.pieces.size(); i++) {
-            this.add(new ContentPanel(Main.pieces.get(i).pieceImage, Main.pieces.get(i).x, Main.pieces.get(i).y));
-        }*/
     }   
     public static int xCoordinateToPixel(int coordinate) {
         return coordinate*100;
@@ -70,31 +54,14 @@ public class ChessUI extends JPanel implements MouseListener{
          */
         return (int) Math.abs(constant - Math.floor((pixel-40)/100.0));
     }
-    
-    //NOTE: This was used in an older version of the graphics and will be deleted once the other method is fully implemented
-//    public void drawBoard() {
-//        /**
-//         * Redraws the images on the board
-//         * NOTE: This is for development only. Actual graphical display will not
-//         * use this, and will added once the rest of the program is in working order
-//         */
-//        
-//        for(int i=0; i<Main.deletedPieces.size(); i++) {
-//            this.add(Main.deletedPieces.get(i).drawBlank());
-//        }
-//        for(int i=0; i<Main.pieces.size(); i++) {
-//           /// System.out.println(Main.pieces.get(i).prepareToDraw().);
-//            this.add(Main.pieces.get(i).prepareToDraw());
-//        }
-//    }
 
-    @Override
+
     public void paintComponent(Graphics g) {
-        
+        super.paintComponent(g);
         for(int i=0; i<Main.pieces.size(); i++) {
             g.drawImage(Main.pieces.get(i).pieceImage, xCoordinateToPixel(Main.pieces.get(i).x), yCoordinateToPixel(Main.pieces.get(i).y, 7), this);
         }
-        super.paintComponent(g);
+        
     }
     
     @Override
