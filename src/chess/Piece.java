@@ -18,14 +18,18 @@ import javax.imageio.ImageIO;
 public class Piece {
     public String pieceType; //always lowercase used
     public String pieceColour; 
-    public int y; //the y-coordinate of the piece: 1-8 in chess notation
-    public int x; //the x-coordinate of the piece: a-h in chess notation
-    public boolean hasMoved; //used only for pawns
+    public Square location; //The square the piece is on
+    public boolean hasMoved; //for pawns and castling
     public ArrayList<Square> possibleDestinations; //An array of the squares the piece can go to
     public BufferedImage pieceImage;
     
-    public Piece() {
-        
+    public Piece(String initPieceType, String initPieceColour, int x, int y) {
+        this.pieceType = initPieceType;
+        this.pieceColour = initPieceColour;
+        this.location = new Square(x,y);
+        this.hasMoved = false;
+        this.possibleDestinations = null;
+        this.pieceImage = this.getImage();
     }
     public boolean moveLegal(int x, int y) {
         /**
@@ -96,9 +100,8 @@ public class Piece {
                     return blackPawn;
             }
         }
-        
-        
     }
+    
     public void updatePossibleDestinations() {
         /*
         *Function purpose: to update the array of locations that the piece can move to
@@ -155,7 +158,33 @@ public class Piece {
         }
     }
     
-    public boolean isInCheck(ArrayList<Piece> boardPosition) {
+    public boolean controlsSquare(ArrayList<Piece> boardPosition, Square square) {
+        
+        Move move = new Move(this, square);
+        
+        switch(this.pieceType) {
+            case "king":
+                return Validation.isKing(boardPosition, move);
+                
+            case "queen":
+                return (Validation.isDiagonal(boardPosition, move) || Validation.isStraight(boardPosition, move)); 
+
+            case "rook":
+                return Validation.isStraight(boardPosition, move);
+
+            case "bishop":
+                return Validation.isDiagonal(boardPosition, move);
+
+            case "knight":
+                return Validation.isKnight(boardPosition, move);
+
+            default:
+                return Validation.isPawn(boardPosition, move);
+    
+        }
+    }
+    
+    public boolean isInCheck(ArrayList<Piece> boardPosition, Square kingLocation) {
         if(this.pieceType.equals("king")) {
             Piece piece = null;
             for(int i=0; i<boardPosition.size(); i++) {
@@ -163,22 +192,17 @@ public class Piece {
                 
                 //the piece must be of opposite colour
                 if(piece.pieceColour.equals(this.pieceColour) == false) {
-                    //check all of the destinations that the pieces have to see if they match the square the king is on
-                    for(int j=0; j<piece.possibleDestinations.size(); j++) {
-                        if(piece.possibleDestinations.get(j).x == this.x && piece.possibleDestinations.get(j).y == this.y) {
-                            return true;
-                        }
+                    if(piece.controlsSquare(boardPosition, kingLocation)) {
+                        return true;
                     }
                 }
-                
             }
-            
         }
         return false;
     }
     
     public boolean pieceOnSquare(Square square) {
-        if(this.y == square.y && this.x == square.x) {
+        if(this.location.y == square.y && this.location.x == square.x) {
             return true;
         }
         return false;

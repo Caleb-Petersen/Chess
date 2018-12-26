@@ -25,21 +25,21 @@ public class Validation {
         
 
         //If a move is diagonal, it will follow a linear path with a slope of 1
-        if ((Math.abs(move.destination.y - move.piece.y)) == (Math.abs(move.destination.x - move.piece.x))) {
+        if ((Math.abs(move.destination.y - move.piece.location.y)) == (Math.abs(move.destination.x - move.piece.location.x))) {
            
             //The piece cannot move to the square that it itself occupies
-            if ((move.destination.x - move.piece.x) != 0) {
+            if ((move.destination.x - move.piece.location.x) != 0) {
                 
                 //It is known that the piece travels diagonally, however there also need to be no other pieces in its way
                 //This loops through all of the squares in between the piece, and it's destination square
 
-                int maxX = java.lang.Math.max(move.piece.x, move.destination.x);
-                int minX = java.lang.Math.min(move.piece.x, move.destination.x);
-                int yLocation = move.piece.y;
+                int maxX = java.lang.Math.max(move.piece.location.x, move.destination.x);
+                int minX = java.lang.Math.min(move.piece.location.x, move.destination.x);
+                int yLocation = move.piece.location.y;
                 
                 //The slope variable indicates whether or not the y value increases or decreases as the x value increases
                 //It is either -1, or +1, and is used to adjust the y value as the squares are checked
-                int slope = (move.destination.y - move.piece.y) / (move.destination.x - move.piece.x);
+                int slope = (move.destination.y - move.piece.location.y) / (move.destination.x - move.piece.location.x);
 
                 //Loop through all of the squares on the diagonal and check if a piece is on those squares
                 for (int i = minX + 1; i < maxX; i++) {
@@ -71,28 +71,28 @@ public class Validation {
          *      3. Is the destination square occupied by a piece of the same colour?
          */     
         
-        if (move.destination.y == move.piece.y) {
+        if (move.destination.y == move.piece.location.y) {
             //a horizontal move was atempted
-            int maxX = java.lang.Math.max(move.piece.y, move.destination.x);
-            int minX = java.lang.Math.min(move.piece.y, move.destination.x);
+            int maxX = java.lang.Math.max(move.piece.location.y, move.destination.x);
+            int minX = java.lang.Math.min(move.piece.location.y, move.destination.x);
             //Check to ensure that all of the squares between minX and maxX are empty
             for (int i = (minX + 1); i < maxX; i++) {
                 for(int j=0; j<boardPosition.size(); j++) {
-                    Square square = new Square(i, move.piece.y);
+                    Square square = new Square(i, move.piece.location.y);
                     
                     if(boardPosition.get(j).pieceOnSquare(square)) {
                         return false;
                     }
                 }
             }
-        } else if (move.destination.x == move.piece.x) {
+        } else if (move.destination.x == move.piece.location.x) {
             //a vertical move was attempted
-            int maxY = java.lang.Math.max(move.piece.y, move.destination.y);
-            int minY = java.lang.Math.min(move.piece.y, move.destination.y);
+            int maxY = java.lang.Math.max(move.piece.location.y, move.destination.y);
+            int minY = java.lang.Math.min(move.piece.location.y, move.destination.y);
             //Check to ensure that all of the squares between minY and maxY are empty
             for (int i = (minY + 1); i < maxY; i++) {
                 for(int j=0; j<boardPosition.size(); j++) {
-                    Square square = new Square(move.piece.y, i );
+                    Square square = new Square(move.piece.location.y, i );
                     
                     if(boardPosition.get(j).pieceOnSquare(square)) {
                         return false;
@@ -117,12 +117,12 @@ public class Validation {
 
         //Check to see if the knight moved up/down one y, and over two columns. The
         //absolute values allow it to occur in any direction 
-        if ((Math.abs(move.destination.y - move.piece.y) == 1) && (Math.abs(move.destination.x - move.piece.x) == 2)) {
+        if ((Math.abs(move.destination.y - move.piece.location.y) == 1) && (Math.abs(move.destination.x - move.piece.location.x) == 2)) {
             validLocation = true;
             
         //Check to see if the knight moved up/down two rows, and over one column. 
         //The absolute values allow it to occur in any direction. 
-        } else if ((Math.abs(move.destination.y - move.piece.y) == 2) && (Math.abs(move.destination.x - move.piece.x) == 1)) {
+        } else if ((Math.abs(move.destination.y - move.piece.location.y) == 2) && (Math.abs(move.destination.x - move.piece.location.x) == 1)) {
             validLocation = true;
         }
         if(validLocation) {
@@ -143,21 +143,21 @@ public class Validation {
          *      3. Is the destination square occupied by a piece of the same colour?
          */   
         
-        if (((Math.abs(move.destination.y - move.piece.y) == 0 && (Math.abs(move.destination.x - move.piece.x)) == 1)
-                || (Math.abs(move.destination.y - move.piece.y) == 1 && (Math.abs(move.destination.x - move.piece.x)) == 0)
-                || (Math.abs(move.destination.y - move.piece.y) == 1 && (Math.abs(move.destination.x - move.piece.x)) == 1))) {
+        if (((Math.abs(move.destination.y - move.piece.location.y) == 0 && (Math.abs(move.destination.x - move.piece.location.x)) == 1)
+                || (Math.abs(move.destination.y - move.piece.location.y) == 1 && (Math.abs(move.destination.x - move.piece.location.x)) == 0)
+                || (Math.abs(move.destination.y - move.piece.location.y) == 1 && (Math.abs(move.destination.x - move.piece.location.x)) == 1))) {
             
             return isValidDestination(boardPosition, move);
-        } else if (Math.abs(move.destination.x - move.piece.x) == 2 && move.destination.y - move.piece.y == 0) {
+        } else if (Math.abs(move.destination.x - move.piece.location.x) == 2 && move.destination.y - move.piece.location.y == 0) {
             
-            if ((move.destination.x - move.piece.x) == -2) {
+            if ((move.destination.x - move.piece.location.x) == -2) {
                 //NOTE:: Queenside castling was attempted
                 
                 //Find the rook that matches the king
                 Piece rook = null;
                 for(int i=0; i<boardPosition.size(); i++) {
                     //For queenside castling, the x position of the rook will be zero, and the y will match that of the king
-                    if(boardPosition.get(i).x == 0 && boardPosition.get(i).y == move.piece.y) {
+                    if(boardPosition.get(i).location.x == 0 && boardPosition.get(i).location.y == move.piece.location.y) {
                         rook = boardPosition.get(i);
                     }
                 } 
@@ -168,31 +168,30 @@ public class Validation {
                     //      1. The square isn't controlled by an opponent's piece
                     //      2. The square isn't occupied
                     
-                    if(move.piece.isInCheck(boardPosition) == false) {
+                    if(move.piece.isInCheck(boardPosition,move.piece.location) == false) {
                         //NOTE:: could convert this to an array to avoid having the three variables
-                        Square oneLeft = new Square(move.piece.x - 1, move.piece.y);
-                        Square twoLeft = new Square(move.piece.x - 2, move.piece.y);
-                        Square threeLeft = new Square(move.piece.x - 3, move.piece.y);
+                        Square oneLeft = new Square(move.piece.location.x - 1, move.piece.location.y);
+                        Square twoLeft = new Square(move.piece.location.x - 2, move.piece.location.y);
+                        Square threeLeft = new Square(move.piece.location.x - 3, move.piece.location.y);
 
                         if(oneLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
                                 oneLeft.pieceOnSquare(boardPosition) == false &&
                                 twoLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
                                 twoLeft.pieceOnSquare(boardPosition) == false &&
-                                threeLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
                                 threeLeft.pieceOnSquare(boardPosition) == false) {
 
                             return true;
                         }
                     }
                 }
-            } else if ((move.destination.x - move.piece.x) == 2) {
+            } else if ((move.destination.x - move.piece.location.x) == 2) {
                 //NOTE:: castling kingside was attempted
                 
                 //Find the rook that matches the king
                 Piece rook = null;
                 for(int i=0; i<boardPosition.size(); i++) {
                     //For queenside castling, the x position of the rook will be 7, and the y will match that of the king
-                    if(boardPosition.get(i).x == 7 && boardPosition.get(i).y == move.piece.y) {
+                    if(boardPosition.get(i).location.x == 7 && boardPosition.get(i).location.y == move.piece.location.y) {
                         rook = boardPosition.get(i);
                     }
                 } 
@@ -202,11 +201,10 @@ public class Validation {
                     //get all of the squares between the king and the rook and check that
                     //      1. The square isn't controlled by an opponent's piece
                     //      2. The square isn't occupied
-                    
-                    if(move.piece.isInCheck(boardPosition) == false) {
-                        Square oneLeft = new Square(move.piece.x + 1, move.piece.y);
-                        Square twoLeft = new Square(move.piece.x + 2, move.piece.y);
-
+                    if(move.piece.isInCheck(boardPosition, move.piece.location) == false) {
+                        Square oneLeft = new Square(move.piece.location.x + 1, move.piece.location.y);
+                        Square twoLeft = new Square(move.piece.location.x + 2, move.piece.location.y);
+                        
                         if(oneLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
                                 oneLeft.pieceOnSquare(boardPosition) == false &&
                                 twoLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
@@ -233,17 +231,17 @@ public class Validation {
         }
         
         //This is if the pawn is attempted to have be moved forward once
-        if ((move.destination.x == move.piece.x) && ((move.destination.y - move.piece.y) == direction)) {
+        if ((move.destination.x == move.piece.location.x) && ((move.destination.y - move.piece.location.y) == direction)) {
             validLocation = true;
             //This is if the pawn has been attempted to have been moved two forward
             //The pawn can't have moved
-        } else if ((move.destination.x == move.piece.x) && ((move.destination.y - move.piece.y) == (direction*2)) && move.piece.hasMoved == false) {
+        } else if ((move.destination.x == move.piece.location.x) && ((move.destination.y - move.piece.location.y) == (direction*2)) && move.piece.hasMoved == false) {
             validLocation = true;
             //This is for the capture of pawns
-        } else if (move.destination.y == (move.piece.y + direction) && (move.destination.x == (move.piece.x + 1) || move.destination.x == (move.piece.x - 1))) {
+        } else if (move.destination.y == (move.piece.location.y + direction) && (move.destination.x == (move.piece.location.x + 1) || move.destination.x == (move.piece.location.x - 1))) {
             
             for(int i=0; i<boardPosition.size(); i++) {
-                if(boardPosition.get(i).x == move.destination.x && boardPosition.get(i).y == move.destination.y) {
+                if(boardPosition.get(i).location.x == move.destination.x && boardPosition.get(i).location.y == move.destination.y) {
                     Square square = new Square(move.destination.x, move.destination.y);
                 
                     if(boardPosition.get(i).pieceOnSquare(square)) {

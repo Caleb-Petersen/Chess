@@ -52,14 +52,14 @@ public class MoveTest {
     }
 
     /**
-     * Test of moveIsCastling method, of class Move.
+     * Test of isCastling method, of class Move.
      */
     @Test
     public void testMoveIsCastling() {
         System.out.println("moveIsCastling");
         Move instance = null;
         boolean expResult = false;
-        boolean result = instance.moveIsCastling();
+        boolean result = instance.isCastling();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

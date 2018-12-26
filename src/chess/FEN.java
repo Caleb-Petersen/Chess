@@ -31,12 +31,11 @@ public class FEN {
                 //NOTE:: need to add a constructor to the Piece class
                 for(int j=0; (j<boardRows[i].length() && (Character.getType(squares[j])) != 12); j++) {
                     if(!Character.isDigit(squares[j])) {
-                        boardPosition.add(charToPiece(String.valueOf(squares[j])));
-                        int size = boardPosition.size() -1;
-                        boardPosition.get(size).y = 7-i;
-                        boardPosition.get(size).x = j;
-                        boardPosition.get(size).hasMoved = false;
-                        boardPosition.get(size).pieceImage = boardPosition.get(size).getImage();
+                        //j is the x coordinate of the piece
+                        //7-i is the y coordinate of the piece
+                        //the string value of the character array index is a letter indicating the type and colour of the piece
+                        //The image is added in the constructor
+                        boardPosition.add(charToPiece(String.valueOf(squares[j]), j, 7-i));
                     }
                 }
             }
@@ -57,64 +56,66 @@ public class FEN {
         //in the future to rigorously validate a given FEN. 
         return true;
     }
-    public Piece charToPiece(String character) {
-        Piece piece = new Piece();
+    public Piece charToPiece(String character, int x, int y) {
+        String pieceType = "";
+        String pieceColour = "";
         switch(character) {
             case "k":
-                piece.pieceType = "king";
-                piece.pieceColour = "black";
+                pieceType = "king";
+                pieceColour = "black";
                 break;
             case "q":
-                piece.pieceType = "queen";
-                piece.pieceColour = "black";
+                pieceType = "queen";
+                pieceColour = "black";
                 break;
             case "r":
-                piece.pieceType = "rook";
-               piece.pieceColour = "black";
+                pieceType = "rook";
+                pieceColour = "black";
                 break;
              
             case "b":
-                piece.pieceType = "bishop"; 
-                piece.pieceColour = "black";
+                pieceType = "bishop"; 
+                pieceColour = "black";
                 break;
                 
             case "n":
-                piece.pieceType = "knight";
-                piece.pieceColour = "black";
+                pieceType = "knight";
+                pieceColour = "black";
                 break;
                 
             case "p":
-                piece.pieceType = "pawn";
-                piece.pieceColour = "black";
+                pieceType = "pawn";
+                pieceColour = "black";
                 break;
             case "K":
-                piece.pieceType = "king";
-                piece.pieceColour = "white";
+                pieceType = "king";
+                pieceColour = "white";
                 break;
             case "Q":
-                piece.pieceType = "queen";
-                piece.pieceColour = "white";
+                pieceType = "queen";
+                pieceColour = "white";
                 break;
             case "R":
-                piece.pieceType = "rook";
-               piece.pieceColour = "white";
+                pieceType = "rook";
+                pieceColour = "white";
                 break;
              
             case "B":
-                piece.pieceType = "bishop"; 
-                piece.pieceColour = "white";
+                pieceType = "bishop"; 
+                pieceColour = "white";
                 break;
                 
             case "N":
-                piece.pieceType = "knight";
-                piece.pieceColour = "white";
+                pieceType = "knight";
+                pieceColour = "white";
                 break;
                 
             case "P":
-                piece.pieceType = "pawn";
-                piece.pieceColour = "white";
+                pieceType = "pawn";
+                pieceColour = "white";
                 break;
         }
-        return piece;
+        
+        return new Piece(pieceType, pieceColour, x,y);
     }
 }

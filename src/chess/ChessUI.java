@@ -59,7 +59,7 @@ public class ChessUI extends JPanel implements MouseListener{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for(int i=0; i<Main.pieces.size(); i++) {
-            g.drawImage(Main.pieces.get(i).pieceImage, xCoordinateToPixel(Main.pieces.get(i).x), yCoordinateToPixel(Main.pieces.get(i).y, 7), this);
+            g.drawImage(Main.pieces.get(i).pieceImage, xCoordinateToPixel(Main.pieces.get(i).location.x), yCoordinateToPixel(Main.pieces.get(i).location.y, 7), this);
         }
         
     }
@@ -86,8 +86,7 @@ public class ChessUI extends JPanel implements MouseListener{
         Piece piece = null;
         //Get the piece that was initially clicked. If no such piece exists, then inform the user of that fact
         for(int i=0; i<Main.pieces.size(); i++) {
-            if(Main.pieces.get(i).x == source.x && Main.pieces.get(i).y == source.y) {
-                System.out.println("PIECE MATCH FOUND");
+            if(Main.pieces.get(i).location.x == source.x && Main.pieces.get(i).location.y == source.y) {
                 piece = Main.pieces.get(i);
             }
         }
@@ -95,9 +94,7 @@ public class ChessUI extends JPanel implements MouseListener{
             Move move = new Move(piece, destination);
             
             if(move.isValidMove()) {
-                System.out.println("MOVE IS VALID");
                 move.executeMove();
-                
                 repaint();
             }else {
                 Main.infoBox("Invalid Move!", "Error");

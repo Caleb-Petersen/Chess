@@ -26,7 +26,7 @@ public class Square {
          * @returns boolean indicating whether or not the piece is on a square
          */
         for(int i=0; i<boardPosition.size(); i++) {
-            if(boardPosition.get(i).x == this.x && boardPosition.get(i).y == this.y) {
+            if(boardPosition.get(i).location.x == this.x && boardPosition.get(i).location.y == this.y) {
                 return true;
             }
         }
@@ -39,21 +39,16 @@ public class Square {
          * @returns boolean indicating whether or not the opposing team controls a given square
          */
         
-        Piece piece = null;
+        Move move = null;
         for(int i=0; i<boardPosition.size(); i++) {
-            piece = boardPosition.get(i);
+            move = new Move(boardPosition.get(i), this);
             //the piece must be of opposite colour
-            if(piece.pieceColour.equals(playerColour) == false) {
-                //check all of the destinations that the pieces have to see if they match the square 
-                for(int j=0; j<piece.possibleDestinations.size(); j++) {
-                    if(piece.possibleDestinations.get(j).x == this.x && piece.possibleDestinations.get(j).y == this.y) {
-                        return true;
-                    }
+            if(move.piece.pieceColour.equals(playerColour) == false) {
+                if(move.isValidMove()) {
+                    return true;
                 }
             }
-
         }
-            
         
         return false;
     }
