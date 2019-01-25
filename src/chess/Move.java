@@ -79,19 +79,19 @@ public class Move {
          * @returns whether or not a move is valid
          */
         switch(this.piece.pieceType) {
-            case "king":
+            case KING:
                 return Validation.isKing(Main.pieces, this);
                 
-            case "queen":
+            case QUEEN:
                 return Validation.isDiagonal(Main.pieces, this) && Validation.isStraight(Main.pieces, this);
                 
-            case "rook":
+            case ROOK:
                 return Validation.isStraight(Main.pieces, this);
                 
-            case "bishop":
+            case BISHOP:
                 return Validation.isDiagonal(Main.pieces, this);
      
-            case "knight":
+            case KNIGHT:
                 return Validation.isKnight(Main.pieces, this);
                 
             default:

@@ -73,13 +73,13 @@ public class Validation {
         
         if (move.destination.y == move.piece.location.y) {
             //a horizontal move was atempted
-            int maxX = java.lang.Math.max(move.piece.location.y, move.destination.x);
-            int minX = java.lang.Math.min(move.piece.location.y, move.destination.x);
+            int maxX = java.lang.Math.max(move.piece.location.x, move.destination.x);
+            int minX = java.lang.Math.min(move.piece.location.x, move.destination.x);
             //Check to ensure that all of the squares between minX and maxX are empty
             for (int i = (minX + 1); i < maxX; i++) {
+                Square square = new Square(i, move.piece.location.y);
+                
                 for(int j=0; j<boardPosition.size(); j++) {
-                    Square square = new Square(i, move.piece.location.y);
-                    
                     if(boardPosition.get(j).pieceOnSquare(square)) {
                         return false;
                     }
@@ -91,9 +91,9 @@ public class Validation {
             int minY = java.lang.Math.min(move.piece.location.y, move.destination.y);
             //Check to ensure that all of the squares between minY and maxY are empty
             for (int i = (minY + 1); i < maxY; i++) {
+                Square square = new Square(move.piece.location.y, i );
+                
                 for(int j=0; j<boardPosition.size(); j++) {
-                    Square square = new Square(move.piece.location.y, i );
-                    
                     if(boardPosition.get(j).pieceOnSquare(square)) {
                         return false;
                     }
@@ -220,46 +220,69 @@ public class Validation {
     }
     
     public static boolean isPawn(ArrayList<Piece> boardPosition, Move move) {
+        /**
+         * @param boardPosition contains the current state of the board
+         * @param move is the move in the current board position that is be assessed for validity
+         * @returns boolean indicating whether or not the move is valid
+         * The Algorithm
+         *      1. Determine the colour of the pawn that is being move (and so the direction that it travels)
+         *      2. Check through the attempts to move the pawn forward (using direction) one
+         *      3. Check through the attempts to move the pawn forward (using direction) two
+         *      4. Check captures (if the piece is on the destination square), and enpassant
+         *  
+         */   
         boolean validLocation = false;
-        int direction;
-        //the black pawn
+        int direction = 1;
+        
         if (move.piece.pieceColour.equals("black")) {
+            //when black pawns move forward their y coordinate value goes down
             direction = -1;
-        //the white pawn
-        }else {
-            direction = 1;
         }
         
-        //This is if the pawn is attempted to have be moved forward once
+        
         if ((move.destination.x == move.piece.location.x) && ((move.destination.y - move.piece.location.y) == direction)) {
+            //This is if the pawn is attempted to have be moved forward once
             validLocation = true;
+        } else if ((move.destination.x == move.piece.location.x) && ((move.destination.y - move.piece.location.y) == (direction*2)) && move.piece.hasMoved == false) {
             //This is if the pawn has been attempted to have been moved two forward
             //The pawn can't have moved
-        } else if ((move.destination.x == move.piece.location.x) && ((move.destination.y - move.piece.location.y) == (direction*2)) && move.piece.hasMoved == false) {
             validLocation = true;
-            //This is for the capture of pawns
         } else if (move.destination.y == (move.piece.location.y + direction) && (move.destination.x == (move.piece.location.x + 1) || move.destination.x == (move.piece.location.x - 1))) {
-            
+            //a capture was attempted
             for(int i=0; i<boardPosition.size(); i++) {
                 if(boardPosition.get(i).location.x == move.destination.x && boardPosition.get(i).location.y == move.destination.y) {
-                    Square square = new Square(move.destination.x, move.destination.y);
-                
-                    if(boardPosition.get(i).pieceOnSquare(square)) {
-                        if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
-                            return false;
-                        }
-                        validLocation = true;
-                    }else {
-                        /*This is for if en passant is played
-                        Firstly, the destination destination needs to be empty (already verified). Secondly, the 
-                        piece beside the pawn needs to be a pawn, and of the opposite colour */
-                        return false; //for now leave enpassant until later
+                    if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
+                        return false;
                     }
+                    //a capture was attempted
+                    validLocation = true;
                 }
+                //this checks for enpassant
+                //The destination square must be empty 
+                //The piece beside the pawn (one y value up from the destination square) must be a pawn
+                //That pawn beside the pawn being moved must be of the opponent's colour
+                //That pawn beside the pawn being moved must have just moved up two squares
+                
+                if(validLocation == false) {
+                    // validLocaiton == false => the destination square is empty
+                    
+                }
+                    //if(boardPosition.get(i).pieceOnSquare(square)) {
+                        
+                    //}else {
+                        
+                        
+                        Square squareBeside = new Square(move.destination.x, move.piece.location.y);
+                        
+                        return false; 
+                    //}
+                
                 
             }
         }
-
+        
+        return validLocation && isValidDestination(boardPosition, move);
+        /*
         if(validLocation) {
             //check to see if there is a piece on the destination destination
             //if there is, verify that it is not of the same colour as the piece
@@ -275,7 +298,7 @@ public class Validation {
             }
             return true;
         }
-        return false;
+        return false;*/
     
     }
     

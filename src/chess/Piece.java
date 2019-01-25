@@ -16,16 +16,29 @@ import javax.imageio.ImageIO;
  *
  */
 public class Piece {
-    public String pieceType; //always lowercase used
-    public String pieceColour; 
+    public TYPE pieceType; //always lowercase used
+    public COLOUR pieceColour; 
     public Square location; //The square the piece is on
     public boolean hasMoved; //for pawns and castling
     public ArrayList<Square> possibleDestinations; //An array of the squares the piece can go to
     public BufferedImage pieceImage;
     
-    public Piece(String initPieceType, String initPieceColour, int x, int y) {
-        this.pieceType = initPieceType;
-        this.pieceColour = initPieceColour;
+    public enum TYPE {
+        KING,
+        QUEEN,
+        ROOK,
+        KNIGHT,
+        BISHOP,
+        PAWN
+    }
+    public enum COLOUR {
+        BLACK,
+        WHITE
+    }
+   
+    public Piece(TYPE type, COLOUR colour, int x, int y) {
+        this.pieceType = type;
+        this.pieceColour = colour;
         this.location = new Square(x,y);
         this.hasMoved = false;
         this.possibleDestinations = null;
@@ -69,32 +82,32 @@ public class Piece {
             Main.infoBox("Could not read in the image files: " + e.toString(), "IOException");
         }
         
-        if(this.pieceColour.equals("white")) {
+        if(this.pieceColour == COLOUR.WHITE) {
             switch (this.pieceType) {
-                case "king":
+                case KING:
                     return whiteKing;
-                case "queen":
+                case QUEEN:
                     return whiteQueen;
-                case "rook":
+                case ROOK:
                     return whiteRook;
-                case "bishop":
+                case BISHOP:
                     return whiteBishop;
-                case "knight":
+                case KNIGHT:
                     return whiteKnight;
                 default:
                     return whitePawn;
             }
         }else {
             switch (this.pieceType) {
-                case "king":
+                case KING:
                     return blackKing;
-                case "queen":
+                case QUEEN:
                     return blackQueen;
-                case "rook":
+                case ROOK:
                     return blackRook;
-                case "bishop":
+                case BISHOP:
                     return blackBishop;
-                case "knight":
+                case KNIGHT:
                     return blackKnight;
                 default:
                     return blackPawn;
@@ -118,31 +131,31 @@ public class Piece {
                 Move move = new Move(this, square);
 
                 switch(this.pieceType) {
-                    case "king":
+                    case KING:
                         if(Validation.isKing(Main.pieces, move)) { //&& !proccessCheck(this, x, y            
                             possibleDestinations.add(square);
                         }
                         break;
-                    case "queen":
+                    case QUEEN:
                         if((Validation.isDiagonal(Main.pieces, move) || Validation.isStraight(Main.pieces, move)) ) { //&&!proccessCheck(this, x, y)
                             possibleDestinations.add(square);
                         }
                         break;
                     
-                    case "rook":
+                    case ROOK:
                         if(Validation.isStraight(Main.pieces, move) ) { //&& !proccessCheck(this.x, x, this.y, y, null)
                             possibleDestinations.add(square);
                         }
                         break;
                     
                         
-                    case "bishop":
+                    case BISHOP:
                         if(Validation.isDiagonal(Main.pieces, move)) { //&&!proccessCheck(this.x, x, this.y, y, null)
                             possibleDestinations.add(square);
                         }
                         break;
                     
-                    case "knight":
+                    case KNIGHT:
                         if(Validation.isKnight(Main.pieces, move) ) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
                             possibleDestinations.add(square);  
                         }
@@ -163,19 +176,19 @@ public class Piece {
         Move move = new Move(this, square);
         
         switch(this.pieceType) {
-            case "king":
+            case KING:
                 return Validation.isKing(boardPosition, move);
                 
-            case "queen":
+            case QUEEN:
                 return (Validation.isDiagonal(boardPosition, move) || Validation.isStraight(boardPosition, move)); 
 
-            case "rook":
+            case ROOK:
                 return Validation.isStraight(boardPosition, move);
 
-            case "bishop":
+            case BISHOP:
                 return Validation.isDiagonal(boardPosition, move);
 
-            case "knight":
+            case KNIGHT:
                 return Validation.isKnight(boardPosition, move);
 
             default:
@@ -206,5 +219,43 @@ public class Piece {
             return true;
         }
         return false;
+    }
+    
+    public String identifier() {
+        
+        char identifier;
+        
+        switch(this.pieceType) {
+            
+            case KING:
+                identifier = 'k';
+                break;
+                
+            case QUEEN:
+                identifier = 'q';
+                break;
+                
+            case ROOK:
+                identifier = 'r';
+                break;
+            
+            case BISHOP:
+                identifier = 'b';
+                break;
+            
+            case KNIGHT:
+                identifier = 'n';
+                break;
+                
+            default:
+                identifier = 'p';
+                break;
+        }
+        
+        if(this.pieceColour == COLOUR.WHITE) {
+            //black pieces are represented by upper case characters
+            identifier = Character.toUpperCase(identifier);
+        }
+        return Character.toString(identifier);
     }
 }

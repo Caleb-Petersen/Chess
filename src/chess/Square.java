@@ -32,7 +32,7 @@ public class Square {
         }
         return false;
     }
-    public boolean squareControlled(ArrayList<Piece> boardPosition, String playerColour) {
+    public boolean squareControlled(ArrayList<Piece> boardPosition, Piece.COLOUR playerColour) {
         /**
          * @param boardPosition contains the current state of the board
          * @param playerColour is the string containing the colour of the player's pieces
