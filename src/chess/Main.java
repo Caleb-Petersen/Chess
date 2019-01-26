@@ -28,22 +28,23 @@ public class Main {
         });
     }
     private static void displayChessBoard(){
-        //The initial position in an FEN string
-        
-        FEN initialPosition = new FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+        //The initial position in an position string
+        //rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
+        FEN initialPosition = new FEN("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R");
         
         pieces = initialPosition.fenToBoardPosition();
         FEN random = new FEN("");
         random.createFEN(pieces);
-        System.out.println(random.FEN);
-        
-        FEN testing = new FEN("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R");
+        System.out.println(random.position);
+        /*
+        position testing = new position("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R");
         ArrayList<Piece> jazz = new ArrayList<Piece>();
         jazz = testing.fenToBoardPosition();
-        FEN rand = new FEN("");
+        position rand = new position("");
         rand.createFEN(jazz);
-        System.out.println(rand.FEN.equals("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R"));
-        System.out.println(rand.FEN);
+        System.out.println(rand.position.equals("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R"));
+        System.out.println(rand.position);
+        */
         ChessUI chessUI = new ChessUI();
         
         //set up the JFrame

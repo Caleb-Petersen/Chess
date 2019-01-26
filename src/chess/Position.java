@@ -5,16 +5,18 @@
  */
 package Chess;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Caleb
  */
 public class Position {
     public FEN fen;
-    public double eval;
+    public ArrayList<Piece> boardPosition;
     
     public Position(FEN initFEN) {
+        this.boardPosition = initFEN.fenToBoardPosition();
         this.fen = initFEN;
-        this.eval = 0;
     }
 }

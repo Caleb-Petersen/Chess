@@ -12,23 +12,28 @@ import java.util.ArrayList;
  * @author Caleb
  */
 public class FEN {
-    public String FEN;
+    public String position;
+    public char turnColour; //either 'w' or 'b'
+    public String castlingAvailability; //KQkq for kingside and queenside castling availability, "-" for nothing is available
+    public String enpassantAvailability; //either "-" or the square behind the pawn (e.g. e3)
     
     public FEN (String initFEN) {
-        this.FEN = initFEN;
+        this.position = initFEN;
+        this.castlingAvailability = "";
+        this.enpassantAvailability = "";
     }
+
     public ArrayList<Piece> fenToBoardPosition() {
         ArrayList<Piece> boardPosition = new ArrayList<Piece>();
         //rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R
         if(this.isValid()) {
-            //boardRows is of size 8 if the FEN is valid
-            String[] boardRows = this.FEN.split("/");
+            //boardRows is of size 8 if the position is valid
+            String[] boardRows = this.position.split("/");
             for(int i=0; i<8; i++) {
                 char [] squares = boardRows[i].toCharArray();
                 //NOTE:: this is somewhat messy, and hard to understand -> to be refactored in the future
-                int xCoordinate = 0; //This coordinate is necessary as j may not reach 7 due to the nature of FEN strings (e.g. 3P4 j will only reach 2)
+                int xCoordinate = 0; //This coordinate is necessary as j may not reach 7 due to the nature of position strings (e.g. 3P4 j will only reach 2)
                 for(int j=0; (j<boardRows[i].length() && (Character.getType(squares[j])) != 12); j++) {
-                    System.out.println("J is: " + j);
                     if(Character.isDigit(squares[j]) == false) {
                         //j is the x coordinate of the piece
                         //7-i is the y coordinate of the piece
@@ -62,7 +67,7 @@ public class FEN {
          * @param position is the position that is being put into an FEN string
          * @updates the FEN member variable using the position array
          */
-        this.FEN = ""; //ensure that the string is empty before updating it
+        this.position = ""; //ensure that the string is empty before updating it
         String [][] fenArray = new String [8][8];
         
         for(int i=0; i<8; i++) {
@@ -80,7 +85,7 @@ public class FEN {
             }
             System.out.println();
         }
-        //Add the char array to the FEN string
+        //Add the char array to the position string
         for(int i=7; i>=0; i--) {
             boolean counting = false;
             int sum = 0;
@@ -91,19 +96,19 @@ public class FEN {
                     counting = true;
                 }else {
                     if(counting) {
-                        this.FEN += String.valueOf(sum);
+                        this.position += String.valueOf(sum);
                     }
-                    this.FEN += fenArray[j][i];
+                    this.position += fenArray[j][i];
                     sum = 0;
                     counting = false;
                 }
             }
             
             if(counting) {
-                this.FEN += String.valueOf(sum);
+                this.position += String.valueOf(sum);
             }
             if(i > 0) {
-                this.FEN += "/";
+                this.position += "/";
             }
         }
     }
@@ -114,8 +119,8 @@ public class FEN {
          * @returns boolean indicating whether or not an FEN is valid
          */
         
-        //Currently it is assumed that the FEN is valid. This function will be updated
-        //in the future to rigorously validate a given FEN. 
+        //Currently it is assumed that the position is valid. This function will be updated
+        //in the future to rigorously validate a given position. 
         return true;
     }
     public Piece charToPiece(String character, int x, int y) {
