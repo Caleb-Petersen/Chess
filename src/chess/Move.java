@@ -12,9 +12,9 @@ public class Move {
     public Piece piece;
     public Square destination;
     
-    public Move(Piece initPiece, Square initSquare) {
-        this.piece = initPiece;
-        this.destination = initSquare;
+    public Move(Piece p, Square s) {
+        this.piece = p;
+        this.destination = s;
     }
     public boolean moveIsEnpassant() {
         /**

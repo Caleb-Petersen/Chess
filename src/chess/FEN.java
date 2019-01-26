@@ -17,6 +17,10 @@ public class FEN {
     public String castlingAvailability; //KQkq for kingside and queenside castling availability, "-" for nothing is available
     public String enpassantAvailability; //either "-" or the square behind the pawn (e.g. e3)
     
+    public FEN () {
+        
+    }
+    
     public FEN (String initFEN) {
         this.position = initFEN;
         this.castlingAvailability = "";

@@ -19,4 +19,8 @@ public class Position {
         this.boardPosition = initFEN.fenToBoardPosition();
         this.fen = initFEN;
     }
+    public Position(FEN initFEN, ArrayList<Piece> b) {
+        this.boardPosition = b;
+        this.fen = initFEN;
+    }
 }

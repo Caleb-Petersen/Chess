@@ -12,9 +12,12 @@ import Chess.*;
  */
 public class Evaluator {
     public Position position;
-    public h
+    public double evaluation;
+    public Move bestMove;
     
     public Evaluator(Position p) {
         this.position = p;
+        this.evaluation = 0.0;
+        this.bestMove = null;
     }
 }
