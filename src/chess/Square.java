@@ -20,7 +20,7 @@ public class Square {
         x = initX;
     }
     
-    public boolean pieceOnSquare(ArrayList<Piece> boardPosition) {
+    public boolean isPieceOnSquare(ArrayList<Piece> boardPosition) {
         /**
          * @param boardPostion an array of pieces showing the current state of the position
          * @returns boolean indicating whether or not the piece is on a square
@@ -31,6 +31,15 @@ public class Square {
             }
         }
         return false;
+    }
+    public Piece.TYPE pieceOnSquare(Position position) {
+        for(int i=0; i<position.boardPosition.size(); i++) {
+            if(position.boardPosition.get(i).location.x == this.x && position.boardPosition.get(i).location.y == this.y) {
+                return position.boardPosition.get(i).pieceType;
+            }
+        }
+        //TODO: Get a return type that is not null (empty piece type in enum maybe?)
+        return null; //shouldn't get here if called, always call isPieceOnSquare first or use in boolean check
     }
     public boolean squareControlled(ArrayList<Piece> boardPosition, Piece.COLOUR playerColour) {
         /**

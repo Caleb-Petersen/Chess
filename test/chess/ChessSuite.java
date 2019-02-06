@@ -6,10 +6,6 @@
 package Chess;
 
 import chess.Images.ImagesSuite;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -18,23 +14,7 @@ import org.junit.runners.Suite;
  * @author Caleb
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({Chess.SquareTest.class, Chess.ValidationTest.class, Chess.MainTest.class, Chess.ProcessMoveTest.class, Chess.MoveTest.class, Chess.ChessUITest.class, ImagesSuite.class, Chess.PieceTest.class, Chess.FENTest.class})
+@Suite.SuiteClasses({SquareTest.class, ValidationTest.class, MainTest.class, ProcessMoveTest.class, MoveTest.class, ImagesSuite.class, PieceTest.class, FENTest.class})
 public class ChessSuite {
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
     
 }

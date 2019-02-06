@@ -16,33 +16,37 @@ public class Move {
         this.piece = p;
         this.destination = s;
     }
-    public boolean moveIsEnpassant() {
+    public boolean moveIsEnpassant(Position position) {
         /**
          * @param none
          * @returns a boolean indicating whether or not a move is enpassant
+         * @NOTE: Function doesn't care about the validity of the move, it only gives information about the nature of the move
          */
         
         //Algorithm to implement
         //Check to see if the piece moved was a pawn
         //check to see if the move is valid
         //Check to see if a diagonal move was made
-        //Check to see if there is no piece on the destination destination
+        //Check to see that the destination square is empty
+        //Check to see that the pawn being captured (via enpassant) is actually there
         //If all of those checks are true, return true, if not, return false
         
         int direction = 1;
-        if(this.piece.pieceColour.equals("black")) {
+        if(this.piece.pieceColour == Piece.COLOUR.BLACK) {
             direction = -1;
         }
         
-        if(this.piece.pieceType.equals("pawn")) {
+        if(this.piece.pieceType == Piece.TYPE.PAWN) {
             //check to see if the destination row is correct for the colour of piece (3rd rank for black pieces, 6th for white)
-            if((this.piece.pieceColour.equals("white") && this.destination.y == 2) || (this.piece.pieceColour.equals("black") && this.destination.y == 5)) {
+            if((this.piece.pieceColour == Piece.COLOUR.WHITE && this.destination.y == 2) || (this.piece.pieceColour == Piece.COLOUR.BLACK && this.destination.y == 5)) {
                 //check to see that the pawn was one column removed from the destination destination (e.g the e file to the f file)
                 if(Math.abs(this.piece.location.x - this.destination.x) == 1) {
                     //check to see if the piece on the destination above the destination destination contains a pawn
-                    for(int i=0; i< Main.pieces.size(); i++) {
-                        if(Main.pieces.get(i).location.x == this.destination.x && Main.pieces.get(i).location.y == this.destination.y + direction) {
-                            
+                    if(this.destination.isPieceOnSquare(position.boardPosition) == false) {
+                        //Check to ensure that the enpassant is actually capturing a piece
+                        Square square = new Square(this.destination.x, (this.destination.y - direction));
+                        if(square.pieceOnSquare(position) == Piece.TYPE.PAWN) {
+                            return true; //Assume that this move is a valid move
                         }
                     }
                 }
@@ -54,8 +58,6 @@ public class Move {
     public boolean isCastling() {
         /**
          * Function purpose: To determine if a move involves castling
-         * NOTE: as of October 20, 2018, this function is incomplete, and 
-         * views every king move as an attempt to castle.
          */
         
         //Algorithm to implement
@@ -64,7 +66,7 @@ public class Move {
         //Check to see if the move is valid
         //If all are true, return true, if not, return false
         
-        if(this.piece.pieceType.equals("king")) {
+        if(this.piece.pieceType == Piece.TYPE.KING) {
             if(Math.abs(this.piece.location.x - this.destination.x) == 2) {
                 if(this.isValidMove()) {
                     return true;

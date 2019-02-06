@@ -9,6 +9,7 @@ package Chess;
  *  
  * @author Caleb
 */
+import engine.SearchGraph;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -35,7 +36,10 @@ public class Main {
         pieces = initialPosition.fenToBoardPosition();
         FEN random = new FEN("");
         random.createFEN(pieces);
-        System.out.println(random.position);
+        Position position = new Position(initialPosition);
+        SearchGraph graph = new SearchGraph(position, null);
+        MoveHistory history = graph.search(pieces, new ArrayList<>(), null, 0);
+        System.out.println(history.move.destination.x);
         /*
         position testing = new position("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R");
         ArrayList<Piece> jazz = new ArrayList<Piece>();
@@ -45,6 +49,7 @@ public class Main {
         System.out.println(rand.position.equals("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R"));
         System.out.println(rand.position);
         */
+        /*
         ChessUI chessUI = new ChessUI();
         
         //set up the JFrame
@@ -57,7 +62,7 @@ public class Main {
         
         frame.setLocationRelativeTo( null );
         frame.setVisible(true);
-    
+        */
     }
     public static void infoBox(String infoMessage, String titleBar) {
         /**

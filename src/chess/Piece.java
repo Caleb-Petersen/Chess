@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
  *
  */
 public class Piece {
-    public TYPE pieceType; //always lowercase used
+    public TYPE pieceType; 
     public COLOUR pieceColour; 
     public Square location; //The square the piece is on
     public boolean hasMoved; //for pawns and castling
@@ -115,7 +115,7 @@ public class Piece {
         }
     }
     
-    public void updatePossibleDestinations() {
+    public void updatePossibleDestinations(ArrayList<Piece> boardPosition) {
         /*
         *Function purpose: to update the array of locations that the piece can move to
         */
@@ -132,37 +132,37 @@ public class Piece {
 
                 switch(this.pieceType) {
                     case KING:
-                        if(Validation.isKing(Main.pieces, move)) { //&& !proccessCheck(this, x, y            
+                        if(Validation.isKing(boardPosition, move)) { //&& !proccessCheck(this, x, y            
                             possibleDestinations.add(square);
                         }
                         break;
                     case QUEEN:
-                        if((Validation.isDiagonal(Main.pieces, move) || Validation.isStraight(Main.pieces, move)) ) { //&&!proccessCheck(this, x, y)
+                        if((Validation.isDiagonal(boardPosition, move) || Validation.isStraight(boardPosition, move)) ) { //&&!proccessCheck(this, x, y)
                             possibleDestinations.add(square);
                         }
                         break;
                     
                     case ROOK:
-                        if(Validation.isStraight(Main.pieces, move) ) { //&& !proccessCheck(this.x, x, this.y, y, null)
+                        if(Validation.isStraight(boardPosition, move) ) { //&& !proccessCheck(this.x, x, this.y, y, null)
                             possibleDestinations.add(square);
                         }
                         break;
                     
                         
                     case BISHOP:
-                        if(Validation.isDiagonal(Main.pieces, move)) { //&&!proccessCheck(this.x, x, this.y, y, null)
+                        if(Validation.isDiagonal(boardPosition, move)) { //&&!proccessCheck(this.x, x, this.y, y, null)
                             possibleDestinations.add(square);
                         }
                         break;
                     
                     case KNIGHT:
-                        if(Validation.isKnight(Main.pieces, move) ) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
+                        if(Validation.isKnight(boardPosition, move) ) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
                             possibleDestinations.add(square);  
                         }
                         break;
                     
                     default:
-                        if(Validation.isPawn(Main.pieces, move)) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
+                        if(Validation.isPawn(boardPosition, move)) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
                             possibleDestinations.add(square);  
                         }
                         break;

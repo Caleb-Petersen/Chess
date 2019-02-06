@@ -20,4 +20,9 @@ public class Evaluator {
         this.evaluation = 0.0;
         this.bestMove = null;
     }
+    
+    public double evaluate() {
+        //Evaluate the position, and then return evaluation
+        return this.evaluation;
+    }
 }

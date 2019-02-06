@@ -175,10 +175,10 @@ public class Validation {
                         Square threeLeft = new Square(move.piece.location.x - 3, move.piece.location.y);
 
                         if(oneLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
-                                oneLeft.pieceOnSquare(boardPosition) == false &&
+                                oneLeft.isPieceOnSquare(boardPosition) == false &&
                                 twoLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
-                                twoLeft.pieceOnSquare(boardPosition) == false &&
-                                threeLeft.pieceOnSquare(boardPosition) == false) {
+                                twoLeft.isPieceOnSquare(boardPosition) == false &&
+                                threeLeft.isPieceOnSquare(boardPosition) == false) {
 
                             return true;
                         }
@@ -206,9 +206,9 @@ public class Validation {
                         Square twoLeft = new Square(move.piece.location.x + 2, move.piece.location.y);
                         
                         if(oneLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
-                                oneLeft.pieceOnSquare(boardPosition) == false &&
+                                oneLeft.isPieceOnSquare(boardPosition) == false &&
                                 twoLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
-                                twoLeft.pieceOnSquare(boardPosition) == false) {
+                                twoLeft.isPieceOnSquare(boardPosition) == false) {
 
                             return true;
                         }
