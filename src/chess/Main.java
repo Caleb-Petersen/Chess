@@ -12,7 +12,6 @@ package Chess;
 import engine.SearchGraph;
 import java.awt.EventQueue;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Main {
@@ -20,22 +19,21 @@ public class Main {
     public static ArrayList<Piece> deletedPieces = new ArrayList<Piece>();
     
     public static void main(String[] args){
-        Square piece = new Square(3,4);
-        
         EventQueue.invokeLater(new Runnable() {
             public void run(){
                 displayChessBoard();
             }
         });
     }
+    
     private static void displayChessBoard(){
         //The initial position in an position string
         //rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
         FEN initialPosition = new FEN("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R");
         
         pieces = initialPosition.fenToBoardPosition();
-        FEN random = new FEN("");
-        random.createFEN(pieces);
+        //FEN random = new FEN("");
+        //random.createFEN(pieces);
         Position position = new Position(initialPosition);
         SearchGraph graph = new SearchGraph(position, null);
         MoveHistory history = graph.search(pieces, new ArrayList<>(), null, 0);
@@ -70,5 +68,20 @@ public class Main {
          * @param titleBar the title of the box displayed to the user
          */
         JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public static ArrayList<Piece> copyBoardPosition(ArrayList<Piece> boardPosition) {
+        /**
+         * @param boardPosition is the position that needs to be copied
+         * Creates a deep copy of the board position list
+         */
+        ArrayList<Piece> copy = new ArrayList<>();
+
+        for(Piece piece : boardPosition) {
+            Piece copyPiece = new Piece(piece.pieceType, piece.pieceColour,piece.location.x, piece.location.y);
+            copy.add(copyPiece);
+        }
+        
+        return copy;
     }
 }
