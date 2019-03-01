@@ -41,7 +41,7 @@ public class SearchGraph {
             for(int i=0; i<possibleMoves.size(); i++) {
                 Position virtualPosition = executeVirtualMove(boardPosition, possibleMoves.get(i));
                 
-                moveOptions.add(search(virtualPosition.fen.fenToBoardPosition(),new ArrayList<>(), (new MoveHistory(possibleMoves.get(i),virtualPosition)), depth + 1));
+                moveOptions.add(search(virtualPosition.boardPosition,new ArrayList<>(), (new MoveHistory(possibleMoves.get(i),virtualPosition)), depth + 1));
                 
             }
             //calculate max or min of the possible moves (dependent on depth because depth represents colour when using %2, and add it to the path
@@ -96,9 +96,7 @@ public class SearchGraph {
                 }
             }
         }
-        FEN fen = new FEN();
-        fen.createFEN(copyBoardPosition);
-        Position createdPosition = new Position(fen, copyBoardPosition);
+        Position createdPosition = new Position(copyBoardPosition);
         return createdPosition;
     }
 }
