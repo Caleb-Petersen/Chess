@@ -231,24 +231,29 @@ public class Validation {
          *      4. Check captures (if the piece is on the destination square), and enpassant
          *  
          */   
-        boolean validLocation = false;
+        boolean validLocation = false; //Valid location => the square is correct -> check that the square is not occupied
         int direction = 1;
+        Square destinationSquare = new Square(move.destination.x, move.destination.y);
         
-        if (move.piece.pieceColour.equals("black")) {
+        if (move.piece.pieceColour == Piece.COLOUR.BLACK) {
             //when black pawns move forward their y coordinate value goes down
             direction = -1;
         }
         
-        
         if ((move.destination.x == move.piece.location.x) && ((move.destination.y - move.piece.location.y) == direction)) {
-            //This is if the pawn is attempted to have be moved forward once
-            validLocation = true;
+            //This occurs if the pawn is attempted to have be moved forward once
+            //Check to see that the destination square is empty (the move is valid)
+            return destinationSquare.isPieceOnSquare(boardPosition) == false;
+            
         } else if ((move.destination.x == move.piece.location.x) && ((move.destination.y - move.piece.location.y) == (direction*2)) && move.piece.hasMoved == false) {
             //This is if the pawn has been attempted to have been moved two forward
-            //The pawn can't have moved
-            validLocation = true;
+            //The pawn can't have moved, and the two squares in front need to be empty
+            Square intermediateSquare = new Square(move.destination.x, (move.destination.y - direction));
+            
+            return destinationSquare.isPieceOnSquare(boardPosition) == false && intermediateSquare.isPieceOnSquare(boardPosition) == false;
+            
         } else if (move.destination.y == (move.piece.location.y + direction) && (move.destination.x == (move.piece.location.x + 1) || move.destination.x == (move.piece.location.x - 1))) {
-            //a capture was attempted
+            //a capture or enpassant was attempted
             for(int i=0; i<boardPosition.size(); i++) {
                 if(boardPosition.get(i).location.x == move.destination.x && boardPosition.get(i).location.y == move.destination.y) {
                     if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
@@ -301,19 +306,28 @@ public class Validation {
         return false;*/
     
     }
-    
+    public boolean destinationIsEmpty(Position position, Move move) {
+        Square square = new Square(move.destination.x, move.destination.y);
+        
+        for(int i=0; i<position.boardPosition.size(); i++) {
+            if(position.boardPosition.get(i).pieceOnSquare(square)) {
+                if(position.boardPosition.get(i).pieceColour == move.piece.pieceColour){
+                    return false;
+                }
+            }
+        } 
+        return true;
+    }
     public static boolean isValidDestination(ArrayList<Piece> boardPosition, Move move) {
         /**
          * @param boardPosition contains the current state of the board
          * @param move is the move in the current board position that is be assessed for validity
          * @returns boolean indicating whether or not the destination square contains a piece of the same colour as the one being moved
          */  
-      
+        Square square = new Square(move.destination.x, move.destination.y);
         for(int i=0; i<boardPosition.size(); i++) {
-            Square square = new Square(move.destination.x, move.destination.y);
-            
             if(boardPosition.get(i).pieceOnSquare(square)) {
-                if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
+                if(boardPosition.get(i).pieceColour == move.piece.pieceColour){
                     return false;
                 }
             }

@@ -26,12 +26,18 @@ public class SearchGraph {
         //For testing purposes assume that the engine is always black move. This will be fixed later
         //NOTE: somehow I need to store move history here, so that once depth is reached the function
         //will have access to the moves that were played up until that point
+        System.out.println("_____________________________________________");
+        System.out.println("Path size: " + path.size());
+        System.out.println("Board Position: " + boardPosition.size());
+        System.out.println("Depth: " + depth);
+        System.out.println("_____________________________________________");
+       
         if(depth == this.DEPTH) {
             return moveHistory;
         }else {
             ArrayList<Move> possibleMoves = generateMoves(boardPosition);
-            
-            ArrayList<MoveHistory> moveOptions = new ArrayList();
+            ArrayList<MoveHistory> moveOptions = new ArrayList<>();
+            System.out.println("Generated Moves");
             for(int i=0; i<possibleMoves.size(); i++) {
                 Position virtualPosition = executeVirtualMove(boardPosition, possibleMoves.get(i));
                 
@@ -63,11 +69,12 @@ public class SearchGraph {
         return moveOptions.get(index);
     }       
     public ArrayList<Move> generateMoves(ArrayList<Piece> boardPosition) {
-        ArrayList<Move> possibleMoves = new ArrayList();
+        ArrayList<Move> possibleMoves = new ArrayList<>();
         System.out.println("This thing here");
         for(int i=0; i<boardPosition.size(); i++) {
             Piece piece = boardPosition.get(i);
             piece.updatePossibleDestinations(boardPosition);
+            
             for(int j=0; j<piece.possibleDestinations.size(); j++) {
                 possibleMoves.add(new Move(piece, piece.possibleDestinations.get(j)));
             }
@@ -76,21 +83,22 @@ public class SearchGraph {
     }
   
     public Position executeVirtualMove(ArrayList<Piece> boardPosition, Move move) {
-        for(int i=0; i< boardPosition.size(); i++) {
+        ArrayList<Piece> copyBoardPosition = Main.copyBoardPosition(boardPosition);
+        for(int i=0; i< copyBoardPosition.size(); i++) {
             //manual check to avoid issues with objects and such
-            if(boardPosition.get(i).location.x == move.piece.location.x && boardPosition.get(i).location.y == move.piece.location.y)  {
-                boardPosition.get(i).hasMoved = true;
-                boardPosition.get(i).location.x = move.destination.x;
-                boardPosition.get(i).location.y = move.destination.y;
+            if(copyBoardPosition.get(i).location.x == move.piece.location.x && copyBoardPosition.get(i).location.y == move.piece.location.y)  {
+                copyBoardPosition.get(i).hasMoved = true;
+                copyBoardPosition.get(i).location.x = move.destination.x;
+                copyBoardPosition.get(i).location.y = move.destination.y;
                 
-                if(move.isCastling()) {
+                if(move.isCastling(copyBoardPosition)) {
                     System.out.println("need to find associated rook, and move it too");
                 }
             }
         }
         FEN fen = new FEN();
-        fen.createFEN(boardPosition);
-        Position position = new Position(fen, boardPosition);
-        return position;
+        fen.createFEN(copyBoardPosition);
+        Position createdPosition = new Position(fen, copyBoardPosition);
+        return createdPosition;
     }
 }

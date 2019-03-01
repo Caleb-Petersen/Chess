@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package Chess;
+
+import java.util.ArrayList;
+
 /**
  * 
  * @author Caleb
@@ -41,8 +44,8 @@ public class Move {
             if((this.piece.pieceColour == Piece.COLOUR.WHITE && this.destination.y == 2) || (this.piece.pieceColour == Piece.COLOUR.BLACK && this.destination.y == 5)) {
                 //check to see that the pawn was one column removed from the destination destination (e.g the e file to the f file)
                 if(Math.abs(this.piece.location.x - this.destination.x) == 1) {
-                    //check to see if the piece on the destination above the destination destination contains a pawn
-                    if(this.destination.isPieceOnSquare(position.boardPosition) == false) {
+                    //Check to see if the piece on the destination above the destination destination contains a pawn
+                    if(this.destination.isPieceOnSquare(position.boardPosition) == false) { //Check may not be necessary as we don't need to know about validity
                         //Check to ensure that the enpassant is actually capturing a piece
                         Square square = new Square(this.destination.x, (this.destination.y - direction));
                         if(square.pieceOnSquare(position) == Piece.TYPE.PAWN) {
@@ -55,49 +58,52 @@ public class Move {
         return false;
     }
     
-    public boolean isCastling() {
+    public boolean isCastling(ArrayList<Piece> boardPosition) {
         /**
          * Function purpose: To determine if a move involves castling
+         * NOTE:this function must be used alongside the isValidMove function
+         * as it does not check if a move is legal. If a move is legal and
+         * isCastling returns true, it is know that a move is castling
          */
         
         //Algorithm to implement
         //Check to see if the piece moved is a king
         //Check to see if the king was moved two squares
-        //Check to see if the move is valid
         //If all are true, return true, if not, return false
         
         if(this.piece.pieceType == Piece.TYPE.KING) {
             if(Math.abs(this.piece.location.x - this.destination.x) == 2) {
-                if(this.isValidMove()) {
+                if(this.isValidMove(boardPosition)) {
                     return true;
                 }
             }
         }
         return false;
     }
-    public boolean isValidMove() {
+    public boolean isValidMove(ArrayList<Piece> boardPosition) {
         /**
          * @param none
          * @returns whether or not a move is valid
          */
+        System.out.println("CHecking to see if a move is valid for piece " + this.piece.pieceType);
         switch(this.piece.pieceType) {
             case KING:
-                return Validation.isKing(Main.pieces, this);
+                return Validation.isKing(boardPosition, this);
                 
             case QUEEN:
-                return Validation.isDiagonal(Main.pieces, this) && Validation.isStraight(Main.pieces, this);
+                return Validation.isDiagonal(boardPosition, this) && Validation.isStraight(Main.pieces, this);
                 
             case ROOK:
-                return Validation.isStraight(Main.pieces, this);
+                return Validation.isStraight(boardPosition, this);
                 
             case BISHOP:
-                return Validation.isDiagonal(Main.pieces, this);
+                return Validation.isDiagonal(boardPosition, this);
      
             case KNIGHT:
-                return Validation.isKnight(Main.pieces, this);
+                return Validation.isKnight(boardPosition, this);
                 
             default:
-                return Validation.isPawn(Main.pieces, this);
+                return Validation.isPawn(boardPosition, this);
         }
     }
     
@@ -122,7 +128,7 @@ public class Move {
                 Main.pieces.get(i).location.x = this.destination.x;
                 Main.pieces.get(i).location.y = this.destination.y;
                 
-                if(this.isCastling()) {
+                if(this.isCastling(Main.pieces)) {
                     System.out.println("need to find associated rook, and move it too");
                 }
             }

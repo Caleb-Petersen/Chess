@@ -53,7 +53,7 @@ public class Square {
             move = new Move(boardPosition.get(i), this);
             //the piece must be of opposite colour
             if(move.piece.pieceColour.equals(playerColour) == false) {
-                if(move.isValidMove()) {
+                if(move.isValidMove(boardPosition)) {
                     return true;
                 }
             }

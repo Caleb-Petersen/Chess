@@ -16,5 +16,9 @@ public class MoveHistory {
     public MoveHistory(Move initMove, Position initPosition) {
         this.move = initMove;
         this.position = initPosition;
+        Piece piece = new Piece(Piece.TYPE.KING, Piece.COLOUR.BLACK, 0, 0);
+        piece.updatePossibleDestinations(initPosition.boardPosition);
+        piece.controlsSquare(initPosition.boardPosition, new Square(4,4));
     }
 }
+

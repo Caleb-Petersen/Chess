@@ -4,15 +4,18 @@
  * and open the template in the editor.
  */
 package Chess;
+
+import java.util.ArrayList;
+
 /**
  *
  * @author Caleb
  */
 public class ProcessMove {
     
-    public static void processMove(Move move) {
+    public static void processMove(ArrayList<Piece> boardPosition, Move move) {
         System.out.println("PROCESS MOVE");
-        if(move.isValidMove()) {
+        if(move.isValidMove(boardPosition)) {
             move.executeMove();
         }else {
             Main.infoBox("Error", "Invalid Move");

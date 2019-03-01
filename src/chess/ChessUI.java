@@ -93,7 +93,7 @@ public class ChessUI extends JPanel implements MouseListener{
         if(piece != null) {
             Move move = new Move(piece, destination);
             
-            if(move.isValidMove()) {
+            if(move.isValidMove(Main.pieces)) {
                 move.executeMove();
                 repaint();
             }else {

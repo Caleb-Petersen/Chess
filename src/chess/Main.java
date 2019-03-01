@@ -31,9 +31,11 @@ public class Main {
         //rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
         FEN initialPosition = new FEN("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R");
         
-        pieces = initialPosition.fenToBoardPosition();
+        //pieces = initialPosition.fenToBoardPosition();
         //FEN random = new FEN("");
         //random.createFEN(pieces);
+        
+        pieces.add(new Piece(Piece.TYPE.KING, Piece.COLOUR.BLACK, 5,5));
         Position position = new Position(initialPosition);
         SearchGraph graph = new SearchGraph(position, null);
         MoveHistory history = graph.search(pieces, new ArrayList<>(), null, 0);

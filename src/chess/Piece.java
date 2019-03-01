@@ -122,7 +122,7 @@ public class Piece {
         if(this.possibleDestinations != null) {
             this.possibleDestinations.clear();
         }else {
-            this.possibleDestinations = new ArrayList<Square>();
+            this.possibleDestinations = new ArrayList<>();
         }
             
         for (int x = 0; x < 8; x++) {
