@@ -107,7 +107,7 @@ public class Move {
         }
     }
     
-    public void executeMove() {
+    public void executeMove(ArrayList<Piece> boardPosition) {
         /**
          * @param none
          * @returns nothing
@@ -116,19 +116,18 @@ public class Move {
         
         //If a piece was captured, remove it from the main array, 
         //add it to the deleted pieces array for graphical purpososes
-        for(int i=0; i<Main.pieces.size(); i++) {
-            if(Main.pieces.get(i).location.x == this.destination.x && Main.pieces.get(i).location.y == this.destination.y) {
-                Main.deletedPieces.add(Main.pieces.get(i));
-                Main.pieces.remove(i);
+        for(int i=0; i<boardPosition.size(); i++) {
+            if(boardPosition.get(i).location.x == this.destination.x && boardPosition.get(i).location.y == this.destination.y) {
+                boardPosition.remove(i);
             }
         }
-        for(int i=0; i< Main.pieces.size(); i++) {
-            if(Main.pieces.get(i) == this.piece) {
-                Main.pieces.get(i).hasMoved = true;
-                Main.pieces.get(i).location.x = this.destination.x;
-                Main.pieces.get(i).location.y = this.destination.y;
+        for(int i=0; i< boardPosition.size(); i++) {
+            if(boardPosition.get(i) == this.piece) {
+                boardPosition.get(i).hasMoved = true;
+                boardPosition.get(i).location.x = this.destination.x;
+                boardPosition.get(i).location.y = this.destination.y;
                 
-                if(this.isCastling(Main.pieces)) {
+                if(this.isCastling(boardPosition)) {
                     System.out.println("need to find associated rook, and move it too");
                 }
             }

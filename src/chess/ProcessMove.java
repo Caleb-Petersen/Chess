@@ -16,7 +16,7 @@ public class ProcessMove {
     public static void processMove(ArrayList<Piece> boardPosition, Move move) {
         System.out.println("PROCESS MOVE");
         if(move.isValidMove(boardPosition)) {
-            move.executeMove();
+            move.executeMove(boardPosition);
         }else {
             Main.infoBox("Error", "Invalid Move");
         }
