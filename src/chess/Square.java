@@ -16,8 +16,13 @@ public class Square {
     public int x;
     
     public Square(int initX,int initY) {
-        y = initY;
-        x = initX;
+        this.y = initY;
+        this.x = initX;
+    }
+    
+    public Square(Square s) {
+        this.x = s.x;
+        this.y = s.y;
     }
     
     public boolean isPieceOnSquare(Position position) {

@@ -5,8 +5,6 @@
  */
 package Chess;
 
-import java.util.ArrayList;
-
 /**
  * 
  * @author Caleb
@@ -19,6 +17,12 @@ public class Move {
         this.piece = p;
         this.destination = s;
     }
+    
+    public Move(Move m) {
+        this.piece = new Piece(m.piece);
+        this.destination = new Square(m.destination);
+    }
+    
     public boolean moveIsEnpassant(Position position) {
         /**
          * @param none

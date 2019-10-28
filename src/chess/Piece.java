@@ -45,61 +45,13 @@ public class Piece {
         this.pieceImage = this.getImage();
     }
     
-    public BufferedImage getImage() {
-        /**
-         * @param none
-         * @returns BufferedImage
-         */
-        BufferedImage whiteKing = null, whiteQueen = null, whiteRook = null, whiteBishop = null, whiteKnight = null, whitePawn = null;
-        BufferedImage blackKing = null, blackQueen = null, blackRook = null, blackBishop = null, blackKnight = null, blackPawn = null;
-        try {
-            whiteKing = ImageIO.read(getClass().getResource("Images/whiteKing.jpg"));
-            whiteQueen = ImageIO.read(getClass().getResource("Images/whiteQueen.jpg"));
-            whiteRook = ImageIO.read(getClass().getResource("Images/whiteRook.jpg"));
-            whiteBishop = ImageIO.read(getClass().getResource("Images/whiteBishop.jpg"));
-            whiteKnight = ImageIO.read(getClass().getResource("Images/whiteKnight.jpg"));
-            whitePawn = ImageIO.read(getClass().getResource("Images/whitePawn.jpg"));
-            blackKing = ImageIO.read(getClass().getResource("Images/blackKing.jpg"));
-            blackQueen = ImageIO.read(getClass().getResource("Images/blackQueen.jpg"));
-            blackRook = ImageIO.read(getClass().getResource("Images/blackRook.jpg"));
-            blackBishop = ImageIO.read(getClass().getResource("Images/blackBishop.jpg"));
-            blackKnight = ImageIO.read(getClass().getResource("Images/blackKnight.jpg"));
-            blackPawn = ImageIO.read(getClass().getResource("Images/blackPawn.jpg"));
-        } catch (IOException e) {
-            Main.infoBox("Could not read in the image files: " + e.toString(), "IOException");
-        }
-        
-        if(this.pieceColour == COLOUR.WHITE) {
-            switch (this.pieceType) {
-                case KING:
-                    return whiteKing;
-                case QUEEN:
-                    return whiteQueen;
-                case ROOK:
-                    return whiteRook;
-                case BISHOP:
-                    return whiteBishop;
-                case KNIGHT:
-                    return whiteKnight;
-                default:
-                    return whitePawn;
-            }
-        }else {
-            switch (this.pieceType) {
-                case KING:
-                    return blackKing;
-                case QUEEN:
-                    return blackQueen;
-                case ROOK:
-                    return blackRook;
-                case BISHOP:
-                    return blackBishop;
-                case KNIGHT:
-                    return blackKnight;
-                default:
-                    return blackPawn;
-            }
-        }
+    public Piece(Piece p) {
+        this.pieceType = p.pieceType;
+        this.pieceColour = p.pieceColour;
+        this.location = new Square(p.location.x, p.location.y);
+        this.hasMoved = false;
+        this.possibleDestinations = null;
+        this.pieceImage = this.getImage();
     }
     
     public void updatePossibleDestinations(Position position) {
@@ -238,5 +190,62 @@ public class Piece {
             identifier = Character.toUpperCase(identifier);
         }
         return Character.toString(identifier);
+    }
+    
+    public BufferedImage getImage() {
+        /**
+         * @param none
+         * @returns BufferedImage
+         */
+        BufferedImage whiteKing = null, whiteQueen = null, whiteRook = null, whiteBishop = null, whiteKnight = null, whitePawn = null;
+        BufferedImage blackKing = null, blackQueen = null, blackRook = null, blackBishop = null, blackKnight = null, blackPawn = null;
+        try {
+            whiteKing = ImageIO.read(getClass().getResource("Images/whiteKing.jpg"));
+            whiteQueen = ImageIO.read(getClass().getResource("Images/whiteQueen.jpg"));
+            whiteRook = ImageIO.read(getClass().getResource("Images/whiteRook.jpg"));
+            whiteBishop = ImageIO.read(getClass().getResource("Images/whiteBishop.jpg"));
+            whiteKnight = ImageIO.read(getClass().getResource("Images/whiteKnight.jpg"));
+            whitePawn = ImageIO.read(getClass().getResource("Images/whitePawn.jpg"));
+            blackKing = ImageIO.read(getClass().getResource("Images/blackKing.jpg"));
+            blackQueen = ImageIO.read(getClass().getResource("Images/blackQueen.jpg"));
+            blackRook = ImageIO.read(getClass().getResource("Images/blackRook.jpg"));
+            blackBishop = ImageIO.read(getClass().getResource("Images/blackBishop.jpg"));
+            blackKnight = ImageIO.read(getClass().getResource("Images/blackKnight.jpg"));
+            blackPawn = ImageIO.read(getClass().getResource("Images/blackPawn.jpg"));
+        } catch (IOException e) {
+            Main.infoBox("Could not read in the image files: " + e.toString(), "IOException");
+        }
+        
+        if(this.pieceColour == COLOUR.WHITE) {
+            switch (this.pieceType) {
+                case KING:
+                    return whiteKing;
+                case QUEEN:
+                    return whiteQueen;
+                case ROOK:
+                    return whiteRook;
+                case BISHOP:
+                    return whiteBishop;
+                case KNIGHT:
+                    return whiteKnight;
+                default:
+                    return whitePawn;
+            }
+        }else {
+            switch (this.pieceType) {
+                case KING:
+                    return blackKing;
+                case QUEEN:
+                    return blackQueen;
+                case ROOK:
+                    return blackRook;
+                case BISHOP:
+                    return blackBishop;
+                case KNIGHT:
+                    return blackKnight;
+                default:
+                    return blackPawn;
+            }
+        }
     }
 }

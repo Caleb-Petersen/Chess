@@ -20,5 +20,10 @@ public class MoveHistory {
         piece.updatePossibleDestinations(initPosition);
         piece.controlsSquare(initPosition, new Square(4,4));
     }
+    
+    public MoveHistory(MoveHistory mh) {
+        this.move = new Move(mh.move);
+        this.position = new Position(mh.position);
+    }
 }
 

@@ -30,18 +30,13 @@ public class Position {
         /**
          * Creates a deep copy of the boardPosition array for a new position
          */
-        
         ArrayList<Piece> copy = new ArrayList<>();
 
         for(Piece piece : p.boardPosition) {
-            Piece copyPiece = new Piece(piece.pieceType, piece.pieceColour, piece.location.x, piece.location.y);
-            copy.add(copyPiece);
+            copy.add(new Piece(piece));
         }
         
-        //NOTE: MoveHistory is only read from, so a direct copy is fine (for now)
         this.boardPosition = copy;
-        this.lastMove = p.lastMove;
-        
+        this.lastMove = new MoveHistory(p.lastMove);
     }
-    
 }
