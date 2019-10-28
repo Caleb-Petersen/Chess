@@ -44,19 +44,6 @@ public class Piece {
         this.possibleDestinations = null;
         this.pieceImage = this.getImage();
     }
-    public boolean moveLegal(int x, int y) {
-        /**
-         * @param a possible destination for a piece.
-         * @returns a boolean indicating whether or not the piece can move to that destination
-         * Note: The possible destinations array is assumed to be updated
-         */
-        for(int i=0; i<this.possibleDestinations.size(); i++) {
-            if(this.possibleDestinations.get(i).x == x && this.possibleDestinations.get(i).y == y) {
-                return true;
-            }
-        }
-        return false;
-    }
     
     public BufferedImage getImage() {
         /**
@@ -115,7 +102,7 @@ public class Piece {
         }
     }
     
-    public void updatePossibleDestinations(ArrayList<Piece> boardPosition) {
+    public void updatePossibleDestinations(Position position) {
         /*
         *Function purpose: to update the array of locations that the piece can move to
         */
@@ -129,85 +116,82 @@ public class Piece {
             for (int y = 0; y < 8; y++) {
                 Square square = new Square(x,y);
                 Move move = new Move(this, square);
+                
+                //don't let the square be the one the piece is currently on
+                if(!(this.location.x == x && this.location.y == y)) {
+                    switch(this.pieceType) {
+                        case KING:
+                            if(Validation.isKing(position, move)) { //&& !proccessCheck(this, x, y            
+                                possibleDestinations.add(square);
+                            }
+                            break;
+                        case QUEEN:
+                            if((Validation.isDiagonal(position, move) || Validation.isStraight(position, move)) ) { //&&!proccessCheck(this, x, y)
+                                possibleDestinations.add(square);
+                            }
+                            break;
 
-                switch(this.pieceType) {
-                    case KING:
-                        if(Validation.isKing(boardPosition, move)) { //&& !proccessCheck(this, x, y            
-                            possibleDestinations.add(square);
-                        }
-                        break;
-                    case QUEEN:
-                        if((Validation.isDiagonal(boardPosition, move) || Validation.isStraight(boardPosition, move)) ) { //&&!proccessCheck(this, x, y)
-                            possibleDestinations.add(square);
-                        }
-                        break;
-                    
-                    case ROOK:
-                        if(Validation.isStraight(boardPosition, move) ) { //&& !proccessCheck(this.x, x, this.y, y, null)
-                            possibleDestinations.add(square);
-                        }
-                        break;
-                    
-                        
-                    case BISHOP:
-                        if(Validation.isDiagonal(boardPosition, move)) { //&&!proccessCheck(this.x, x, this.y, y, null)
-                            possibleDestinations.add(square);
-                        }
-                        break;
-                    
-                    case KNIGHT:
-                        if(Validation.isKnight(boardPosition, move) ) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
-                            possibleDestinations.add(square);  
-                        }
-                        break;
-                    
-                    default:
-                        if(Validation.isPawn(boardPosition, move)) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
-                            possibleDestinations.add(square);  
-                        }
-                        break;
+                        case ROOK:
+                            if(Validation.isStraight(position, move) ) { //&& !proccessCheck(this.x, x, this.y, y, null)
+                                possibleDestinations.add(square);
+                            }
+                            break;
+
+
+                        case BISHOP:
+                            if(Validation.isDiagonal(position, move)) { //&&!proccessCheck(this.x, x, this.y, y, null)
+                                possibleDestinations.add(square);
+                            }
+                            break;
+
+                        case KNIGHT:
+                            if(Validation.isKnight(position, move) ) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
+                                possibleDestinations.add(square);  
+                            }
+                            break;
+
+                        default:
+                            if(Validation.isPawn(position, move)) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
+                                possibleDestinations.add(square);  
+                            }
+                            break;
+                    }
                 }
             }
         }
     }
     
-    public boolean controlsSquare(ArrayList<Piece> boardPosition, Square square) {
+    public boolean controlsSquare(Position position, Square square) {
         
         Move move = new Move(this, square);
         
         switch(this.pieceType) {
             case KING:
-                return Validation.isKing(boardPosition, move);
+                return Validation.isKing(position, move);
                 
             case QUEEN:
-                return (Validation.isDiagonal(boardPosition, move) || Validation.isStraight(boardPosition, move)); 
+                return (Validation.isDiagonal(position, move) || Validation.isStraight(position, move)); 
 
             case ROOK:
-                return Validation.isStraight(boardPosition, move);
+                return Validation.isStraight(position, move);
 
             case BISHOP:
-                return Validation.isDiagonal(boardPosition, move);
+                return Validation.isDiagonal(position, move);
 
             case KNIGHT:
-                return Validation.isKnight(boardPosition, move);
+                return Validation.isKnight(position, move);
 
             default:
-                return Validation.isPawn(boardPosition, move);
+                return Validation.isPawn(position, move);
     
         }
     }
     
-    public boolean isInCheck(ArrayList<Piece> boardPosition, Square kingLocation) {
-        if(this.pieceType.equals("king")) {
-            Piece piece = null;
-            for(int i=0; i<boardPosition.size(); i++) {
-                piece = boardPosition.get(i);
-                
-                //the piece must be of opposite colour
-                if(piece.pieceColour.equals(this.pieceColour) == false) {
-                    if(piece.controlsSquare(boardPosition, kingLocation)) {
-                        return true;
-                    }
+    public boolean isAttacked(Position boardPosition) {
+        for(Piece piece : boardPosition.boardPosition) {
+            if(piece.pieceColour != this.pieceColour) {
+                if(piece.controlsSquare(boardPosition, this.location)) {
+                    return true;
                 }
             }
         }
@@ -215,10 +199,7 @@ public class Piece {
     }
     
     public boolean pieceOnSquare(Square square) {
-        if(this.location.y == square.y && this.location.x == square.x) {
-            return true;
-        }
-        return false;
+        return this.location.y == square.y && this.location.x == square.x;
     }
     
     public String identifier() {

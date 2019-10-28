@@ -13,10 +13,10 @@ import java.util.ArrayList;
  */
 public class ProcessMove {
     
-    public static void processMove(ArrayList<Piece> boardPosition, Move move) {
+    public static void processMove(Position position, Move move) {
         System.out.println("PROCESS MOVE");
-        if(move.isValidMove(boardPosition)) {
-            move.executeMove(boardPosition);
+        if(move.isValidMove(position)) {
+            move.executeMove(position);
         }else {
             Main.infoBox("Error", "Invalid Move");
         }

@@ -93,8 +93,9 @@ public class ChessUI extends JPanel implements MouseListener{
         if(piece != null) {
             Move move = new Move(piece, destination);
             
-            if(move.isValidMove(Main.pieces)) {
-                move.executeMove(Main.pieces);
+            Position position = new Position(Main.pieces);
+            if(move.isValidMove(position)) {
+                move.executeMove(position);
                 repaint();
             }else {
                 Main.infoBox("Invalid Move!", "Error");

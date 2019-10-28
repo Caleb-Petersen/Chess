@@ -12,6 +12,7 @@ package Chess;
 import engine.SearchGraph;
 import java.awt.EventQueue;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Main {
@@ -29,19 +30,21 @@ public class Main {
     private static void displayChessBoard(){
         //The initial position in an position string
         //rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
-        FEN initialPosition = new FEN("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R");
         
-        //pieces = initialPosition.fenToBoardPosition();
+        //rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R
+        FEN initialPosition = new FEN(Constants.ORIGINAL_POSITION_FEN);
+        
+        pieces = initialPosition.fenToBoardPosition();
         //FEN random = new FEN("");
         //random.createFEN(pieces);
         
-        pieces.add(new Piece(Piece.TYPE.KING, Piece.COLOUR.BLACK, 5,5));
-        Position position = new Position(initialPosition);
-        SearchGraph graph = new SearchGraph(position, null);
-        MoveHistory history = graph.search(pieces, new ArrayList<>(), null, 0);
-        System.out.println(history.move.destination.x);
+        //pieces.add(new Piece(Piece.TYPE.KING, Piece.COLOUR.BLACK, 5,5));
+        //Position position = new Position(initialPosition);
+        //SearchGraph graph = new SearchGraph(position, null);
+        //MoveHistory history = graph.search(pieces, new ArrayList<>(), null, 0);
+        //System.out.println(history.move.destination.x);
         /*
-        position testing = new position("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R");
+        Position testing = new Position("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R");
         ArrayList<Piece> jazz = new ArrayList<Piece>();
         jazz = testing.fenToBoardPosition();
         position rand = new position("");
@@ -49,7 +52,7 @@ public class Main {
         System.out.println(rand.position.equals("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R"));
         System.out.println(rand.position);
         */
-        /*
+        
         ChessUI chessUI = new ChessUI();
         
         //set up the JFrame
@@ -62,7 +65,7 @@ public class Main {
         
         frame.setLocationRelativeTo( null );
         frame.setVisible(true);
-        */
+        
     }
     public static void infoBox(String infoMessage, String titleBar) {
         /**

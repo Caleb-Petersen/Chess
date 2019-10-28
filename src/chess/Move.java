@@ -45,7 +45,7 @@ public class Move {
                 //check to see that the pawn was one column removed from the destination destination (e.g the e file to the f file)
                 if(Math.abs(this.piece.location.x - this.destination.x) == 1) {
                     //Check to see if the piece on the destination above the destination destination contains a pawn
-                    if(this.destination.isPieceOnSquare(position.boardPosition) == false) { //Check may not be necessary as we don't need to know about validity
+                    if(this.destination.isPieceOnSquare(position) == false) { //Check may not be necessary as we don't need to know about validity
                         //Check to ensure that the enpassant is actually capturing a piece
                         Square square = new Square(this.destination.x, (this.destination.y - direction));
                         if(square.pieceOnSquare(position) == Piece.TYPE.PAWN) {
@@ -58,7 +58,7 @@ public class Move {
         return false;
     }
     
-    public boolean isCastling(ArrayList<Piece> boardPosition) {
+    public boolean isCastling(Position position) {
         /**
          * Function purpose: To determine if a move involves castling
          * NOTE:this function must be used alongside the isValidMove function
@@ -73,14 +73,14 @@ public class Move {
         
         if(this.piece.pieceType == Piece.TYPE.KING) {
             if(Math.abs(this.piece.location.x - this.destination.x) == 2) {
-                if(this.isValidMove(boardPosition)) {
+                if(this.isValidMove(position)) {
                     return true;
                 }
             }
         }
         return false;
     }
-    public boolean isValidMove(ArrayList<Piece> boardPosition) {
+    public boolean isValidMove(Position position) {
         /**
          * @param none
          * @returns whether or not a move is valid
@@ -88,26 +88,26 @@ public class Move {
         System.out.println("CHecking to see if a move is valid for piece " + this.piece.pieceType);
         switch(this.piece.pieceType) {
             case KING:
-                return Validation.isKing(boardPosition, this);
+                return Validation.isKing(position, this);
                 
             case QUEEN:
-                return Validation.isDiagonal(boardPosition, this) && Validation.isStraight(Main.pieces, this);
+                return Validation.isDiagonal(position, this) && Validation.isStraight(position, this);
                 
             case ROOK:
-                return Validation.isStraight(boardPosition, this);
+                return Validation.isStraight(position, this);
                 
             case BISHOP:
-                return Validation.isDiagonal(boardPosition, this);
+                return Validation.isDiagonal(position, this);
      
             case KNIGHT:
-                return Validation.isKnight(boardPosition, this);
+                return Validation.isKnight(position, this);
                 
             default:
-                return Validation.isPawn(boardPosition, this);
+                return Validation.isPawn(position, this);
         }
     }
     
-    public void executeMove(ArrayList<Piece> boardPosition) {
+    public void executeMove(Position position) {
         /**
          * @param none
          * @returns nothing
@@ -116,18 +116,18 @@ public class Move {
         
         //If a piece was captured, remove it from the main array, 
         //add it to the deleted pieces array for graphical purpososes
-        for(int i=0; i<boardPosition.size(); i++) {
-            if(boardPosition.get(i).location.x == this.destination.x && boardPosition.get(i).location.y == this.destination.y) {
-                boardPosition.remove(i);
+        for(int i=0; i<position.boardPosition.size(); i++) {
+            if(position.boardPosition.get(i).location.x == this.destination.x && position.boardPosition.get(i).location.y == this.destination.y) {
+                position.boardPosition.remove(i);
             }
         }
-        for(int i=0; i< boardPosition.size(); i++) {
-            if(boardPosition.get(i) == this.piece) {
-                boardPosition.get(i).hasMoved = true;
-                boardPosition.get(i).location.x = this.destination.x;
-                boardPosition.get(i).location.y = this.destination.y;
+        for(int i=0; i< position.boardPosition.size(); i++) {
+            if(position.boardPosition.get(i) == this.piece) {
+                position.boardPosition.get(i).hasMoved = true;
+                position.boardPosition.get(i).location.x = this.destination.x;
+                position.boardPosition.get(i).location.y = this.destination.y;
                 
-                if(this.isCastling(boardPosition)) {
+                if(this.isCastling(position)) {
                     System.out.println("need to find associated rook, and move it too");
                 }
             }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author Caleb
  */
 public class Validation {
-     public static boolean isDiagonal(ArrayList<Piece> boardPosition, Move move) {
+     public static boolean isDiagonal(Position position, Move move) {
         /**
          * @param boardPosition contains the current state of the board
          * @param move is the move in the current board position that is be assessed for validity
@@ -46,21 +46,21 @@ public class Validation {
                    
                     yLocation = yLocation + slope;
                     
-                    for(int j=0; j<boardPosition.size(); j++) {
+                    for(int j=0; j<position.boardPosition.size(); j++) {
                         Square square = new Square(i, yLocation);
-                        if(boardPosition.get(j).pieceOnSquare(square)) {
+                        if(position.boardPosition.get(j).pieceOnSquare(square)) {
                             return false;
                         }
                     }
                 }
                 //The piece colours must be different, or the destination must be empty
-                return isValidDestination(boardPosition, move);
+                return isValidDestination(position, move);
             }
         }
         return false;
     }
 
-    public static boolean isStraight(ArrayList<Piece> boardPosition, Move move) {
+    public static boolean isStraight(Position position, Move move) {
         /**
          * @param boardPosition contains the current state of the board
          * @param move is the move in the current board position that is be assessed for validity
@@ -79,8 +79,8 @@ public class Validation {
             for (int i = (minX + 1); i < maxX; i++) {
                 Square square = new Square(i, move.piece.location.y);
                 
-                for(int j=0; j<boardPosition.size(); j++) {
-                    if(boardPosition.get(j).pieceOnSquare(square)) {
+                for(int j=0; j<position.boardPosition.size(); j++) {
+                    if(position.boardPosition.get(j).pieceOnSquare(square)) {
                         return false;
                     }
                 }
@@ -93,8 +93,8 @@ public class Validation {
             for (int i = (minY + 1); i < maxY; i++) {
                 Square square = new Square(move.piece.location.y, i );
                 
-                for(int j=0; j<boardPosition.size(); j++) {
-                    if(boardPosition.get(j).pieceOnSquare(square)) {
+                for(int j=0; j<position.boardPosition.size(); j++) {
+                    if(position.boardPosition.get(j).pieceOnSquare(square)) {
                         return false;
                     }
                 }
@@ -104,10 +104,10 @@ public class Validation {
             return false;
         }
         //Checking to see that the piece on the destination destination doesn't have a piece of the same colour on it
-        return isValidDestination(boardPosition, move);
+        return isValidDestination(position, move);
     }
 
-    public static boolean isKnight(ArrayList<Piece> boardPosition, Move move) {
+    public static boolean isKnight(Position position, Move move) {
         /**
          * @param boardPosition contains the current state of the board
          * @param move is the move in the current board position that is be assessed for validity
@@ -127,12 +127,12 @@ public class Validation {
         }
         if(validLocation) {
             //Check to make sure that the destination destination doesn't have a piece of the same colour on it
-            return isValidDestination(boardPosition, move);
+            return isValidDestination(position, move);
         }
         return false;
     }
     
-    public static boolean isKing(ArrayList<Piece> boardPosition, Move move) {
+    public static boolean isKing(Position position, Move move) {
         /**
          * @param boardPosition contains the current state of the board
          * @param move is the move in the current board position that is be assessed for validity
@@ -147,7 +147,7 @@ public class Validation {
                 || (Math.abs(move.destination.y - move.piece.location.y) == 1 && (Math.abs(move.destination.x - move.piece.location.x)) == 0)
                 || (Math.abs(move.destination.y - move.piece.location.y) == 1 && (Math.abs(move.destination.x - move.piece.location.x)) == 1))) {
             
-            return isValidDestination(boardPosition, move);
+            return isValidDestination(position, move);
         } else if (Math.abs(move.destination.x - move.piece.location.x) == 2 && move.destination.y - move.piece.location.y == 0) {
             
             if ((move.destination.x - move.piece.location.x) == -2) {
@@ -155,10 +155,10 @@ public class Validation {
                 
                 //Find the rook that matches the king
                 Piece rook = null;
-                for(int i=0; i<boardPosition.size(); i++) {
+                for(int i=0; i<position.boardPosition.size(); i++) {
                     //For queenside castling, the x position of the rook will be zero, and the y will match that of the king
-                    if(boardPosition.get(i).location.x == 0 && boardPosition.get(i).location.y == move.piece.location.y) {
-                        rook = boardPosition.get(i);
+                    if(position.boardPosition.get(i).location.x == 0 && position.boardPosition.get(i).location.y == move.piece.location.y) {
+                        rook = position.boardPosition.get(i);
                     }
                 } 
                 
@@ -168,17 +168,17 @@ public class Validation {
                     //      1. The square isn't controlled by an opponent's piece
                     //      2. The square isn't occupied
                     
-                    if(move.piece.isInCheck(boardPosition,move.piece.location) == false) {
+                    if(move.piece.isAttacked(position) == false) {
                         //NOTE:: could convert this to an array to avoid having the three variables
                         Square oneLeft = new Square(move.piece.location.x - 1, move.piece.location.y);
                         Square twoLeft = new Square(move.piece.location.x - 2, move.piece.location.y);
                         Square threeLeft = new Square(move.piece.location.x - 3, move.piece.location.y);
 
-                        if(oneLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
-                                oneLeft.isPieceOnSquare(boardPosition) == false &&
-                                twoLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
-                                twoLeft.isPieceOnSquare(boardPosition) == false &&
-                                threeLeft.isPieceOnSquare(boardPosition) == false) {
+                        if(oneLeft.squareControlled(position, move.piece.pieceColour) == false &&
+                                oneLeft.isPieceOnSquare(position) == false &&
+                                twoLeft.squareControlled(position, move.piece.pieceColour) == false &&
+                                twoLeft.isPieceOnSquare(position) == false &&
+                                threeLeft.isPieceOnSquare(position) == false) {
 
                             return true;
                         }
@@ -189,10 +189,10 @@ public class Validation {
                 
                 //Find the rook that matches the king
                 Piece rook = null;
-                for(int i=0; i<boardPosition.size(); i++) {
-                    //For queenside castling, the x position of the rook will be 7, and the y will match that of the king
-                    if(boardPosition.get(i).location.x == 7 && boardPosition.get(i).location.y == move.piece.location.y) {
-                        rook = boardPosition.get(i);
+                for(int i=0; i<position.boardPosition.size(); i++) {
+                    //For queenside castling, thhe x position of the rook will be 7, and the y will match that of the king
+                    if(position.boardPosition.get(i).location.x == 7 && position.boardPosition.get(i).location.y == move.piece.location.y) {
+                        rook = position.boardPosition.get(i);
                     }
                 } 
                 
@@ -201,14 +201,14 @@ public class Validation {
                     //get all of the squares between the king and the rook and check that
                     //      1. The square isn't controlled by an opponent's piece
                     //      2. The square isn't occupied
-                    if(move.piece.isInCheck(boardPosition, move.piece.location) == false) {
+                    if(move.piece.isAttacked(position) == false) {
                         Square oneLeft = new Square(move.piece.location.x + 1, move.piece.location.y);
                         Square twoLeft = new Square(move.piece.location.x + 2, move.piece.location.y);
                         
-                        if(oneLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
-                                oneLeft.isPieceOnSquare(boardPosition) == false &&
-                                twoLeft.squareControlled(boardPosition, move.piece.pieceColour) == false &&
-                                twoLeft.isPieceOnSquare(boardPosition) == false) {
+                        if(oneLeft.squareControlled(position, move.piece.pieceColour) == false &&
+                                oneLeft.isPieceOnSquare(position) == false &&
+                                twoLeft.squareControlled(position, move.piece.pieceColour) == false &&
+                                twoLeft.isPieceOnSquare(position) == false) {
 
                             return true;
                         }
@@ -219,9 +219,9 @@ public class Validation {
         return false;
     }
     
-    public static boolean isPawn(ArrayList<Piece> boardPosition, Move move) {
+    public static boolean isPawn(Position position, Move move) {
         /**
-         * @param boardPosition contains the current state of the board
+         * @param position contains the current state of the board
          * @param move is the move in the current board position that is be assessed for validity
          * @returns boolean indicating whether or not the move is valid
          * The Algorithm
@@ -243,20 +243,20 @@ public class Validation {
         if ((move.destination.x == move.piece.location.x) && ((move.destination.y - move.piece.location.y) == direction)) {
             //This occurs if the pawn is attempted to have be moved forward once
             //Check to see that the destination square is empty (the move is valid)
-            return destinationSquare.isPieceOnSquare(boardPosition) == false;
+            return destinationSquare.isPieceOnSquare(position) == false;
             
         } else if ((move.destination.x == move.piece.location.x) && ((move.destination.y - move.piece.location.y) == (direction*2)) && move.piece.hasMoved == false) {
             //This is if the pawn has been attempted to have been moved two forward
             //The pawn can't have moved, and the two squares in front need to be empty
             Square intermediateSquare = new Square(move.destination.x, (move.destination.y - direction));
             
-            return destinationSquare.isPieceOnSquare(boardPosition) == false && intermediateSquare.isPieceOnSquare(boardPosition) == false;
+            return destinationSquare.isPieceOnSquare(position) == false && intermediateSquare.isPieceOnSquare(position) == false;
             
         } else if (move.destination.y == (move.piece.location.y + direction) && (move.destination.x == (move.piece.location.x + 1) || move.destination.x == (move.piece.location.x - 1))) {
             //a capture or enpassant was attempted
-            for(int i=0; i<boardPosition.size(); i++) {
-                if(boardPosition.get(i).location.x == move.destination.x && boardPosition.get(i).location.y == move.destination.y) {
-                    if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
+            for(int i=0; i<position.boardPosition.size(); i++) {
+                if(position.boardPosition.get(i).location.x == move.destination.x && position.boardPosition.get(i).location.y == move.destination.y) {
+                    if(position.boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
                         return false;
                     }
                     //a capture was attempted
@@ -286,7 +286,7 @@ public class Validation {
             }
         }
         
-        return validLocation && isValidDestination(boardPosition, move);
+        return validLocation && isValidDestination(position, move);
         /*
         if(validLocation) {
             //check to see if there is a piece on the destination destination
@@ -318,16 +318,16 @@ public class Validation {
         } 
         return true;
     }
-    public static boolean isValidDestination(ArrayList<Piece> boardPosition, Move move) {
+    public static boolean isValidDestination(Position position, Move move) {
         /**
-         * @param boardPosition contains the current state of the board
+         * @param position contains the current state of the board
          * @param move is the move in the current board position that is be assessed for validity
          * @returns boolean indicating whether or not the destination square contains a piece of the same colour as the one being moved
          */  
         Square square = new Square(move.destination.x, move.destination.y);
-        for(int i=0; i<boardPosition.size(); i++) {
-            if(boardPosition.get(i).pieceOnSquare(square)) {
-                if(boardPosition.get(i).pieceColour == move.piece.pieceColour){
+        for(int i=0; i<position.boardPosition.size(); i++) {
+            if(position.boardPosition.get(i).pieceOnSquare(square)) {
+                if(position.boardPosition.get(i).pieceColour == move.piece.pieceColour){
                     return false;
                 }
             }

@@ -20,13 +20,13 @@ public class Square {
         x = initX;
     }
     
-    public boolean isPieceOnSquare(ArrayList<Piece> boardPosition) {
+    public boolean isPieceOnSquare(Position position) {
         /**
-         * @param boardPostion an array of pieces showing the current state of the position
+         * @param position an array of pieces showing the current state of the position
          * @returns boolean indicating whether or not the piece is on a square
          */
-        for(int i=0; i<boardPosition.size(); i++) {
-            if(boardPosition.get(i).location.x == this.x && boardPosition.get(i).location.y == this.y) {
+        for(int i=0; i<position.boardPosition.size(); i++) {
+            if(position.boardPosition.get(i).location.x == this.x && position.boardPosition.get(i).location.y == this.y) {
                 return true;
             }
         }
@@ -41,19 +41,19 @@ public class Square {
         //TODO: Get a return type that is not null (empty piece type in enum maybe?)
         return null; //shouldn't get here if called, always call isPieceOnSquare first or use in boolean check
     }
-    public boolean squareControlled(ArrayList<Piece> boardPosition, Piece.COLOUR playerColour) {
+    public boolean squareControlled(Position position, Piece.COLOUR playerColour) {
         /**
-         * @param boardPosition contains the current state of the board
+         * @param position contains the current state of the board
          * @param playerColour is the string containing the colour of the player's pieces
          * @returns boolean indicating whether or not the opposing team controls a given square
          */
         
         Move move = null;
-        for(int i=0; i<boardPosition.size(); i++) {
-            move = new Move(boardPosition.get(i), this);
+        for(int i=0; i<position.boardPosition.size(); i++) {
+            move = new Move(position.boardPosition.get(i), this);
             //the piece must be of opposite colour
             if(move.piece.pieceColour.equals(playerColour) == false) {
-                if(move.isValidMove(boardPosition)) {
+                if(move.isValidMove(position)) {
                     return true;
                 }
             }
