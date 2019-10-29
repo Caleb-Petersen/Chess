@@ -17,4 +17,9 @@ public class Constants {
     public static int BISHOP_VALUE = 3;
     public static int KNIGHT_VALUE = 3;
     public static int PAWN_VALUE = 1;
+    
+    public static int BOTTOM_EVALUATION = -10000; //Constant for a very low evaluation
+    public static int TOP_EVALUATION = 10000; //Constant for a very high evaluation
+    
+    public static int SEARCH_DEPTH = 1;
 }

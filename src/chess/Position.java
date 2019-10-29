@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Position {
    // public FEN fen;
     public ArrayList<Piece> boardPosition;
-    public MoveHistory lastMove;
+    public Move lastMove;
     
     public Position(FEN initFEN) {
         this.boardPosition = initFEN.fenToBoardPosition();
@@ -23,9 +23,9 @@ public class Position {
     public Position(ArrayList<Piece> b) {
         this.boardPosition = b;
     }
-    public Position(ArrayList<Piece> b, MoveHistory mh) {
+    public Position(ArrayList<Piece> b, Move m) {
         this.boardPosition = b;
-        this.lastMove = mh;
+        this.lastMove = m;
     }
     public Position(Position p) {
         /**
@@ -38,7 +38,7 @@ public class Position {
         }
         
         this.boardPosition = copy;
-        this.lastMove = new MoveHistory(p.lastMove);
+        this.lastMove = new Move(p.lastMove);
     }
     
     public int getEvaluation() {
@@ -48,13 +48,13 @@ public class Position {
         for(Piece p : this.boardPosition) {
             evaluation += p.getValue();
         }
-        
+        System.out.println("Evaluation of the position is: " + evaluation);
         return evaluation;
     }
     
     public ArrayList<Move> generateMoves() {
         //Call generate moves with the opposite colour that is recorded in the move history
-        if(this.lastMove.move.piece.pieceColour == COLOUR.BLACK) {
+        if(this.lastMove.piece.pieceColour == COLOUR.BLACK) {
             return this.generateMoves(COLOUR.WHITE);
         }
         return this.generateMoves(COLOUR.BLACK);
@@ -63,7 +63,6 @@ public class Position {
     public ArrayList<Move> generateMoves(COLOUR colour) {
         //generates the possible moves for the colour specified
         ArrayList<Move> possibleMoves = new ArrayList<>();
-        System.out.println("This thing here");
         for(Piece piece : this.boardPosition) {
             //Ensure that the moves generated are for one colour only
             if(piece.pieceColour == colour) {

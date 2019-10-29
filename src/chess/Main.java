@@ -32,25 +32,16 @@ public class Main {
         
         //rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R
         FEN initialPosition = new FEN(Constants.ORIGINAL_POSITION_FEN);
-        
         pieces = initialPosition.fenToBoardPosition();
-        //FEN random = new FEN("");
-        //random.createFEN(pieces);
+        Position p = new Position(pieces);
+        Piece fakePiece = new Piece(Piece.TYPE.KING, Piece.COLOUR.BLACK, 0, 0);
+        Move fakeMove = new Move(fakePiece, new Square(0,1));
+        p.lastMove = fakeMove;
         
-        //pieces.add(new Piece(Piece.TYPE.KING, Piece.COLOUR.BLACK, 5,5));
-        //Position position = new Position(initialPosition);
-        //SearchGraph graph = new SearchGraph(position, null);
-        //MoveHistory history = graph.search(pieces, new ArrayList<>(), null, 0);
-        //System.out.println(history.move.destination.x);
-        /*
-        Position testing = new Position("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R");
-        ArrayList<Piece> jazz = new ArrayList<Piece>();
-        jazz = testing.fenToBoardPosition();
-        position rand = new position("");
-        rand.createFEN(jazz);
-        System.out.println(rand.position.equals("rnbqk2r/1pp1b1p1/3p4/p3p1np/4Pp2/2PPBN1P/PPQNBPP1/R3K2R"));
-        System.out.println(rand.position);
-        */
+        Move m = SearchGraph.findBestMove(p, Piece.COLOUR.WHITE);
+        
+        System.out.println("Move x-coordinate: " + m.piece.location.x);
+        System.out.println("Move y-coordinate: " + m.piece.location.y);
         
         ChessUI chessUI = new ChessUI();
         

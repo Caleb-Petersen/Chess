@@ -5,8 +5,6 @@
  */
 package Chess;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Caleb

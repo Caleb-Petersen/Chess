@@ -23,7 +23,7 @@ public class Move {
         this.destination = new Square(m.destination);
     }
     
-    public boolean moveIsEnpassant(Position position) {
+    public boolean isEnpassantAttempt(Position position) {
         /**
          * @param none
          * @returns a boolean indicating whether or not a move is enpassant
@@ -62,7 +62,7 @@ public class Move {
         return false;
     }
     
-    public boolean isCastling(Position position) {
+    public boolean isCastlingAttempt(Position position) {
         /**
          * Function purpose: To determine if a move involves castling
          * NOTE:this function must be used alongside the isValidMove function
@@ -77,9 +77,7 @@ public class Move {
         
         if(this.piece.pieceType == Piece.TYPE.KING) {
             if(Math.abs(this.piece.location.x - this.destination.x) == 2) {
-                if(this.isValidMove(position)) {
-                    return true;
-                }
+                return true;
             }
         }
         return false;
@@ -89,7 +87,6 @@ public class Move {
          * @param none
          * @returns whether or not a move is valid
          */
-        System.out.println("CHecking to see if a move is valid for piece " + this.piece.pieceType);
         switch(this.piece.pieceType) {
             case KING:
                 return Validation.isKing(position, this);
@@ -120,6 +117,7 @@ public class Move {
         
         //If a piece was captured, remove it from the main array, 
         //add it to the deleted pieces array for graphical purpososes
+        System.out.println("Executing the move");
         for(int i=0; i<position.boardPosition.size(); i++) {
             if(position.boardPosition.get(i).location.x == this.destination.x && position.boardPosition.get(i).location.y == this.destination.y) {
                 position.boardPosition.remove(i);
@@ -127,12 +125,18 @@ public class Move {
         }
         for(int i=0; i< position.boardPosition.size(); i++) {
             if(position.boardPosition.get(i) == this.piece) {
+                ///Move the piece to the destination square
                 position.boardPosition.get(i).hasMoved = true;
                 position.boardPosition.get(i).location.x = this.destination.x;
                 position.boardPosition.get(i).location.y = this.destination.y;
                 
-                if(this.isCastling(position)) {
+                //Handle edge cases
+                if(this.isCastlingAttempt(position)) {
                     System.out.println("need to find associated rook, and move it too");
+                }
+                
+                if(this.isEnpassantAttempt(position)) {
+                    System.out.println("Need to remove the captured pawn");
                 }
             }
         }
