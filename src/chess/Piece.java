@@ -154,6 +154,38 @@ public class Piece {
         return this.location.y == square.y && this.location.x == square.x;
     }
     
+    public int getValue() {
+        int value = 0;
+        switch(this.pieceType) {
+            case KING:
+                value += Constants.KING_VALUE;
+                break;
+            case QUEEN:
+                value += Constants.QUEEN_VALUE;
+                break;
+            case ROOK:
+                value += Constants.ROOK_VALUE;
+                break;
+            case BISHOP:
+                value += Constants.BISHOP_VALUE;
+                break;
+            case KNIGHT:
+                value += Constants.KNIGHT_VALUE;
+                break;
+            case PAWN:
+                value += Constants.PAWN_VALUE;
+                break;
+            default:
+                break;
+        }
+        
+        if(this.pieceColour == COLOUR.BLACK) {
+            value *= -1;
+        }
+        
+        return value;
+    }
+    
     public String identifier() {
         
         char identifier;

@@ -53,9 +53,8 @@ public class Square {
          * @returns boolean indicating whether or not the opposing team controls a given square
          */
         
-        Move move = null;
         for(int i=0; i<position.boardPosition.size(); i++) {
-            move = new Move(position.boardPosition.get(i), this);
+            Move move = new Move(position.boardPosition.get(i), this);
             //the piece must be of opposite colour
             if(move.piece.pieceColour.equals(playerColour) == false) {
                 if(move.isValidMove(position)) {

@@ -269,20 +269,10 @@ public class Validation {
                 //That pawn beside the pawn being moved must have just moved up two squares
                 
                 if(validLocation == false) {
-                    // validLocaiton == false => the destination square is empty
-                    
+                    //check for all of the other information
                 }
-                    //if(boardPosition.get(i).pieceOnSquare(square)) {
                         
-                    //}else {
-                        
-                        
-                        Square squareBeside = new Square(move.destination.x, move.piece.location.y);
-                        
-                        return false; 
-                    //}
-                
-                
+                return false; 
             }
         }
         

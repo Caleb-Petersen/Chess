@@ -5,6 +5,7 @@
  */
 package Chess;
 
+import Chess.Piece.COLOUR;
 import java.util.ArrayList;
 
 /**
@@ -39,4 +40,41 @@ public class Position {
         this.boardPosition = copy;
         this.lastMove = new MoveHistory(p.lastMove);
     }
+    
+    public int getEvaluation() {
+        int evaluation = 0;
+        
+        //Sum up the values of all of the pieces for rudimentary evaluation
+        for(Piece p : this.boardPosition) {
+            evaluation += p.getValue();
+        }
+        
+        return evaluation;
+    }
+    
+    public ArrayList<Move> generateMoves() {
+        //Call generate moves with the opposite colour that is recorded in the move history
+        if(this.lastMove.move.piece.pieceColour == COLOUR.BLACK) {
+            return this.generateMoves(COLOUR.WHITE);
+        }
+        return this.generateMoves(COLOUR.BLACK);
+    }
+    
+    public ArrayList<Move> generateMoves(COLOUR colour) {
+        //generates the possible moves for the colour specified
+        ArrayList<Move> possibleMoves = new ArrayList<>();
+        System.out.println("This thing here");
+        for(Piece piece : this.boardPosition) {
+            //Ensure that the moves generated are for one colour only
+            if(piece.pieceColour == colour) {
+                piece.updatePossibleDestinations(this);
+            
+                for(Square destinationSquare : piece.possibleDestinations) {
+                    possibleMoves.add(new Move(piece, destinationSquare));
+                }
+            }
+        }
+        return possibleMoves;
+    }
+    
 }

@@ -9,7 +9,6 @@ package Chess;
  *  
  * @author Caleb
 */
-import engine.SearchGraph;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -73,20 +72,5 @@ public class Main {
          * @param titleBar the title of the box displayed to the user
          */
         JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
-    }
-    
-    public static ArrayList<Piece> copyBoardPosition(ArrayList<Piece> boardPosition) {
-        /**
-         * @param boardPosition is the position that needs to be copied
-         * Creates a deep copy of the board position list
-         */
-        ArrayList<Piece> copy = new ArrayList<>();
-
-        for(Piece piece : boardPosition) {
-            Piece copyPiece = new Piece(piece.pieceType, piece.pieceColour,piece.location.x, piece.location.y);
-            copy.add(copyPiece);
-        }
-        
-        return copy;
     }
 }
