@@ -17,7 +17,7 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             public void run(){
                 //displayChessBoard();
-                ChessUI chessUI = new ChessUI();
+                Game game = new Game();
             }
         });
     }

@@ -25,25 +25,23 @@ import javax.swing.JPanel;
  */
 public class ChessUI extends JPanel implements ActionListener{
     private final JButton[][] boardButtons;
-    public Position currentPosition;
+    private Game game;
     
-    public ChessUI() {
+    public ChessUI(Game g) {
         this.boardButtons = new JButton[8][8];
-        FEN initialPosition = new FEN(Constants.ORIGINAL_POSITION_FEN);
-        this.currentPosition =  new Position(initialPosition.fenToBoardPosition());
+        this.game = g;
         
         display();
-        updateView(this.currentPosition);
     }   
     
     private void display(){
         
         this.setLayout(new GridLayout(8,8));
-        for(int i=0; i<8; i++) {
+        for(int i=7; i>=0; i--) {
             for(int j=0; j<8; j++) {
-                boardButtons[i][j] = new JButton();
-                this.add(boardButtons[i][j]);
-                boardButtons[i][j].addActionListener(this);
+                boardButtons[j][i] = new JButton();
+                this.add(boardButtons[j][i]);
+                boardButtons[j][i].addActionListener(this);
             }
         }
         
@@ -69,61 +67,10 @@ public class ChessUI extends JPanel implements ActionListener{
         
         for(int row=0; row<8; row++) {
             for(int col=0; col<8; col++) {
-                if(boardButtons[row][col] == selectedButton) {
-                    System.out.println("row is " + row);
-                    System.out.println("col is " + col);
+                if(boardButtons[col][row] == selectedButton) {
+                    game.squareSelected(new Square(col, row));
                 }
             }
         }
     }
-    /*
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        
-        if(!engineMoving) {
-            if(!firstClickOccured) {
-                this.initialPosition = this.getMousePosition();
-                firstClickOccured = true;
-            }
-            else {
-                this.finalPosition = this.getMousePosition();
-        
-                //The source square is the location (in coordinates: (0-7, 0-7)) of the piece that was initially clicked
-                Square source = new Square ((xPixelToCoordinate((int) initialPosition.getX())),(yPixelToCoordinate((int) initialPosition.getY(),7)));
-                //the destination square is the end location (in coordinates: (0-7, 0-7)) of the piece that was moved
-                Square destination = new Square ((xPixelToCoordinate((int) finalPosition.getX())),(yPixelToCoordinate((int) finalPosition.getY(),7)));
-
-                Piece piece = null;
-                //Get the piece that was initially clicked. If no such piece exists, then inform the user of that fact
-                for(int i=0; i<Main.pieces.size(); i++) {
-                    if(Main.pieces.get(i).location.x == source.x && Main.pieces.get(i).location.y == source.y) {
-                        piece = Main.pieces.get(i);
-                    }
-                }
-                if(piece != null) {
-                    Move move = new Move(piece, destination);
-
-                    Position position = new Position(Main.pieces);
-                    if(move.isValidMove(position)) {
-                        move.executeMove(position);
-                        repaint();
-
-                        //Move the computer
-                        engineMoving = true;
-                        Position p = new Position(Main.pieces, move);
-                        SearchGraph.findBestMove(p, Piece.COLOUR.BLACK).executeMove(p);
-                        engineMoving = false;
-                    }else {
-                        Main.infoBox("Invalid Move!", "Error");
-                    }
-                }else {
-                    Main.infoBox("You didn't select a piece!", "Error");
-                }
-                this.firstClickOccured = false;
-            }
-        }
-    }
-    */
-
-    
 }
