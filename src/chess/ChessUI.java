@@ -18,6 +18,7 @@ import javax.swing.JPanel;
  */
 public class ChessUI extends JPanel implements MouseListener{
     Point initialPosition, finalPosition;
+    boolean engineMoving = false;
     
     public ChessUI() {
         //Define variables
@@ -56,12 +57,12 @@ public class ChessUI extends JPanel implements MouseListener{
     }
 
 
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         for(int i=0; i<Main.pieces.size(); i++) {
-            g.drawImage(Main.pieces.get(i).pieceImage, xCoordinateToPixel(Main.pieces.get(i).location.x), yCoordinateToPixel(Main.pieces.get(i).location.y, 7), this);
+            g.drawImage(Main.pieces.get(i).getImage(), xCoordinateToPixel(Main.pieces.get(i).location.x), yCoordinateToPixel(Main.pieces.get(i).location.y, 7), this);
         }
-        
     }
     
     @Override
@@ -71,11 +72,15 @@ public class ChessUI extends JPanel implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        this.initialPosition = this.getMousePosition();
+        if(!engineMoving) {
+            this.initialPosition = this.getMousePosition();
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        if(engineMoving) return;
+        
         this.finalPosition = this.getMousePosition();
         
         //The source square is the location (in coordinates: (0-7, 0-7)) of the piece that was initially clicked
@@ -97,6 +102,12 @@ public class ChessUI extends JPanel implements MouseListener{
             if(move.isValidMove(position)) {
                 move.executeMove(position);
                 repaint();
+                
+                //Move the computer
+                engineMoving = true;
+                Position p = new Position(Main.pieces, move);
+                SearchGraph.findBestMove(p, Piece.COLOUR.BLACK).executeMove(p);
+                engineMoving = false;
             }else {
                 Main.infoBox("Invalid Move!", "Error");
             }
@@ -104,14 +115,15 @@ public class ChessUI extends JPanel implements MouseListener{
             Main.infoBox("You didn't select a piece!", "Error");
         }
     }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        //Not used yet (could eventually be implemented for some purpose)
-    }
-
+    
     @Override
     public void mouseExited(MouseEvent e) {
-        //not used yet (could eventually be implemented for some purpose)
+        //Not yet used (could eventually be implemented for some purpose)
     }
+    
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        //Not yet used (could eventually be implemented for some purpose)
+    }
+
 }

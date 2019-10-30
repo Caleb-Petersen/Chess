@@ -21,7 +21,6 @@ public class Piece {
     public Square location; //The square the piece is on
     public boolean hasMoved; //for pawns and castling
     public ArrayList<Square> possibleDestinations; //An array of the squares the piece can go to
-    public BufferedImage pieceImage;
     
     public enum TYPE {
         KING,
@@ -37,12 +36,12 @@ public class Piece {
     }
    
     public Piece(TYPE type, COLOUR colour, int x, int y) {
+        
         this.pieceType = type;
         this.pieceColour = colour;
         this.location = new Square(x,y);
         this.hasMoved = false;
         this.possibleDestinations = null;
-        this.pieceImage = this.getImage();
     }
     
     public Piece(Piece p) {
@@ -51,7 +50,6 @@ public class Piece {
         this.location = new Square(p.location.x, p.location.y);
         this.hasMoved = false;
         this.possibleDestinations = null;
-        this.pieceImage = this.getImage();
     }
     
     public void updatePossibleDestinations(Position position) {
@@ -229,55 +227,42 @@ public class Piece {
          * @param none
          * @returns BufferedImage
          */
-        BufferedImage whiteKing = null, whiteQueen = null, whiteRook = null, whiteBishop = null, whiteKnight = null, whitePawn = null;
-        BufferedImage blackKing = null, blackQueen = null, blackRook = null, blackBishop = null, blackKnight = null, blackPawn = null;
         try {
-            whiteKing = ImageIO.read(getClass().getResource("Images/whiteKing.jpg"));
-            whiteQueen = ImageIO.read(getClass().getResource("Images/whiteQueen.jpg"));
-            whiteRook = ImageIO.read(getClass().getResource("Images/whiteRook.jpg"));
-            whiteBishop = ImageIO.read(getClass().getResource("Images/whiteBishop.jpg"));
-            whiteKnight = ImageIO.read(getClass().getResource("Images/whiteKnight.jpg"));
-            whitePawn = ImageIO.read(getClass().getResource("Images/whitePawn.jpg"));
-            blackKing = ImageIO.read(getClass().getResource("Images/blackKing.jpg"));
-            blackQueen = ImageIO.read(getClass().getResource("Images/blackQueen.jpg"));
-            blackRook = ImageIO.read(getClass().getResource("Images/blackRook.jpg"));
-            blackBishop = ImageIO.read(getClass().getResource("Images/blackBishop.jpg"));
-            blackKnight = ImageIO.read(getClass().getResource("Images/blackKnight.jpg"));
-            blackPawn = ImageIO.read(getClass().getResource("Images/blackPawn.jpg"));
+            if(this.pieceColour == COLOUR.WHITE) {
+                switch (this.pieceType) {
+                    case KING:
+                        return ImageIO.read(getClass().getResource("Images/whiteKing.jpg"));
+                    case QUEEN:
+                        return ImageIO.read(getClass().getResource("Images/whiteQueen.jpg"));
+                    case ROOK:
+                        return ImageIO.read(getClass().getResource("Images/whiteRook.jpg"));
+                    case BISHOP:
+                        return ImageIO.read(getClass().getResource("Images/whiteBishop.jpg"));
+                    case KNIGHT:
+                        return ImageIO.read(getClass().getResource("Images/whiteKnight.jpg"));
+                    default:
+                        return ImageIO.read(getClass().getResource("Images/whitePawn.jpg"));
+                }
+            }else {
+                switch (this.pieceType) {
+                    case KING:
+                        return ImageIO.read(getClass().getResource("Images/blackKing.jpg"));
+                    case QUEEN:
+                        return ImageIO.read(getClass().getResource("Images/blackQueen.jpg"));
+                    case ROOK:
+                        return ImageIO.read(getClass().getResource("Images/blackRook.jpg"));
+                    case BISHOP:
+                        return ImageIO.read(getClass().getResource("Images/blackBishop.jpg"));
+                    case KNIGHT:
+                        return ImageIO.read(getClass().getResource("Images/blackKnight.jpg"));
+                    default:
+                        return ImageIO.read(getClass().getResource("Images/blackPawn.jpg"));
+                }
+            }
         } catch (IOException e) {
             Main.infoBox("Could not read in the image files: " + e.toString(), "IOException");
         }
         
-        if(this.pieceColour == COLOUR.WHITE) {
-            switch (this.pieceType) {
-                case KING:
-                    return whiteKing;
-                case QUEEN:
-                    return whiteQueen;
-                case ROOK:
-                    return whiteRook;
-                case BISHOP:
-                    return whiteBishop;
-                case KNIGHT:
-                    return whiteKnight;
-                default:
-                    return whitePawn;
-            }
-        }else {
-            switch (this.pieceType) {
-                case KING:
-                    return blackKing;
-                case QUEEN:
-                    return blackQueen;
-                case ROOK:
-                    return blackRook;
-                case BISHOP:
-                    return blackBishop;
-                case KNIGHT:
-                    return blackKnight;
-                default:
-                    return blackPawn;
-            }
-        }
+        return null;
     }
 }

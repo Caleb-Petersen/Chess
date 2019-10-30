@@ -34,14 +34,6 @@ public class Main {
         FEN initialPosition = new FEN(Constants.ORIGINAL_POSITION_FEN);
         pieces = initialPosition.fenToBoardPosition();
         Position p = new Position(pieces);
-        Piece fakePiece = new Piece(Piece.TYPE.KING, Piece.COLOUR.BLACK, 0, 0);
-        Move fakeMove = new Move(fakePiece, new Square(0,1));
-        p.lastMove = fakeMove;
-        
-        Move m = SearchGraph.findBestMove(p, Piece.COLOUR.WHITE);
-        
-        System.out.println("Move x-coordinate: " + m.piece.location.x);
-        System.out.println("Move y-coordinate: " + m.piece.location.y);
         
         ChessUI chessUI = new ChessUI();
         

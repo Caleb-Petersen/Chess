@@ -36,9 +36,10 @@ public class Position {
         for(Piece piece : p.boardPosition) {
             copy.add(new Piece(piece));
         }
-        
         this.boardPosition = copy;
+        
         this.lastMove = new Move(p.lastMove);
+
     }
     
     public int getEvaluation() {
@@ -62,6 +63,7 @@ public class Position {
     
     public ArrayList<Move> generateMoves(COLOUR colour) {
         //generates the possible moves for the colour specified
+        long startTime = System.currentTimeMillis();
         ArrayList<Move> possibleMoves = new ArrayList<>();
         for(Piece piece : this.boardPosition) {
             //Ensure that the moves generated are for one colour only
@@ -73,6 +75,7 @@ public class Position {
                 }
             }
         }
+        System.out.println("Time to generate moves is: " + (System.currentTimeMillis() - startTime)/1000);
         return possibleMoves;
     }
     
