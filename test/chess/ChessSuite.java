@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
  * @author Caleb
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SquareTest.class, ValidationTest.class, MainTest.class, ProcessMoveTest.class, MoveTest.class, ImagesSuite.class, PieceTest.class, FENTest.class})
+@Suite.SuiteClasses({SquareTest.class, ValidationTest.class, MainTest.class, MoveTest.class, ImagesSuite.class, PieceTest.class, FENTest.class})
 public class ChessSuite {
     
 }
