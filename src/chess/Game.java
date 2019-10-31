@@ -59,7 +59,9 @@ public class Game {
                     Move move = new Move(piece, selectedSquare);
 
                     if(move.isValidMove(currentPosition)) {
+                        System.out.println("size before: " + currentPosition.boardPosition.size());
                         move.executeMove(currentPosition);
+                        System.out.println("size after: " + currentPosition.boardPosition.size());
                         updateView();
                         //Move the computer
                         engineMoving = true;

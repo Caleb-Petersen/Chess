@@ -115,8 +115,7 @@ public class Move {
          * Function purpose: To execute a move
          */
         
-        //If a piece was captured, remove it from the main array, 
-        //add it to the deleted pieces array for graphical purpososes
+        //If a piece was captured, remove it from the main array
         System.out.println("Executing the move");
         for(int i=0; i<position.boardPosition.size(); i++) {
             if(position.boardPosition.get(i).location.x == this.destination.x && position.boardPosition.get(i).location.y == this.destination.y) {

@@ -60,6 +60,7 @@ public class ChessUI extends JPanel implements ActionListener{
         //Update the background Colour
         for(int i=0; i<8; i++) {
             for(int j=0; j<8; j++) {
+                //Set the background colour
                 Color buttonColour = Color.getHSBColor(0.0f, 0.0f, 0.663f); //defaul to white square
                 if((i+j)%2 == 0) {
                     //Black square if the sum of the square indexs is even
@@ -67,6 +68,9 @@ public class ChessUI extends JPanel implements ActionListener{
                 }
                 
                 boardButtons[i][j].setBackground(buttonColour);
+                boardButtons[i][j].setIcon(null);
+                //Remove the icons 
+                
             }
         }
         for(Piece piece : position.boardPosition) {
