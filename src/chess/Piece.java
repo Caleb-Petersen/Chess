@@ -231,32 +231,32 @@ public class Piece {
             if(this.pieceColour == COLOUR.WHITE) {
                 switch (this.pieceType) {
                     case KING:
-                        return ImageIO.read(getClass().getResource("Images/whiteKing.jpg"));
+                        return ImageIO.read(getClass().getResource("Images/whiteKing.png"));
                     case QUEEN:
-                        return ImageIO.read(getClass().getResource("Images/whiteQueen.jpg"));
+                        return ImageIO.read(getClass().getResource("Images/whiteQueen.png"));
                     case ROOK:
-                        return ImageIO.read(getClass().getResource("Images/whiteRook.jpg"));
+                        return ImageIO.read(getClass().getResource("Images/whiteRook.png"));
                     case BISHOP:
-                        return ImageIO.read(getClass().getResource("Images/whiteBishop.jpg"));
+                        return ImageIO.read(getClass().getResource("Images/whiteBishop.png"));
                     case KNIGHT:
-                        return ImageIO.read(getClass().getResource("Images/whiteKnight.jpg"));
+                        return ImageIO.read(getClass().getResource("Images/whiteKnight.png"));
                     default:
-                        return ImageIO.read(getClass().getResource("Images/whitePawn.jpg"));
+                        return ImageIO.read(getClass().getResource("Images/whitePawn.png"));
                 }
             }else {
                 switch (this.pieceType) {
                     case KING:
-                        return ImageIO.read(getClass().getResource("Images/blackKing.jpg"));
+                        return ImageIO.read(getClass().getResource("Images/blackKing.png"));
                     case QUEEN:
-                        return ImageIO.read(getClass().getResource("Images/blackQueen.jpg"));
+                        return ImageIO.read(getClass().getResource("Images/blackQueen.png"));
                     case ROOK:
-                        return ImageIO.read(getClass().getResource("Images/blackRook.jpg"));
+                        return ImageIO.read(getClass().getResource("Images/blackRook.png"));
                     case BISHOP:
-                        return ImageIO.read(getClass().getResource("Images/blackBishop.jpg"));
+                        return ImageIO.read(getClass().getResource("Images/blackBishop.png"));
                     case KNIGHT:
-                        return ImageIO.read(getClass().getResource("Images/blackKnight.jpg"));
+                        return ImageIO.read(getClass().getResource("Images/blackKnight.png"));
                     default:
-                        return ImageIO.read(getClass().getResource("Images/blackPawn.jpg"));
+                        return ImageIO.read(getClass().getResource("Images/blackPawn.png"));
                 }
             }
         } catch (IOException e) {
