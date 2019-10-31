@@ -5,8 +5,6 @@
  */
 package Chess;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Caleb
@@ -35,7 +33,12 @@ public class Validation {
 
                 int maxX = java.lang.Math.max(move.piece.location.x, move.destination.x);
                 int minX = java.lang.Math.min(move.piece.location.x, move.destination.x);
+               
                 int yLocation = move.piece.location.y;
+                
+                if(maxX == move.piece.location.x) {
+                    yLocation = move.destination.y;
+                }
                 
                 //The slope variable indicates whether or not the y value increases or decreases as the x value increases
                 //It is either -1, or +1, and is used to adjust the y value as the squares are checked
@@ -43,12 +46,12 @@ public class Validation {
 
                 //Loop through all of the squares on the diagonal and check if a piece is on those squares
                 for (int i = minX + 1; i < maxX; i++) {
-                   
                     yLocation = yLocation + slope;
-                    
-                    for(int j=0; j<position.boardPosition.size(); j++) {
+                    System.out.println("X location is: " + i);
+                    System.out.println("Y location is: " + yLocation);
+                    for(Piece piece : position.boardPosition) {
                         Square square = new Square(i, yLocation);
-                        if(position.boardPosition.get(j).pieceOnSquare(square)) {
+                        if(piece.isOnSquare(square)) {
                             return false;
                         }
                     }
@@ -80,7 +83,7 @@ public class Validation {
                 Square square = new Square(i, move.piece.location.y);
                 
                 for(int j=0; j<position.boardPosition.size(); j++) {
-                    if(position.boardPosition.get(j).pieceOnSquare(square)) {
+                    if(position.boardPosition.get(j).isOnSquare(square)) {
                         return false;
                     }
                 }
@@ -94,7 +97,7 @@ public class Validation {
                 Square square = new Square(move.piece.location.y, i );
                 
                 for(int j=0; j<position.boardPosition.size(); j++) {
-                    if(position.boardPosition.get(j).pieceOnSquare(square)) {
+                    if(position.boardPosition.get(j).isOnSquare(square)) {
                         return false;
                     }
                 }
@@ -300,7 +303,7 @@ public class Validation {
         Square square = new Square(move.destination.x, move.destination.y);
         
         for(int i=0; i<position.boardPosition.size(); i++) {
-            if(position.boardPosition.get(i).pieceOnSquare(square)) {
+            if(position.boardPosition.get(i).isOnSquare(square)) {
                 if(position.boardPosition.get(i).pieceColour == move.piece.pieceColour){
                     return false;
                 }
@@ -316,7 +319,7 @@ public class Validation {
          */  
         Square square = new Square(move.destination.x, move.destination.y);
         for(int i=0; i<position.boardPosition.size(); i++) {
-            if(position.boardPosition.get(i).pieceOnSquare(square)) {
+            if(position.boardPosition.get(i).isOnSquare(square)) {
                 if(position.boardPosition.get(i).pieceColour == move.piece.pieceColour){
                     return false;
                 }

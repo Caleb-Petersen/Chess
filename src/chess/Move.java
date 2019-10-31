@@ -92,7 +92,7 @@ public class Move {
                 return Validation.isKing(position, this);
                 
             case QUEEN:
-                return Validation.isDiagonal(position, this) && Validation.isStraight(position, this);
+                return Validation.isDiagonal(position, this) || Validation.isStraight(position, this);
                 
             case ROOK:
                 return Validation.isStraight(position, this);

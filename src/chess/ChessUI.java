@@ -69,10 +69,9 @@ public class ChessUI extends JPanel implements ActionListener{
                 
                 boardButtons[i][j].setBackground(buttonColour);
                 boardButtons[i][j].setIcon(null);
-                //Remove the icons 
-                
             }
         }
+        //Update all of the current pieces
         for(Piece piece : position.boardPosition) {
             boardButtons[piece.location.x][piece.location.y].setIcon(new ImageIcon(piece.getImage()));
         }

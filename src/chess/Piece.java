@@ -69,42 +69,8 @@ public class Piece {
                 
                 //don't let the square be the one the piece is currently on
                 if(!(this.location.x == x && this.location.y == y)) {
-                    switch(this.pieceType) {
-                        case KING:
-                            if(Validation.isKing(position, move)) { //&& !proccessCheck(this, x, y            
-                                possibleDestinations.add(square);
-                            }
-                            break;
-                        case QUEEN:
-                            if((Validation.isDiagonal(position, move) || Validation.isStraight(position, move)) ) { //&&!proccessCheck(this, x, y)
-                                possibleDestinations.add(square);
-                            }
-                            break;
-
-                        case ROOK:
-                            if(Validation.isStraight(position, move) ) { //&& !proccessCheck(this.x, x, this.y, y, null)
-                                possibleDestinations.add(square);
-                            }
-                            break;
-
-
-                        case BISHOP:
-                            if(Validation.isDiagonal(position, move)) { //&&!proccessCheck(this.x, x, this.y, y, null)
-                                possibleDestinations.add(square);
-                            }
-                            break;
-
-                        case KNIGHT:
-                            if(Validation.isKnight(position, move) ) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
-                                possibleDestinations.add(square);  
-                            }
-                            break;
-
-                        default:
-                            if(Validation.isPawn(position, move)) { //&& !proccessCheck(this.x,x,this.y,y,new square[8][8])
-                                possibleDestinations.add(square);  
-                            }
-                            break;
+                    if(move.isValidMove(position)) {
+                        this.possibleDestinations.add(square);
                     }
                 }
             }
@@ -148,7 +114,7 @@ public class Piece {
         return false;
     }
     
-    public boolean pieceOnSquare(Square square) {
+    public boolean isOnSquare(Square square) {
         return this.location.y == square.y && this.location.x == square.x;
     }
     
