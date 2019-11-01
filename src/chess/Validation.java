@@ -96,8 +96,8 @@ public class Validation {
             for (int i = (minY + 1); i < maxY; i++) {
                 Square square = new Square(move.piece.location.y, i );
                 
-                for(int j=0; j<position.boardPosition.size(); j++) {
-                    if(position.boardPosition.get(j).isOnSquare(square)) {
+                for(Piece piece : position.boardPosition) {
+                    if(piece.isOnSquare(square)) {
                         return false;
                     }
                 }
@@ -106,7 +106,7 @@ public class Validation {
             //neither a vertical or horizontal move was attempted, so the move cannot be straight
             return false;
         }
-        //Checking to see that the piece on the destination destination doesn't have a piece of the same colour on it
+        //Checking to see that the piece on the destination square doesn't have a piece of the same colour on it
         return isValidDestination(position, move);
     }
 
@@ -165,7 +165,7 @@ public class Validation {
                     }
                 } 
                 
-                if(move.piece.hasMoved == false && rook.hasMoved == false) {
+                if(rook != null && move.piece.hasMoved == false && rook.hasMoved == false) {
                     //check the path between the rook and the king for checks and pieces
                     //get all of the squares between the king and the rook and check that
                     //      1. The square isn't controlled by an opponent's piece
@@ -199,7 +199,7 @@ public class Validation {
                     }
                 } 
                 
-                if(move.piece.hasMoved == false && rook.hasMoved == false) {
+                if(rook != null && move.piece.hasMoved == false && rook.hasMoved == false) {
                     //check the path between the rook and the king for checks and pieces
                     //get all of the squares between the king and the rook and check that
                     //      1. The square isn't controlled by an opponent's piece
@@ -242,12 +242,10 @@ public class Validation {
             //when black pawns move forward their y coordinate value goes down
             direction = -1;
         }
-        
         if ((move.destination.x == move.piece.location.x) && ((move.destination.y - move.piece.location.y) == direction)) {
             //This occurs if the pawn is attempted to have be moved forward once
             //Check to see that the destination square is empty (the move is valid)
             return destinationSquare.isPieceOnSquare(position) == false;
-            
         } else if ((move.destination.x == move.piece.location.x) && ((move.destination.y - move.piece.location.y) == (direction*2)) && move.piece.hasMoved == false) {
             //This is if the pawn has been attempted to have been moved two forward
             //The pawn can't have moved, and the two squares in front need to be empty
@@ -259,45 +257,42 @@ public class Validation {
             //a capture or enpassant was attempted
             for(int i=0; i<position.boardPosition.size(); i++) {
                 if(position.boardPosition.get(i).location.x == move.destination.x && position.boardPosition.get(i).location.y == move.destination.y) {
-                    if(position.boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
+                    if(position.boardPosition.get(i).pieceColour == move.piece.pieceColour){
                         return false;
                     }
                     //a capture was attempted
                     validLocation = true;
                 }
-                //this checks for enpassant
-                //The destination square must be empty 
-                //The piece beside the pawn (one y value up from the destination square) must be a pawn
-                //That pawn beside the pawn being moved must be of the opponent's colour
-                //That pawn beside the pawn being moved must have just moved up two squares
+                
                 
                 if(validLocation == false) {
-                    //check for all of the other information
-                }
-                        
-                return false; 
+                    //this checks for enpassant
+                    //The destination square must be empty 
+                    //The piece beside the pawn (one y value up from the destination square) must be a pawn
+                    //That pawn beside the pawn being moved must be of the opponent's colour
+                    //That pawn beside the pawn being moved must have just moved up two squares
+                    if(!destinationSquare.isPieceOnSquare(position)) {
+                        Square squareBeside = new Square(destinationSquare.x, destinationSquare.y - direction);
+                        if(squareBeside.isPieceOnSquare(position)) {
+                            for(Piece p : position.boardPosition) {
+                                if(p.location.x == squareBeside.x && p.location.y == squareBeside.y) {
+                                    if(p.pieceColour != move.piece.pieceColour) {
+                                        //Check that the last move was moving a pawn up two
+                                        validLocation = position.lastMove.destination.x == squareBeside.x &&
+                                                position.lastMove.destination.y == squareBeside.y &&
+                                                position.lastMove.piece.pieceType == Piece.TYPE.PAWN &&
+                                                position.lastMove.piece.location.x == squareBeside.x &&
+                                                position.lastMove.piece.location.y == squareBeside.y + 2*direction;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } 
             }
         }
         
         return validLocation && isValidDestination(position, move);
-        /*
-        if(validLocation) {
-            //check to see if there is a piece on the destination destination
-            //if there is, verify that it is not of the same colour as the piece
-            //that is being moved
-            for(int i=0; i<boardPosition.size(); i++) {
-                Square square = new Square(move.destination.x, move.destination.y);
-                
-                if(boardPosition.get(i).pieceOnSquare(square)) {
-                    if(boardPosition.get(i).pieceColour.equals(move.piece.pieceColour)){
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-        return false;*/
-    
     }
     public boolean destinationIsEmpty(Position position, Move move) {
         Square square = new Square(move.destination.x, move.destination.y);
