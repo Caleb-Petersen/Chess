@@ -25,12 +25,9 @@ public class SearchGraph {
         int bestEvaluation = maximizing ? Constants.BOTTOM_EVALUATION : Constants.TOP_EVALUATION;
         
         for(int i=0; i<possibleMoves.size(); i++) {
-            System.out.println("Right before executing the virual Move");
             Position virtualPosition = executeVirtualMove(position, possibleMoves.get(i));
-            System.out.println("Searching for move " + i);
             int searchEvaluation = search(virtualPosition, Constants.SEARCH_DEPTH, !maximizing);
             
-            System.out.println("The search evaluation result is: " + searchEvaluation);
             if(maximizing && searchEvaluation > bestEvaluation) {
                 bestEvaluation = searchEvaluation;
                 selectedIndex = i;
@@ -41,7 +38,6 @@ public class SearchGraph {
             }
         }
         
-        System.out.println("Move evaluation is: " + bestEvaluation);
         
         //Ensure that there wasn't some failure to select a move
         if(selectedIndex > -1) {
@@ -57,7 +53,6 @@ public class SearchGraph {
         }
         ArrayList<Move> possibleMoves = position.generateMoves();
 
-        System.out.println("Depth is: " + depth);
         
         //set the initial optimization value to be either very low or very high
         int bestEvaluation = maximizing ? Constants.BOTTOM_EVALUATION : Constants.TOP_EVALUATION; 

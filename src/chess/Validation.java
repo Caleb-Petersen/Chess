@@ -47,8 +47,7 @@ public class Validation {
                 //Loop through all of the squares on the diagonal and check if a piece is on those squares
                 for (int i = minX + 1; i < maxX; i++) {
                     yLocation = yLocation + slope;
-                    System.out.println("X location is: " + i);
-                    System.out.println("Y location is: " + yLocation);
+                            
                     for(Piece piece : position.boardPosition) {
                         Square square = new Square(i, yLocation);
                         if(piece.isOnSquare(square)) {
@@ -82,8 +81,8 @@ public class Validation {
             for (int i = (minX + 1); i < maxX; i++) {
                 Square square = new Square(i, move.piece.location.y);
                 
-                for(int j=0; j<position.boardPosition.size(); j++) {
-                    if(position.boardPosition.get(j).isOnSquare(square)) {
+                for(Piece piece : position.boardPosition) {
+                    if(piece.isOnSquare(square)) {
                         return false;
                     }
                 }
@@ -94,7 +93,7 @@ public class Validation {
             int minY = java.lang.Math.min(move.piece.location.y, move.destination.y);
             //Check to ensure that all of the squares between minY and maxY are empty
             for (int i = (minY + 1); i < maxY; i++) {
-                Square square = new Square(move.piece.location.y, i );
+                Square square = new Square(move.piece.location.x, i );
                 
                 for(Piece piece : position.boardPosition) {
                     if(piece.isOnSquare(square)) {
@@ -152,7 +151,6 @@ public class Validation {
             
             return isValidDestination(position, move);
         } else if (Math.abs(move.destination.x - move.piece.location.x) == 2 && move.destination.y - move.piece.location.y == 0) {
-            
             if ((move.destination.x - move.piece.location.x) == -2) {
                 //NOTE:: Queenside castling was attempted
                 
@@ -164,7 +162,7 @@ public class Validation {
                         rook = position.boardPosition.get(i);
                     }
                 } 
-                
+                //If the rook is not found (it has moved likely), or it has moved away and then back, then castling is invalid
                 if(rook != null && move.piece.hasMoved == false && rook.hasMoved == false) {
                     //check the path between the rook and the king for checks and pieces
                     //get all of the squares between the king and the rook and check that

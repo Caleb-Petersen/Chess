@@ -49,7 +49,6 @@ public class Position {
         for(Piece p : this.boardPosition) {
             evaluation += p.getValue();
         }
-        System.out.println("Evaluation of the position is: " + evaluation);
         return evaluation;
     }
     
@@ -75,7 +74,7 @@ public class Position {
                 }
             }
         }
-        System.out.println("Time to generate moves is: " + (System.currentTimeMillis() - startTime)/1000);
+       // System.out.println("Time to generate moves is: " + (System.currentTimeMillis() - startTime)/1000);
         return possibleMoves;
     }
     
