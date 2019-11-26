@@ -233,13 +233,11 @@ public class Validation {
          *  
          */   
         boolean validLocation = false; //Valid location => the square is correct -> check that the square is not occupied
-        int direction = 1;
+        
         Square destinationSquare = new Square(move.destination.x, move.destination.y);
         
-        if (move.piece.pieceColour == Piece.COLOUR.BLACK) {
-            //when black pawns move forward their y coordinate value goes down
-            direction = -1;
-        }
+        int direction = (move.piece.pieceColour == Piece.COLOUR.WHITE) ? 1 : -1; //White: 1, Black: -1
+        
         if ((move.destination.x == move.piece.location.x) && ((move.destination.y - move.piece.location.y) == direction)) {
             //This occurs if the pawn is attempted to have be moved forward once
             //Check to see that the destination square is empty (the move is valid)
@@ -265,11 +263,12 @@ public class Validation {
                 
                 if(validLocation == false) {
                     //this checks for enpassant
+                    //There must be a valid last move
                     //The destination square must be empty 
                     //The piece beside the pawn (one y value up from the destination square) must be a pawn
                     //That pawn beside the pawn being moved must be of the opponent's colour
                     //That pawn beside the pawn being moved must have just moved up two squares
-                    if(!destinationSquare.isPieceOnSquare(position)) {
+                    if(position.getLastMoveExists() && !destinationSquare.isPieceOnSquare(position)) {
                         Square squareBeside = new Square(destinationSquare.x, destinationSquare.y - direction);
                         if(squareBeside.isPieceOnSquare(position)) {
                             for(Piece p : position.boardPosition) {

@@ -81,26 +81,7 @@ public class Piece {
         
         Move move = new Move(this, square);
         
-        switch(this.pieceType) {
-            case KING:
-                return Validation.isKing(position, move);
-                
-            case QUEEN:
-                return (Validation.isDiagonal(position, move) || Validation.isStraight(position, move)); 
-
-            case ROOK:
-                return Validation.isStraight(position, move);
-
-            case BISHOP:
-                return Validation.isDiagonal(position, move);
-
-            case KNIGHT:
-                return Validation.isKnight(position, move);
-
-            default:
-                return Validation.isPawn(position, move);
-    
-        }
+        return move.isValidMove(position);
     }
     
     public boolean isAttacked(Position boardPosition) {

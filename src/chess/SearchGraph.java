@@ -25,7 +25,8 @@ public class SearchGraph {
         int bestEvaluation = maximizing ? Constants.BOTTOM_EVALUATION : Constants.TOP_EVALUATION;
         
         for(int i=0; i<possibleMoves.size(); i++) {
-            Position virtualPosition = executeVirtualMove(position, possibleMoves.get(i));
+            Move virtualMove = new Move(possibleMoves.get(i));
+            Position virtualPosition = executeVirtualMove(position, virtualMove);
             int searchEvaluation = search(virtualPosition, Constants.SEARCH_DEPTH, !maximizing);
             
             if(maximizing && searchEvaluation > bestEvaluation) {
@@ -78,6 +79,7 @@ public class SearchGraph {
     public static Position executeVirtualMove(Position position, Move move) {
         //make a deep copy of the position using the copy constructor
         Position virtualPosition = new Position(position);
+        System.out.println("Executed virtual move");
         move.executeMove(virtualPosition);
         
         return virtualPosition;

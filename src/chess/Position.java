@@ -16,17 +16,22 @@ public class Position {
    // public FEN fen;
     public ArrayList<Piece> boardPosition;
     public Move lastMove;
+    private final boolean lastMoveExists;
     
     public Position(FEN initFEN) {
         this.boardPosition = initFEN.fenToBoardPosition();
+        this.lastMoveExists = false;
     }
     public Position(ArrayList<Piece> b) {
         this.boardPosition = b;
+        this.lastMoveExists = false;
     }
     public Position(ArrayList<Piece> b, Move m) {
         this.boardPosition = b;
         this.lastMove = m;
+        this.lastMoveExists = true;
     }
+    
     public Position(Position p) {
         /**
          * Creates a deep copy of the boardPosition array for a new position
@@ -39,9 +44,13 @@ public class Position {
         this.boardPosition = copy;
         
         this.lastMove = new Move(p.lastMove);
-
+        this.lastMoveExists = p.getLastMoveExists();
     }
     
+    public boolean getLastMoveExists() {
+        return this.lastMoveExists;
+    }
+            
     public int getEvaluation() {
         int evaluation = 0;
         
@@ -62,7 +71,6 @@ public class Position {
     
     public ArrayList<Move> generateMoves(COLOUR colour) {
         //generates the possible moves for the colour specified
-        long startTime = System.currentTimeMillis();
         ArrayList<Move> possibleMoves = new ArrayList<>();
         for(Piece piece : this.boardPosition) {
             //Ensure that the moves generated are for one colour only
@@ -74,7 +82,6 @@ public class Position {
                 }
             }
         }
-       // System.out.println("Time to generate moves is: " + (System.currentTimeMillis() - startTime)/1000);
         return possibleMoves;
     }
     

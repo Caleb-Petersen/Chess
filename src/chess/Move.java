@@ -5,7 +5,6 @@
  */
 package Chess;
 
-import Chess.Piece.COLOUR;
 
 /**
  * 
@@ -114,7 +113,18 @@ public class Move {
         }
         return false;
     }
+    /**
+     * @summary the function is the same as the regular isValidMove, only it 
+     * passes a dud MoveHistory. This function can be used for all move validation,
+     * except that a MoveHistory is required for enpassant
+     * @param position
+     */
     public boolean isValidMove(Position position) {
+        MoveHistory dud = new MoveHistory();
+        
+        return isValidMove(position, dud);
+    }
+    public boolean isValidMove(Position position, MoveHistory lastMove) {
         /**
          * @param none
          * @returns whether or not a move is valid
@@ -146,73 +156,74 @@ public class Move {
          * @returns nothing
          * Function purpose: To execute a move
          */
-        
         //If a piece was captured, remove it 
+        
         for(int i=0; i<position.boardPosition.size(); i++) {
-            if(position.boardPosition.get(i).location.x == this.destination.x && position.boardPosition.get(i).location.y == this.destination.y) {
+            if(position.boardPosition.get(i).location.x == this.destination.x && 
+                    position.boardPosition.get(i).location.y == this.destination.y) {
                 position.boardPosition.remove(i);
             }
         }
-        for(Piece p : position.boardPosition) {
-            if(p == this.piece) {
-                //Handle edge cases where another piece is captured first
-                if(isCastlingAttempt()) {
-                    //First handle the differences between queenside and kingside castling
-                    int queensideRookInitialColumn = 0;
-                    int queensideRookDestinationColumn = 3;
-                    int kingsideRookInitialColumn = 7;
-                    int kingsideRookDestinationColumn = 5;
+        
+        /*
+        //Handle edge cases where another piece is captured first
+        if(isCastlingAttempt()) {
+            System.out.println("Castling attempted");
+            //First handle the differences between queenside and kingside castling
+            int queensideRookInitialColumn = 0;
+            int queensideRookDestinationColumn = 3;
+            int kingsideRookInitialColumn = 7;
+            int kingsideRookDestinationColumn = 5;
 
-                    //initialize the columns to 0, set them later
-                    int rookInitialColumn = 0;
-                    int rookDestinationColumn = 0;
-                    
-                    if(isQueensideCastlingAttempt()) {
-                        rookInitialColumn = queensideRookInitialColumn;
-                        rookDestinationColumn = queensideRookDestinationColumn;
-                    }else if (isKingsideCastlingAttempt()) {
-                        rookInitialColumn = kingsideRookInitialColumn;
-                        rookDestinationColumn = kingsideRookDestinationColumn;
-                    }
-                    
-                    Square rookLocation = new Square(rookInitialColumn, this.piece.location.y);
-                    Piece castledRook = null;
+            //initialize the columns to 0, set them later
+            int rookInitialColumn = 0;
+            int rookDestinationColumn = 0;
 
-                    for(Piece possibleRook : position.boardPosition) {
-                        if(possibleRook.location.x == rookLocation.x && possibleRook.location.y == rookLocation.y) {
-                            castledRook = possibleRook;
-                        }
-                    }
-                    if(castledRook == null) {
-                        System.out.println("Castling rook not found. The move must be invalid.");
-                    }
-                    System.out.println("Moving rook to column " + rookDestinationColumn);
-                    castledRook.location.x = rookDestinationColumn;
+            if(isQueensideCastlingAttempt()) {
+                rookInitialColumn = queensideRookInitialColumn;
+                rookDestinationColumn = queensideRookDestinationColumn;
+            }else if (isKingsideCastlingAttempt()) {
+                rookInitialColumn = kingsideRookInitialColumn;
+                rookDestinationColumn = kingsideRookDestinationColumn;
+            }
+
+            Square rookLocation = new Square(rookInitialColumn, this.piece.location.y);
+            Piece castledRook = null;
+
+            for(Piece possibleRook : position.boardPosition) {
+                if(possibleRook.location.x == rookLocation.x && possibleRook.location.y == rookLocation.y) {
+                    castledRook = possibleRook;
                 }
-                
-                
-                
-                if(this.isEnpassantAttempt(position)) {
-                    int capturedPawnRow = 0;
-                    if(this.piece.pieceColour == COLOUR.WHITE) {
-                        capturedPawnRow = this.destination.y - 1;
-                    }else {
-                        capturedPawnRow = this.destination.y + 1;
-                    }
-                    
-                    for(Piece potentialCapturedPawn : position.boardPosition) {
-                        if(potentialCapturedPawn.location.x == this.destination.x && potentialCapturedPawn.location.y == capturedPawnRow) {
-                            position.boardPosition.remove(potentialCapturedPawn);
-                        }
-                    }
-                    
-                }
-                
-                ///Move the piece to the destination square
-                p.hasMoved = true;
-                p.location.x = this.destination.x;
-                p.location.y = this.destination.y;
+            }
+            if(castledRook == null) {
+                System.out.println("Castling rook not found. The move must be invalid.");
+            }
+            else {
+                System.out.println("Moving rook to column " + rookDestinationColumn);
+                castledRook.location.x = rookDestinationColumn;
             }
         }
+
+
+
+        if(this.isEnpassantAttempt(position)) {
+            System.out.println("Enpassant attempted");
+            int capturedPawnRow = (this.piece.pieceColour == COLOUR.WHITE) ? (this.destination.y - 1) : (this.destination.y + 1);
+
+            Iterator<Piece> capturedPawnIterator = position.boardPosition.iterator();
+            while(capturedPawnIterator.hasNext()) {
+                Piece potentialCapturedPawn = capturedPawnIterator.next();
+                if(potentialCapturedPawn.location.x == this.destination.x && 
+                        potentialCapturedPawn.location.y == capturedPawnRow) {
+                    capturedPawnIterator.remove();
+                }
+            }
+        }
+*/
+        ///Move the piece to the destination square
+        //position.lastMove = this;
+        this.piece.hasMoved = true;
+        this.piece.location.x = this.destination.x;
+        this.piece.location.y = this.destination.y;
     }
 }
