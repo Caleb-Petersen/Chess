@@ -17,7 +17,7 @@ public class SearchGraph {
     public static Move findBestMove(Position position, COLOUR playerMoving) {
         //Only call this if position.generateMoves() > 0
         
-        ArrayList<Move> possibleMoves = position.generateMoves();
+        ArrayList<Move> possibleMoves = position.generateMoves(playerMoving);
         boolean maximizing = playerMoving == COLOUR.WHITE;
         int selectedIndex = -1;
         
@@ -52,7 +52,8 @@ public class SearchGraph {
         if(depth == 0) {
             return position.getEvaluation();
         }
-        ArrayList<Move> possibleMoves = position.generateMoves();
+        COLOUR playerColour = extractColour(maximizing);
+        ArrayList<Move> possibleMoves = position.generateMoves(playerColour);
 
         
         //set the initial optimization value to be either very low or very high
@@ -83,5 +84,12 @@ public class SearchGraph {
         move.executeMove(virtualPosition);
         
         return virtualPosition;
+    }
+    
+    private static COLOUR extractColour(boolean maximizing) {
+        if(maximizing){
+            return COLOUR.WHITE;
+        }
+        return COLOUR.BLACK;
     }
 }

@@ -5,6 +5,9 @@
  */
 package Chess;
 
+import Chess.Piece.COLOUR;
+import java.util.Iterator;
+
 
 /**
  * 
@@ -28,7 +31,8 @@ public class Move {
         /**
          * @param none
          * @returns a boolean indicating whether or not a move is enpassant
-         * @NOTE: Function doesn't care about the validity of the move, it only gives information about the nature of the move
+         * @NOTE: Function doesn't care about the validity of the move. It only 
+         * wishes to classify the move as being enpassant without a doubt
          */
         
         //Algorithm to implement
@@ -39,18 +43,16 @@ public class Move {
         //Check to see that the pawn being captured (via enpassant) is actually there
         //If all of those checks are true, return true, if not, return false
         
-        int direction = 1;
-        if(this.piece.pieceColour == Piece.COLOUR.BLACK) {
-            direction = -1;
-        }
+        int direction = (this.piece.pieceColour == Piece.COLOUR.WHITE) ? 1 : -1;
         
         if(this.piece.pieceType == Piece.TYPE.PAWN) {
             //check to see if the destination row is correct for the colour of piece (3rd rank for black pieces, 6th for white)
-            if((this.piece.pieceColour == Piece.COLOUR.WHITE && this.destination.y == 2) || (this.piece.pieceColour == Piece.COLOUR.BLACK && this.destination.y == 5)) {
+            if((this.piece.pieceColour == Piece.COLOUR.WHITE && this.destination.y == 5) || (this.piece.pieceColour == Piece.COLOUR.BLACK && this.destination.y == 2)) {
                 //check to see that the pawn was one column removed from the destination destination (e.g the e file to the f file)
                 if(Math.abs(this.piece.location.x - this.destination.x) == 1) {
                     //Check to see if the piece on the destination above the destination destination contains a pawn
-                    if(this.destination.isPieceOnSquare(position) == false) { //Check may not be necessary as we don't need to know about validity
+                    //Check may not be necessary as we don't need to know about validity
+                    if(this.destination.isPieceOnSquare(position) == false) { 
                         //Check to ensure that the enpassant is actually capturing a piece
                         Square square = new Square(this.destination.x, (this.destination.y - direction));
                         if(square.pieceOnSquare(position) == Piece.TYPE.PAWN) {
@@ -165,7 +167,6 @@ public class Move {
             }
         }
         
-        /*
         //Handle edge cases where another piece is captured first
         if(isCastlingAttempt()) {
             System.out.println("Castling attempted");
@@ -219,9 +220,9 @@ public class Move {
                 }
             }
         }
-*/
+
         ///Move the piece to the destination square
-        //position.lastMove = this;
+        position.setLastMove(this);
         this.piece.hasMoved = true;
         this.piece.location.x = this.destination.x;
         this.piece.location.y = this.destination.y;

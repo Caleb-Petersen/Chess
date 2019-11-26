@@ -37,7 +37,7 @@ public class Game {
         //Hack to make the search graph thing the last piece to have moved is white
         Piece fakePiece = new Piece(Piece.TYPE.KING, Piece.COLOUR.WHITE,0,0 );
         Move fakeMove = new Move(fakePiece, new Square(0,1));
-        this.currentPosition.lastMove = fakeMove;
+        this.currentPosition.setLastMove(fakeMove);
     }
     
     public void squareSelected(Square selectedSquare) {

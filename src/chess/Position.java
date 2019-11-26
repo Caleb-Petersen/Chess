@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class Position {
    // public FEN fen;
     public ArrayList<Piece> boardPosition;
-    public Move lastMove;
-    private final boolean lastMoveExists;
+    private Move lastMove;
+    private boolean lastMoveExists;
     
     public Position(FEN initFEN) {
         this.boardPosition = initFEN.fenToBoardPosition();
@@ -43,14 +43,26 @@ public class Position {
         }
         this.boardPosition = copy;
         
-        this.lastMove = new Move(p.lastMove);
-        this.lastMoveExists = p.getLastMoveExists();
+        if(p.lastMove != null) {
+            this.lastMove = new Move(p.lastMove);
+        }else {
+            this.lastMove = null;
+        }
+        
+        this.lastMoveExists = p.lastMove != null;
     }
     
     public boolean getLastMoveExists() {
         return this.lastMoveExists;
     }
-            
+    
+    public Move getLastMove() {
+        return this.lastMove;
+    }
+    public void setLastMove(Move move) {
+        this.lastMove = new Move(move);
+        this.lastMoveExists = move != null;
+    }
     public int getEvaluation() {
         int evaluation = 0;
         
@@ -63,10 +75,14 @@ public class Position {
     
     public ArrayList<Move> generateMoves() {
         //Call generate moves with the opposite colour that is recorded in the move history
-        if(this.lastMove.piece.pieceColour == COLOUR.BLACK) {
-            return this.generateMoves(COLOUR.WHITE);
+        if(this.lastMoveExists) {
+            if(this.lastMove.piece.pieceColour == COLOUR.BLACK){
+                return this.generateMoves(COLOUR.WHITE);
+            }
+            return this.generateMoves(COLOUR.BLACK);
         }
-        return this.generateMoves(COLOUR.BLACK);
+        
+        return new ArrayList<>();
     }
     
     public ArrayList<Move> generateMoves(COLOUR colour) {

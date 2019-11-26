@@ -259,34 +259,35 @@ public class Validation {
                     //a capture was attempted
                     validLocation = true;
                 }
+            }   
                 
-                
-                if(validLocation == false) {
-                    //this checks for enpassant
-                    //There must be a valid last move
-                    //The destination square must be empty 
-                    //The piece beside the pawn (one y value up from the destination square) must be a pawn
-                    //That pawn beside the pawn being moved must be of the opponent's colour
-                    //That pawn beside the pawn being moved must have just moved up two squares
-                    if(position.getLastMoveExists() && !destinationSquare.isPieceOnSquare(position)) {
-                        Square squareBeside = new Square(destinationSquare.x, destinationSquare.y - direction);
-                        if(squareBeside.isPieceOnSquare(position)) {
-                            for(Piece p : position.boardPosition) {
-                                if(p.location.x == squareBeside.x && p.location.y == squareBeside.y) {
-                                    if(p.pieceColour != move.piece.pieceColour) {
-                                        //Check that the last move was moving a pawn up two
-                                        validLocation = position.lastMove.destination.x == squareBeside.x &&
-                                                position.lastMove.destination.y == squareBeside.y &&
-                                                position.lastMove.piece.pieceType == Piece.TYPE.PAWN &&
-                                                position.lastMove.piece.location.x == squareBeside.x &&
-                                                position.lastMove.piece.location.y == squareBeside.y + 2*direction;
-                                    }
+            if(validLocation == false) {
+                //this checks for enpassant
+                //There must be a valid last move
+                //The destination square must be empty 
+                //The piece beside the pawn (one y value up from the destination square) must be a pawn
+                //That pawn beside the pawn being moved must be of the opponent's colour
+                //That pawn beside the pawn being moved must have just moved up two squares
+                if(position.getLastMoveExists() && !destinationSquare.isPieceOnSquare(position)) {
+                    //The column is the same as the destination, the row is the same as the location
+                    Square squareBeside = new Square(destinationSquare.x, move.piece.location.y);
+                    if(squareBeside.isPieceOnSquare(position)) {
+                        for(Piece p : position.boardPosition) {
+                            if(p.location.x == squareBeside.x && p.location.y == squareBeside.y) {
+                                if(p.pieceColour != move.piece.pieceColour) {
+                                    System.out.println("CHECKING FOR VALIDATION");
+                                    //Check that the last move was moving a pawn up two
+                                    validLocation = position.getLastMove().destination.x == squareBeside.x &&
+                                            position.getLastMove().destination.y == squareBeside.y &&
+                                            position.getLastMove().piece.pieceType == Piece.TYPE.PAWN &&
+                                            position.getLastMove().piece.location.x == squareBeside.x &&
+                                            position.getLastMove().piece.location.y == squareBeside.y + 2*direction;
                                 }
                             }
                         }
                     }
-                } 
-            }
+                }
+            } 
         }
         
         return validLocation && isValidDestination(position, move);
