@@ -13,7 +13,6 @@ import java.util.ArrayList;
  * @author Caleb
  */
 public class SearchGraph {
-    
     public static Move findBestMove(Position position, COLOUR playerMoving) {
         //Only call this if position.generateMoves() > 0
         
@@ -44,8 +43,7 @@ public class SearchGraph {
         if(selectedIndex > -1) {
             return possibleMoves.get(selectedIndex);
         }
-        //TODO implement some kind of exception if the possible moves size is 0
-        System.out.println("THIS SHOULDN'T BE HAPPENING!!! CATASTROPHIC FAILURE");
+        //this is checkmate
         return null;
     }
     public static int search(Position position, int depth, boolean maximizing) {

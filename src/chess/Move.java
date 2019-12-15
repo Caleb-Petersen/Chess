@@ -116,17 +116,30 @@ public class Move {
         return false;
     }
     /**
-     * @summary the function is the same as the regular isValidMove, only it 
-     * passes a dud MoveHistory. This function can be used for all move validation,
-     * except that a MoveHistory is required for enpassant
+     * @return
+     * @summary this function determines if a move is legal in a strict sense
+     * @param position
+     */
+    public boolean isLegalMove(Position position) {
+        boolean validMove = isValidMove(position);
+        if(validMove){
+           try {
+                validMove = validMove && !Validation.isKingAttacked(position, this);
+           }
+           catch(Exception ex){
+               Main.infoBox(ex.getMessage(), "Exception when checking for legal move");
+           }
+        }
+        
+        return validMove;
+    }
+    /**
+     * @summary this function checks to see if a piece is legally allow to move to 
+     * a square disregarding the king being attacked or not (unless the king itself 
+     * is moving)
      * @param position
      */
     public boolean isValidMove(Position position) {
-        MoveHistory dud = new MoveHistory();
-        
-        return isValidMove(position, dud);
-    }
-    public boolean isValidMove(Position position, MoveHistory lastMove) {
         /**
          * @param none
          * @returns whether or not a move is valid
@@ -208,7 +221,6 @@ public class Move {
 
 
         if(this.isEnpassantAttempt(position)) {
-            System.out.println("Enpassant attempted");
             int capturedPawnRow = (this.piece.pieceColour == COLOUR.WHITE) ? (this.destination.y - 1) : (this.destination.y + 1);
 
             Iterator<Piece> capturedPawnIterator = position.boardPosition.iterator();
@@ -221,10 +233,26 @@ public class Move {
             }
         }
 
-        ///Move the piece to the destination square
+        //Move the matching piece (to the move piece) in the position
+        //This is done because the reference to the piece in this move may not exist
+        //in the position, though an equivalent piece will be there.
+        Piece matchingPositionPiece = null;
+        for(Piece p : position.boardPosition){
+            if(this.piece.isEqualPiece(p)){
+                matchingPositionPiece = p;
+            }
+        }
+        //Move the piece to the destination square
         position.setLastMove(this);
+       
         this.piece.hasMoved = true;
         this.piece.location.x = this.destination.x;
         this.piece.location.y = this.destination.y;
+        
+        if(matchingPositionPiece != null){
+            matchingPositionPiece.hasMoved = true;
+            matchingPositionPiece.location.x = this.destination.x;
+            matchingPositionPiece.location.y = this.destination.y;
+        }        
     }
 }

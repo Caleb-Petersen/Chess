@@ -5,6 +5,8 @@
  */
 package Chess;
 
+import Chess.Piece.COLOUR;
+
 /**
  *
  * @author Caleb
@@ -20,7 +22,6 @@ public class Validation {
          *      2. Are there any pieces in the way of the path of that piece?
          *      3. Is the destination square occupied by a piece of the same colour?
          */
-        
 
         //If a move is diagonal, it will follow a linear path with a slope of 1
         if ((Math.abs(move.destination.y - move.piece.location.y)) == (Math.abs(move.destination.x - move.piece.location.x))) {
@@ -127,11 +128,8 @@ public class Validation {
         } else if ((Math.abs(move.destination.y - move.piece.location.y) == 2) && (Math.abs(move.destination.x - move.piece.location.x) == 1)) {
             validLocation = true;
         }
-        if(validLocation) {
-            //Check to make sure that the destination destination doesn't have a piece of the same colour on it
-            return isValidDestination(position, move);
-        }
-        return false;
+        
+        return validLocation && isValidDestination(position, move);
     }
     
     public static boolean isKing(Position position, Move move) {
@@ -275,7 +273,6 @@ public class Validation {
                         for(Piece p : position.boardPosition) {
                             if(p.location.x == squareBeside.x && p.location.y == squareBeside.y) {
                                 if(p.pieceColour != move.piece.pieceColour) {
-                                    System.out.println("CHECKING FOR VALIDATION");
                                     //Check that the last move was moving a pawn up two
                                     validLocation = position.getLastMove().destination.x == squareBeside.x &&
                                             position.getLastMove().destination.y == squareBeside.y &&
@@ -292,6 +289,7 @@ public class Validation {
         
         return validLocation && isValidDestination(position, move);
     }
+    
     public boolean destinationIsEmpty(Position position, Move move) {
         Square square = new Square(move.destination.x, move.destination.y);
         
@@ -309,6 +307,7 @@ public class Validation {
          * @param position contains the current state of the board
          * @param move is the move in the current board position that is be assessed for validity
          * @returns boolean indicating whether or not the destination square contains a piece of the same colour as the one being moved
+         * and whether or not the king is attacked in the final position
          */  
         Square square = new Square(move.destination.x, move.destination.y);
         for(int i=0; i<position.boardPosition.size(); i++) {
@@ -318,6 +317,33 @@ public class Validation {
                 }
             }
         } 
+        
         return true;
+    }
+    
+    /**
+     * @return boolean indicating if the king is attacked
+     * @summary checks to see if the king is attacked or not
+     * @param position
+     * @param move
+     */
+    public static boolean isKingAttacked(Position position, Move move) throws Exception {
+        Position virtualPosition = new Position(position);
+        Move virtualMove = new Move(move);
+        
+        virtualMove.executeMove(virtualPosition);
+        //Check that the king is not attacked in the final position
+        Piece moversKing = null;
+        for(Piece piece : virtualPosition.boardPosition) {
+            if(piece.pieceType == Piece.TYPE.KING && piece.pieceColour == virtualMove.piece.pieceColour) {
+                moversKing = piece;
+            }
+        }
+        if(moversKing == null)
+        {
+            throw new Exception("Illegal Position");
+        }
+        //Ensure that the king was found and is not attacked
+        return moversKing.location.squareControlled(virtualPosition, virtualMove.piece.pieceColour);
     }
 }

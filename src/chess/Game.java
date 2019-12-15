@@ -58,15 +58,20 @@ public class Game {
                 if(piece != null) {
                     Move move = new Move(piece, selectedSquare);
 
-                    if(move.isValidMove(currentPosition)) {
+                    if(move.isLegalMove(currentPosition)) {
                         System.out.println("size before: " + currentPosition.boardPosition.size());
                         move.executeMove(currentPosition);
                         System.out.println("size after: " + currentPosition.boardPosition.size());
                         updateView();
                         //Move the computer
                         engineMoving = true;
-                        SearchGraph.findBestMove(currentPosition, Piece.COLOUR.BLACK).executeMove(currentPosition);
-                        updateView();
+                        Move bestMove = SearchGraph.findBestMove(currentPosition, Piece.COLOUR.BLACK);
+                        if(bestMove != null){
+                            bestMove.executeMove(currentPosition);
+                            updateView();
+                        }else{
+                            Main.infoBox("Checkmate!", "Game Over");
+                        }
                         engineMoving = false;
                     }else {
                         Main.infoBox("Invalid Move!", "Error");

@@ -88,11 +88,12 @@ public class Position {
     public ArrayList<Move> generateMoves(COLOUR colour) {
         //generates the possible moves for the colour specified
         ArrayList<Move> possibleMoves = new ArrayList<>();
-        for(Piece piece : this.boardPosition) {
+        for(int i=0; i<boardPosition.size(); i++) {
+            Piece piece = boardPosition.get(i);
             //Ensure that the moves generated are for one colour only
             if(piece.pieceColour == colour) {
                 piece.updatePossibleDestinations(this);
-            
+                
                 for(Square destinationSquare : piece.possibleDestinations) {
                     possibleMoves.add(new Move(piece, destinationSquare));
                 }
@@ -100,5 +101,4 @@ public class Position {
         }
         return possibleMoves;
     }
-    
 }

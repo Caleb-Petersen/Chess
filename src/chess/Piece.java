@@ -52,6 +52,18 @@ public class Piece {
         this.possibleDestinations = null;
     }
     
+    /**
+     * @summary determines if two pieces are equivalent in terms of value
+     * @param p
+     * @return 
+     */
+    public boolean isEqualPiece(Piece p){
+        return p.pieceColour == this.pieceColour &&
+                p.pieceType == this.pieceType &&
+                p.location.x == this.location.x &&
+                p.location.y == this.location.y &&
+                this.hasMoved == this.hasMoved;
+    }
     public void updatePossibleDestinations(Position position) {
         /*
         *Function purpose: to update the array of locations that the piece can move to
@@ -69,7 +81,7 @@ public class Piece {
                 
                 //don't let the square be the one the piece is currently on
                 if(!(this.location.x == x && this.location.y == y)) {
-                    if(move.isValidMove(position)) {
+                    if(move.isLegalMove(position)) {
                         this.possibleDestinations.add(square);
                     }
                 }
