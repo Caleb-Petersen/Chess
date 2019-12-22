@@ -31,7 +31,7 @@ public class Game {
     }
     
     public void resetGamePosition() {
-        FEN initialPosition = new FEN(Constants.ORIGINAL_POSITION_FEN);
+        FEN initialPosition = new FEN(Constants.TEST_FEN);
         this.currentPosition =  new Position(initialPosition.fenToBoardPosition());
         
         //Hack to make the search graph thing the last piece to have moved is white

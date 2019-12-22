@@ -1,6 +1,7 @@
 
 package Chess;
 
+import chess.EvaluationConstants;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -111,6 +112,42 @@ public class Piece {
         return this.location.y == square.y && this.location.x == square.x;
     }
     
+    public int getLocationValue(){
+        int value = 0;
+        switch(this.pieceType) {
+            case KING:
+                value += Constants.KING_VALUE;
+                break;
+            case QUEEN:
+                value += EvaluationConstants.QUEEN_LOCATION[this.location.x][this.location.y];
+                break;
+            case ROOK:
+                value += EvaluationConstants.ROOK_LOCATION[this.location.x][this.location.y];
+                break;
+            case BISHOP:
+                value += EvaluationConstants.BISHOP_LOCATION[this.location.x][this.location.y];
+                break;
+            case KNIGHT:
+                value += EvaluationConstants.KNIGHT_LOCATION[this.location.x][this.location.y];
+                break;
+            case PAWN:
+                if(this.pieceColour == COLOUR.BLACK) {
+                    value += EvaluationConstants.BLACK_PAWN_LOCATION[this.location.x][this.location.y];
+                }
+                else{
+                    value += EvaluationConstants.WHITE_PAWN_LOCATION[this.location.x][this.location.y];
+                }
+                break;
+            default:
+                break;
+        }
+        
+        if(this.pieceColour == COLOUR.BLACK) {
+            value *= -1;
+        }
+        
+        return value;
+    }
     public int getValue() {
         int value = 0;
         switch(this.pieceType) {

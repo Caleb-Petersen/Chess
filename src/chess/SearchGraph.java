@@ -19,13 +19,12 @@ public class SearchGraph {
         ArrayList<Move> possibleMoves = position.generateMoves(playerMoving);
         boolean maximizing = playerMoving == COLOUR.WHITE;
         int selectedIndex = -1;
-        
-        
+
+        //Initialize the best evaluation with the worst evaluation possible
         int bestEvaluation = maximizing ? Constants.BOTTOM_EVALUATION : Constants.TOP_EVALUATION;
         
         for(int i=0; i<possibleMoves.size(); i++) {
-            Move virtualMove = new Move(possibleMoves.get(i));
-            Position virtualPosition = executeVirtualMove(position, virtualMove);
+            Position virtualPosition = executeVirtualMove(position, possibleMoves.get(i));
             int searchEvaluation = search(virtualPosition, Constants.SEARCH_DEPTH, !maximizing);
             
             if(maximizing && searchEvaluation > bestEvaluation) {
@@ -33,6 +32,10 @@ public class SearchGraph {
                 selectedIndex = i;
             }
             else if(!maximizing && searchEvaluation < bestEvaluation){
+                bestEvaluation = searchEvaluation;
+                selectedIndex = i;
+            }
+            else if(searchEvaluation == bestEvaluation && selectedIndex == -1){
                 bestEvaluation = searchEvaluation;
                 selectedIndex = i;
             }
@@ -52,7 +55,6 @@ public class SearchGraph {
         }
         COLOUR playerColour = extractColour(maximizing);
         ArrayList<Move> possibleMoves = position.generateMoves(playerColour);
-
         
         //set the initial optimization value to be either very low or very high
         int bestEvaluation = maximizing ? Constants.BOTTOM_EVALUATION : Constants.TOP_EVALUATION; 
@@ -72,14 +74,13 @@ public class SearchGraph {
         }
         
         return bestEvaluation;
-        
     }
     
     public static Position executeVirtualMove(Position position, Move move) {
         //make a deep copy of the position using the copy constructor
         Position virtualPosition = new Position(position);
-        System.out.println("Executed virtual move");
-        move.executeMove(virtualPosition);
+        Move virtualMove = new Move(move);
+        virtualMove.executeMove(virtualPosition);
         
         return virtualPosition;
     }

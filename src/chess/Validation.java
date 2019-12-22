@@ -5,8 +5,6 @@
  */
 package Chess;
 
-import Chess.Piece.COLOUR;
-
 /**
  *
  * @author Caleb

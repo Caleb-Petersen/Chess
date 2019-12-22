@@ -65,11 +65,16 @@ public class Position {
     }
     public int getEvaluation() {
         int evaluation = 0;
-        
+        int totalControlledSquares = 0;
         //Sum up the values of all of the pieces for rudimentary evaluation
         for(Piece p : this.boardPosition) {
-            evaluation += p.getValue();
+            evaluation += p.getLocationValue();
+            //p.updatePossibleDestinations(this);
+            
+            //int direction = p.pieceColour == Piece.COLOUR.WHITE ? 1 : -1;
+            //totalControlledSquares += p.possibleDestinations.size()*direction;
         }
+        evaluation += totalControlledSquares/50;
         return evaluation;
     }
     

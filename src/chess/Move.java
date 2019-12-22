@@ -182,7 +182,6 @@ public class Move {
         
         //Handle edge cases where another piece is captured first
         if(isCastlingAttempt()) {
-            System.out.println("Castling attempted");
             //First handle the differences between queenside and kingside castling
             int queensideRookInitialColumn = 0;
             int queensideRookDestinationColumn = 3;
@@ -213,7 +212,6 @@ public class Move {
                 System.out.println("Castling rook not found. The move must be invalid.");
             }
             else {
-                System.out.println("Moving rook to column " + rookDestinationColumn);
                 castledRook.location.x = rookDestinationColumn;
             }
         }
